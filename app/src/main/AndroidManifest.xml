@@ -17,6 +17,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".Controllers.StudentProfile"></activity>
+        <activity android:name=".Controllers.ClassList"></activity>
     </application>
 
 </manifest>
