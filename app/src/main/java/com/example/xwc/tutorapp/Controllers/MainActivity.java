@@ -1,7 +1,9 @@
-package com.example.xwc.tutorapp;
+package com.example.xwc.tutorapp.Controllers;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+
+import com.example.xwc.tutorapp.R;
 
 public class MainActivity extends AppCompatActivity {
 //Testing the git
