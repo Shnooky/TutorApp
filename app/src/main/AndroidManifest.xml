@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.xwc.tutorapp">
+          package="com.example.xwc.tutorapp">
 
     <application
         android:allowBackup="true"
@@ -11,13 +11,15 @@
         android:theme="@style/AppTheme">
         <activity android:name=".Controllers.MainActivity">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.intent.action.MAIN"/>
 
-                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".Controllers.StudentProfile"></activity>
-        <activity android:name=".Controllers.ClassList"></activity>
+        <activity android:name=".Controllers.StudentProfile"/>
+        <activity android:name=".Controllers.ClassList"/>
+        <activity android:name=".Controllers.ClassMenu"/>
+        <activity android:name=".Controllers.TutorialList"/>
     </application>
 
 </manifest>

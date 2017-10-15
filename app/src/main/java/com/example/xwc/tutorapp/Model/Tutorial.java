@@ -1,5 +1,6 @@
 package com.example.xwc.tutorapp.Model;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 /**
@@ -8,21 +9,20 @@ import java.util.Date;
 
 public class Tutorial {
     private String mTutorialId;
-    private String mClassID;
     private Date mTutorialDate;
     private int mAbsentees;
     private int mLates;
+    private ArrayList<StudentProfile> mStudentProfiles;
 
-    public Tutorial(String tutorialId, String classID, Date tutorialDate, int absentees, int lates) {
+    public Tutorial(String tutorialId, Date tutorialDate, int absentees, int lates) {
         mTutorialId = tutorialId;
-        mClassID = classID;
         mTutorialDate = tutorialDate;
         mAbsentees = absentees;
         mLates = lates;
     }
 
     public Tutorial() {
-        this("","",new Date(),0,0);
+        this("",new Date(),0,0);
     }
 
     public String getTutorialId() {
@@ -31,14 +31,6 @@ public class Tutorial {
 
     public void setTutorialId(String tutorialId) {
         mTutorialId = tutorialId;
-    }
-
-    public String getClassID() {
-        return mClassID;
-    }
-
-    public void setClassID(String classID) {
-        mClassID = classID;
     }
 
     public Date getTutorialDate() {
@@ -63,5 +55,13 @@ public class Tutorial {
 
     public void setLates(int lates) {
         mLates = lates;
+    }
+
+    public ArrayList<StudentProfile> getStudentProfiles() {
+        return mStudentProfiles;
+    }
+
+    public void setStudentProfiles(ArrayList<StudentProfile> studentProfiles) {
+        this.mStudentProfiles = studentProfiles;
     }
 }

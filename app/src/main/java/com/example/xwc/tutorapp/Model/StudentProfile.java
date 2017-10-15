@@ -4,7 +4,7 @@ package com.example.xwc.tutorapp.Model;
  * Created by Jacob on 15/10/2017.
  */
 
-public class Student {
+public class StudentProfile {
     private String mzID;
     private String mFirstName;
     private String mSurname;
@@ -13,7 +13,7 @@ public class Student {
     private double mCurrentGrade;
     private String mPicture;
 
-    public Student(String mzID, String firstName, String surname, String codingSkill, String classID, double currentGrade, String picture) {
+    public StudentProfile(String mzID, String firstName, String surname, String codingSkill, String classID, double currentGrade, String picture) {
         this.mzID = mzID;
         mFirstName = firstName;
         mSurname = surname;
@@ -23,7 +23,7 @@ public class Student {
         mPicture = picture;
     }
 
-    public Student() {
+    public StudentProfile() {
         this("","","","","",0.00,"");
     }
 
