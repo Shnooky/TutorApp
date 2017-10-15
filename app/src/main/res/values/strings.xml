@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Smart Tutor</string>
+    <string name="classLabel">Class:</string>
+    <string name="gradeLabel">Current Grade:</string>
 </resources>
