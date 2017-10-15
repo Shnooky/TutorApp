@@ -21,7 +21,7 @@ public class ClassList extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.class_activity);
 
-        ArrayList<Class> classes = new ArrayList<Class>();
+        ArrayList<Class> classes = loadDummyClasses();
 
         ListView classesListView = (ListView) findViewById(R.id.classlist);
 
@@ -32,7 +32,13 @@ public class ClassList extends AppCompatActivity {
 
     }
 
-
+    private ArrayList<Class> loadDummyClasses() {
+        ArrayList<Class> classes = new ArrayList<>();
+        classes.add(new Class("M12A","Mon","1200","1400","CT","Quadrangle G021",22,0));
+        classes.add(new Class("M12B","Mon","1200","1400","CT","Quadrangle G021",22,0));
+        classes.add(new Class("M12C","Mon","1200","1400","CT","Quadrangle G021",22,0));
+        return classes;
+    }
 
 
 }
