@@ -34,6 +34,7 @@ public class DBOpenHelper extends SQLiteOpenHelper {
             "(TUTORIAL_ID TEXT, " +
             "DATE TEXT, " +
             "ABSENT INT, " +
+            "CLASS TEXT, " +
             "LATE INT);";
 
     private static final String TUTORIAL_STUDENT_CREATE = "CREATE TABLE TUTORIALS " +
