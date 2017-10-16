@@ -50,6 +50,7 @@ public class DBOpenHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
+        //need to check if database already exists, if it doesn't, then execute the following:
         db.execSQL(CLASS_CREATE);
         db.execSQL(STUDENT_CREATE);
         db.execSQL(TUTORIAL_CREATE);
