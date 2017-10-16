@@ -15,7 +15,7 @@ import com.example.xwc.tutorapp.Model.Class;
 import com.example.xwc.tutorapp.R;
 
 import java.util.List;
-
+// Hi jacob
 public class ClassAdapter extends ArrayAdapter<Class> {
 
     public ClassAdapter(Context context, List<Class> classes) {
