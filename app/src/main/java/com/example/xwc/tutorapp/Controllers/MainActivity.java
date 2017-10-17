@@ -39,7 +39,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 intent = new Intent(this, ClassList.class);
                 break;
             case R.id.student:
-                intent = new Intent(this, StudentProfile.class);
+                intent = new Intent(this, StudentManager.class);
                 break;
             case R.id.nameGame:
                 break;

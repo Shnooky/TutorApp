@@ -18,8 +18,30 @@
         </activity>
         <activity android:name=".Controllers.StudentProfile"/>
         <activity android:name=".Controllers.ClassList"/>
+        <activity android:name=".Controllers.ClassAdder"/>
         <activity android:name=".Controllers.ClassMenu"/>
         <activity android:name=".Controllers.TutorialList"/>
+        <activity android:name=".Controllers.StudentManager"/>
+
+        <provider
+            android:authorities="com.example.xwc.tutorapp.classProvider"
+            android:name=".Database.ClassProvider" >
+        </provider>
+
+        <provider
+            android:authorities="com.example.xwc.tutorapp.studentProvider"
+            android:name=".Database.StudentProvider" >
+        </provider>
+
+        <provider
+            android:authorities="com.example.xwc.tutorapp.tutorialProvider"
+            android:name=".Database.TutorialProvider" >
+        </provider>
+
+        <provider
+            android:authorities="com.example.xwc.tutorapp.studentTutorialProvider"
+            android:name=".Database.StudentTutorialProvider" >
+        </provider>
     </application>
 
 </manifest>
