@@ -1,6 +1,8 @@
 package com.example.xwc.tutorapp.Controllers;
 
+import android.content.Intent;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -25,6 +27,7 @@ import java.util.Date;
 public class TutorialList extends AppCompatActivity {
     ArrayList<Tutorial> tuts = new ArrayList<>();
     ListView tutorialListView;
+    SQLiteDatabase d;
 
     @Override
     public void onResume() {
@@ -47,15 +50,19 @@ public class TutorialList extends AppCompatActivity {
     }
 
     private void loadTutorials() {
-        Cursor c = getContentResolver().query(TutorialProvider.CONTENT_URI,
-                DBOpenHelper.TUTORIALS_ALL_COLUMNS, null,null, null);
-        tuts.clear();
-        while (c!= null && c.moveToNext()) {
-            tuts.add(new Tutorial(c.getString(c.getColumnIndex(DBOpenHelper.TUTORIALS_ID)),
-                    c.getString(c.getColumnIndex(DBOpenHelper.TUTORIALS_DATE)),
-                    0,
-                    0
-            ));
+        Intent intent = getIntent();
+        String[] classID = {intent.getStringExtra("CLASSID")};
+        if (intent.hasExtra("CLASSID")) {
+            Cursor c = getContentResolver().query(TutorialProvider.CONTENT_URI,
+                    DBOpenHelper.TUTORIALS_ALL_COLUMNS, DBOpenHelper.TUTORIALS_CLASS +"=?", classID, null);
+            tuts.clear();
+            while (c != null && c.moveToNext()) {
+                tuts.add(new Tutorial(c.getString(c.getColumnIndex(DBOpenHelper.TUTORIALS_ID)),
+                        c.getString(c.getColumnIndex(DBOpenHelper.TUTORIALS_DATE)),
+                        0,
+                        0
+                ));
+            }
         }
 
         // Fill list

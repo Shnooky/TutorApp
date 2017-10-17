@@ -59,6 +59,11 @@ public class ClassMenu extends AppCompatActivity implements View.OnClickListener
         switch (v.getId()) {
             case R.id.rollHistory:
                 intent = new Intent(this, TutorialList.class);
+                intent.putExtra("CLASSID", thisClass.getClassId());
+                intent.putExtra("DAY", thisClass.getDay());
+                intent.putExtra("STARTTIME", thisClass.getStartTime());
+                intent.putExtra("ENDTIME", thisClass.getEndTime());
+                intent.putExtra("LOCATION", thisClass.getLocation());
                 break;
             case R.id.newTut:
                 //intent = new Intent(this, StudentManager.class);

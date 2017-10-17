@@ -63,6 +63,11 @@ public class DBOpenHelper extends SQLiteOpenHelper {
             CLASSES_TUTOR + " TEXT, " +
             CLASSES_LOCATION + " TEXT);";
 
+    private static final String DUMMY_CLASSES = "INSERT INTO "+TABLE_CLASSES+" (" +
+            CLASSES_CLASS_ID+", "+CLASSES_DAY+", "+CLASSES_STARTTIME+", "+CLASSES_ENDTIME+", "+CLASSES_TUTOR+", "+CLASSES_LOCATION+") VALUES (" +
+            "'W12A', 'Wed', '1200', '1400', 'TUTOR', 'ASB'), (" +
+            "'W15A', 'Wed', '1500', '1700', 'TUTOR', 'QUAD')";
+
     private static final String STUDENT_CREATE = "CREATE TABLE "+TABLE_STUDENTS+" " +
             "(" + STUDENTS_ZID + " TEXT, " +
             STUDENTS_FIRSTNAME + " TEXT, " +
@@ -78,7 +83,12 @@ public class DBOpenHelper extends SQLiteOpenHelper {
 
     private static final String DUMMY_TUTORIALS = "INSERT INTO "+TABLE_TUTORIALS+" (" +
             TUTORIALS_ID+", "+TUTORIALS_DATE+", "+TUTORIALS_CLASS+") VALUES (" +
-            "'Tutorial 1', '28/02/1995', 'INFS1609')";
+            "'Tutorial 3', '11/10/2017', 'W12A'), (" +
+            "'Tutorial 2', '04/10/2017', 'W12A'), (" +
+            "'Tutorial 1', '27/09/2017', 'W12A'), (" +
+            "'Tutorial 3', '11/10/2017', 'W15A'), (" +
+            "'Tutorial 2', '04/10/2017', 'W15A'), (" +
+            "'Tutorial 1', '27/09/2017', 'W15A')";
 
     private static final String TUTORIAL_STUDENT_CREATE = "CREATE TABLE "+TABLE_STUDENT_TUTORIALS+" " +
             "("+STUDENTS_TUTORIALS_TUTORIAL_ID+" TEXT, " +
@@ -95,6 +105,7 @@ public class DBOpenHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         //need to check if database already exists, if it doesn't, then execute the following:
         db.execSQL(CLASS_CREATE);
+        db.execSQL(DUMMY_CLASSES);
         db.execSQL(STUDENT_CREATE);
         db.execSQL(TUTORIAL_CREATE);
         db.execSQL(DUMMY_TUTORIALS);
@@ -106,4 +117,6 @@ public class DBOpenHelper extends SQLiteOpenHelper {
         //db.execSQL("DROP TABLE IF EXISTS ");
         onCreate(db);
     }
+
+
 }

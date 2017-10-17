@@ -15,3 +15,16 @@
         });
         */
 
+    private Date convertDate(String dateToConvert) {
+        DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+        Date returnDate = new Date();
+        try {
+            returnDate = df.parse(dateToConvert);
+        } catch (ParseException e) {
+           Log.e("DATEPARSE",e.toString());
+        }
+        return returnDate;
+    }
+
+}
+
