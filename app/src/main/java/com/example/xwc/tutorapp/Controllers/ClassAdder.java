@@ -58,7 +58,6 @@ public class ClassAdder extends AppCompatActivity {
                 insertValues.put(DBOpenHelper.CLASSES_LOCATION, txtLocation.getText().toString());
                 // TODO: Make name editable
                 insertValues.put(DBOpenHelper.CLASSES_TUTOR, "Jacob");
-
                 if (updating_class_id != null) {
                     getContentResolver().update(ClassProvider.CONTENT_URI,
                             insertValues, DBOpenHelper.CLASSES_CLASS_ID + " = ?", new String[] {updating_class_id});
@@ -66,8 +65,10 @@ public class ClassAdder extends AppCompatActivity {
                     getContentResolver().insert(ClassProvider.CONTENT_URI,
                             insertValues);
                 }
-
                 finish();
+                Intent intent = new Intent(getBaseContext(),ClassList.class);
+                startActivity(intent);
+
             }
         });
 
@@ -76,6 +77,8 @@ public class ClassAdder extends AppCompatActivity {
                 getContentResolver().delete(ClassProvider.CONTENT_URI,
                             DBOpenHelper.CLASSES_CLASS_ID + " = ?", new String[] {updating_class_id});
                 finish();
+                Intent intent = new Intent(getBaseContext(),ClassList.class);
+                startActivity(intent);
             }
         });
 
