@@ -34,6 +34,7 @@ public class ClassMenu extends AppCompatActivity implements View.OnClickListener
         startTutorial = (Button) findViewById(R.id.newTut);
         editClass = (Button) findViewById(R.id.editClass);
         editClass.setOnClickListener(this);
+        startTutorial.setOnClickListener(this);
 
 
 
@@ -49,7 +50,6 @@ public class ClassMenu extends AppCompatActivity implements View.OnClickListener
             className.setText(thisClass.getClassId() + " " + thisClass.getDay() + " " + thisClass.getStartTime() +
                     "-" + thisClass.getEndTime() + " " + thisClass.getLocation());
         }
-
     }
 
     @Override
@@ -61,10 +61,11 @@ public class ClassMenu extends AppCompatActivity implements View.OnClickListener
                 intent = new Intent(this, TutorialList.class);
                 break;
             case R.id.newTut:
-                //intent = new Intent(this, StudentManager.class);
+                intent = new Intent(this, TutorialStudentList.class);
+                intent.putExtra("CLASSID", thisClass.getClassId());
                 break;
             case R.id.editClass:
-                intent = new Intent(getBaseContext(),ClassAdder.class);
+                intent = new Intent(getBaseContext(), ClassAdder.class);
                 intent.putExtra("CLASSID", thisClass.getClassId());
                 intent.putExtra("DAY", thisClass.getDay());
                 intent.putExtra("STARTTIME", thisClass.getStartTime());
@@ -72,7 +73,6 @@ public class ClassMenu extends AppCompatActivity implements View.OnClickListener
                 intent.putExtra("LOCATION", thisClass.getLocation());
                 break;
             default:
-
         }
         if (intent != null) {
             startActivity(intent);

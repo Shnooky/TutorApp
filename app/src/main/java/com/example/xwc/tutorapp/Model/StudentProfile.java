@@ -5,15 +5,15 @@ package com.example.xwc.tutorapp.Model;
  */
 
 public class StudentProfile {
-    private String mzID;
-    private String mFirstName;
-    private String mSurname;
-    private String mCodingSkill;
-    private String mClassID;
-    private double mCurrentGrade;
-    private String mPicture;
+    protected String mzID;
+    protected String mFirstName;
+    protected String mSurname;
+    protected String mCodingSkill;
+    protected String mClassID;
+    protected double mCurrentGrade;
+    protected byte[] mPicture;
 
-    public StudentProfile(String mzID, String firstName, String surname, String codingSkill, String classID, double currentGrade, String picture) {
+    public StudentProfile(String mzID, String firstName, String surname, String codingSkill, String classID, double currentGrade, byte[] picture) {
         this.mzID = mzID;
         mFirstName = firstName;
         mSurname = surname;
@@ -24,7 +24,7 @@ public class StudentProfile {
     }
 
     public StudentProfile() {
-        this("","","","","",0.00,"");
+        this("","","","","",0.00,null);
     }
 
     public String getMzID() {
@@ -75,11 +75,11 @@ public class StudentProfile {
         mCurrentGrade = currentGrade;
     }
 
-    public String getPicture() {
+    public byte[] getPicture() {
         return mPicture;
     }
 
-    public void setPicture(String picture) {
+    public void setPicture(byte[] picture) {
         mPicture = picture;
     }
 

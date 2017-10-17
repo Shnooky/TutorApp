@@ -36,10 +36,11 @@ public class DBOpenHelper extends SQLiteOpenHelper {
     };
 
     public static final String TUTORIALS_ID = "TUTORIAL_ID";
+    public static final String TUTORIALS_RAWID = "RAW_ID";
     public static final String TUTORIALS_DATE = "DATE";
     public static final String TUTORIALS_CLASS = "CLASS";
     public static final String[] TUTORIALS_ALL_COLUMNS = {
-            TUTORIALS_ID, TUTORIALS_DATE, TUTORIALS_CLASS
+            TUTORIALS_ID, TUTORIALS_DATE, TUTORIALS_CLASS, TUTORIALS_RAWID
     };
 
     public static final String STUDENTS_TUTORIALS_TUTORIAL_ID = "TUTORIAL_ID";
@@ -73,6 +74,7 @@ public class DBOpenHelper extends SQLiteOpenHelper {
 
     private static final String TUTORIAL_CREATE = "CREATE TABLE "+TABLE_TUTORIALS+" " +
             "(" + TUTORIALS_ID + " TEXT, " +
+            TUTORIALS_RAWID + " INT, " +
             TUTORIALS_DATE + " TEXT, " +
             TUTORIALS_CLASS + " TEXT);";
 

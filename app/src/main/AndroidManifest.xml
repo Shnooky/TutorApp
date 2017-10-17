@@ -25,6 +25,8 @@
         <activity android:name=".Controllers.ClassMenu"/>
         <activity android:name=".Controllers.TutorialList"/>
         <activity android:name=".Controllers.StudentManager"/>
+        <activity android:name=".Controllers.TutorialStudentList"/>
+        <activity android:name=".Controllers.TutorialStudentEditor"/>
 
         <provider
             android:authorities="com.example.xwc.tutorapp.classProvider"
