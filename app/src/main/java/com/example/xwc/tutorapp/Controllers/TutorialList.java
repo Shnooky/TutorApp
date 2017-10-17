@@ -27,6 +27,12 @@ public class TutorialList extends AppCompatActivity {
     ListView tutorialListView;
 
     @Override
+    public void onResume() {
+        super.onResume();
+        loadTutorials();
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.tutorial_activity);

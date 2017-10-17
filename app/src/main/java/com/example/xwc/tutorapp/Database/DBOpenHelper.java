@@ -76,6 +76,10 @@ public class DBOpenHelper extends SQLiteOpenHelper {
             TUTORIALS_DATE + " TEXT, " +
             TUTORIALS_CLASS + " TEXT);";
 
+    private static final String DUMMY_TUTORIALS = "INSERT INTO "+TABLE_TUTORIALS+" (" +
+            TUTORIALS_ID+", "+TUTORIALS_DATE+", "+TUTORIALS_CLASS+") VALUES (" +
+            "'Tutorial 1', '28/02/1995', 'INFS1609')";
+
     private static final String TUTORIAL_STUDENT_CREATE = "CREATE TABLE "+TABLE_STUDENT_TUTORIALS+" " +
             "("+STUDENTS_TUTORIALS_TUTORIAL_ID+" TEXT, " +
             STUDENTS_TUTORIALS_ZID + " TEXT, " +
@@ -93,6 +97,7 @@ public class DBOpenHelper extends SQLiteOpenHelper {
         db.execSQL(CLASS_CREATE);
         db.execSQL(STUDENT_CREATE);
         db.execSQL(TUTORIAL_CREATE);
+        db.execSQL(DUMMY_TUTORIALS);
         db.execSQL(TUTORIAL_STUDENT_CREATE);
     }
 

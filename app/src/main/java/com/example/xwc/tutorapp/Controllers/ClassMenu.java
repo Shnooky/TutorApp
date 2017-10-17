@@ -40,7 +40,7 @@ public class ClassMenu extends AppCompatActivity implements View.OnClickListener
         Intent intent = getIntent();
         if (intent.hasExtra("CLASSID")) {
             String thisClassName = intent.getStringExtra("CLASSID");
-            String thisClassDay = intent.getStringExtra("CLASSID");
+            String thisClassDay = intent.getStringExtra("DAY");
             String thisClassStart = intent.getStringExtra("STARTTIME");
             String thisClassEnd = intent.getStringExtra("ENDTIME");
             String thisClassLocation = intent.getStringExtra("LOCATION");
