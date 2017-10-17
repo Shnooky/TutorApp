@@ -5,17 +5,26 @@ import android.database.Cursor;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.content.Intent;
-
+import android.Manifest;
 import com.example.xwc.tutorapp.Database.ClassProvider;
 import com.example.xwc.tutorapp.Database.DBOpenHelper;
 import com.example.xwc.tutorapp.Database.StudentProvider;
 import com.example.xwc.tutorapp.Model.Class;
 import com.example.xwc.tutorapp.R;
-
+import android.content.pm.*;
+import android.os.Build;
+import android.util.Log;
 import android.view.View;
 import android.widget.*;
-
+import android.graphics.*;
+import android.net.Uri;
 import org.w3c.dom.Text;
+import java.io.File;
+import android.os.Environment;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.io.ByteArrayOutputStream;
+import android.graphics.Bitmap.CompressFormat;
 
 public class StudentProfile extends AppCompatActivity {
     private Spinner cboCurrentClass;
@@ -27,8 +36,12 @@ public class StudentProfile extends AppCompatActivity {
 
     private Button btnUpdate;
     private Button btnDelete;
-
+    private ImageView imgStudent;
     private String updating_student = null;
+
+    private Uri mImageCaptureUri;
+    Bitmap student_photo = null;
+    private static final int CAMERA_PIC_REQUEST = 1001;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +59,8 @@ public class StudentProfile extends AppCompatActivity {
 
         btnUpdate = (Button) findViewById(R.id.btnUpdateStudent);
         btnDelete = (Button) findViewById(R.id.btnDeleteStudent);
+
+        imgStudent = (ImageView) findViewById(R.id.imgStudent);
 
         // Set up UI
 
@@ -75,6 +90,9 @@ public class StudentProfile extends AppCompatActivity {
                 insertValues.put(DBOpenHelper.STUDENTS_FIRSTNAME, txtFirstName.getText().toString());
                 insertValues.put(DBOpenHelper.STUDENTS_SURNAME, txtSurname.getText().toString());
                 insertValues.put(DBOpenHelper.STUDENTS_SKILL, cboSkill.getSelectedItem().toString());
+                if (student_photo != null) {
+                    insertValues.put(DBOpenHelper.STUDENTS_PICTURE, getBytes(student_photo));
+                }
 
                 if (updating_student != null) {
                     // update existing student
@@ -97,6 +115,17 @@ public class StudentProfile extends AppCompatActivity {
             }
         });
 
+        imgStudent.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+
+                Intent cameraIntent =
+                        new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+
+                startActivityForResult(cameraIntent, CAMERA_PIC_REQUEST);
+
+            }
+        });
+
 
         // Check if we are adding or updating a student
 
@@ -105,13 +134,16 @@ public class StudentProfile extends AppCompatActivity {
             txtFirstName.setText(i.getStringExtra("FIRSTNAME").toString());
             txtSurname.setText(i.getStringExtra("SURNAME").toString());
             txtZID.setText(i.getStringExtra("ZID").toString());
-//            lblGrade.setText(i.getStringExtra("GRADE").toString());
             selectSpinnerValue (cboCurrentClass, i.getStringExtra("CLASS").toString());
             txtFirstName.setText(i.getStringExtra("FIRSTNAME").toString());
             selectSpinnerValue(cboSkill, i.getStringExtra("SKILL").toString());
             updating_student = i.getStringExtra("ZID").toString();
             btnUpdate.setText("Update");
             btnDelete.setVisibility(View.VISIBLE);
+            byte[] img = i.getByteArrayExtra("PICTURE");
+            if (img != null) {
+                imgStudent.setImageBitmap(getImage(img));
+            }
         } else {
             updating_student = null;
             btnUpdate.setText("Add");
@@ -130,4 +162,28 @@ public class StudentProfile extends AppCompatActivity {
             }
         }
     }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == CAMERA_PIC_REQUEST && resultCode == RESULT_OK) {
+            student_photo = (Bitmap) data.getExtras().get("data");
+            imgStudent.setImageBitmap(student_photo);
+        }
+    }
+
+    // Bitmap -> Byte Array Utility Functions
+    // convert from bitmap to byte array
+    public static byte[] getBytes(Bitmap bitmap) {
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        bitmap.compress(CompressFormat.PNG, 0, stream);
+        return stream.toByteArray();
+    }
+
+    // convert from byte array to bitmap
+    public static Bitmap getImage(byte[] image) {
+        return BitmapFactory.decodeByteArray(image, 0, image.length);
+    }
+
+
 }
