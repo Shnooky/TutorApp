@@ -9,12 +9,12 @@ import java.util.Date;
 
 public class Tutorial {
     private String mTutorialId;
-    private Date mTutorialDate;
+    private String mTutorialDate;
     private int mAbsentees;
     private int mLates;
     private ArrayList<StudentProfile> mStudentProfiles;
 
-    public Tutorial(String tutorialId, Date tutorialDate, int absentees, int lates) {
+    public Tutorial(String tutorialId, String tutorialDate, int absentees, int lates) {
         mTutorialId = tutorialId;
         mTutorialDate = tutorialDate;
         mAbsentees = absentees;
@@ -22,7 +22,7 @@ public class Tutorial {
     }
 
     public Tutorial() {
-        this("",new Date(),0,0);
+        this("","",0,0);
     }
 
     public String getTutorialId() {
@@ -33,11 +33,11 @@ public class Tutorial {
         mTutorialId = tutorialId;
     }
 
-    public Date getTutorialDate() {
+    public String getTutorialDate() {
         return mTutorialDate;
     }
 
-    public void setTutorialDate(Date tutorialDate) {
+    public void setTutorialDate(String tutorialDate) {
         mTutorialDate = tutorialDate;
     }
 

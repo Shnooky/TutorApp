@@ -52,7 +52,7 @@ public class TutorialList extends AppCompatActivity {
         tuts.clear();
         while (c!= null && c.moveToNext()) {
             tuts.add(new Tutorial(c.getString(c.getColumnIndex(DBOpenHelper.TUTORIALS_ID)),
-                    convertDate(c.getString(c.getColumnIndex(DBOpenHelper.TUTORIALS_DATE))),
+                    c.getString(c.getColumnIndex(DBOpenHelper.TUTORIALS_DATE)),
                     0,
                     0
             ));
@@ -61,17 +61,6 @@ public class TutorialList extends AppCompatActivity {
         // Fill list
         TutorialAdapter adapter = new TutorialAdapter(this, tuts);
         tutorialListView.setAdapter(adapter);
-    }
-
-    private Date convertDate(String dateToConvert) {
-        DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
-        Date returnDate = new Date();
-        try {
-            returnDate = df.parse(dateToConvert);
-        } catch (ParseException e) {
-           Log.e("DATEPARSE",e.toString());
-        }
-        return returnDate;
     }
 
 }

@@ -103,7 +103,7 @@ public class DBOpenHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int i, int j) {
-        db.execSQL("DROP TABLE IF EXISTS ");
+        //db.execSQL("DROP TABLE IF EXISTS ");
         onCreate(db);
     }
 }
