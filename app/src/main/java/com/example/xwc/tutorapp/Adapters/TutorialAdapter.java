@@ -41,10 +41,10 @@ public class TutorialAdapter extends ArrayAdapter<Tutorial> {
         tutorialView.setText(currentTutorial.getTutorialId()+" "+currentTutorial.getTutorialDate());
 
         TextView absenteeView = (TextView) listItemView.findViewById(R.id.numAbsent);
-        absenteeView.setText(currentTutorial.getAbsentees());
+        absenteeView.setText(Integer.toString(currentTutorial.getAbsentees()));
 
         TextView latesView = (TextView) listItemView.findViewById(R.id.numLates);
-        latesView.setText(currentTutorial.getLates());
+        latesView.setText(Integer.toString(currentTutorial.getLates()));
         
 
 

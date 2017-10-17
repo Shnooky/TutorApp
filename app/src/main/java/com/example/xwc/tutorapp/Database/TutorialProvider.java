@@ -31,8 +31,10 @@ public class TutorialProvider extends ContentProvider {
     public Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder) {
         return database.query(DBOpenHelper.TABLE_TUTORIALS, DBOpenHelper.TUTORIALS_ALL_COLUMNS,
                 selection, selectionArgs, null, null,
-                DBOpenHelper.TUTORIALS_DATE + " ASC");
+                DBOpenHelper.TUTORIALS_ID + " DESC");
     }
+
+
 
     @Override
     public String getType(Uri uri) {
