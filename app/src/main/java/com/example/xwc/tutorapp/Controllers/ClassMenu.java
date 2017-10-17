@@ -1,13 +1,18 @@
 package com.example.xwc.tutorapp.Controllers;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+
+import com.example.xwc.tutorapp.Database.DBOpenHelper;
+import com.example.xwc.tutorapp.Database.TutorialProvider;
 import com.example.xwc.tutorapp.Model.Class;
 
+import com.example.xwc.tutorapp.Model.Tutorial;
 import com.example.xwc.tutorapp.R;
 
 
@@ -50,6 +55,22 @@ public class ClassMenu extends AppCompatActivity implements View.OnClickListener
                     "-" + thisClass.getEndTime() + " " + thisClass.getLocation());
         }
 
+        viewRollHistory.setEnabled(false);
+        String[] IdToGet = {thisClass.getClassId()};
+        if(tutorialsExist(IdToGet)) {
+            viewRollHistory.setEnabled(true);
+        }
+
+    }
+
+    private boolean tutorialsExist(String[] classID) {
+        boolean exist = true;
+        Cursor c = getContentResolver().query(TutorialProvider.CONTENT_URI,
+                DBOpenHelper.TUTORIALS_ALL_COLUMNS, DBOpenHelper.TUTORIALS_CLASS + "=?", classID, null);
+        if (c == null || !c.moveToNext()) {
+            exist = false;
+        }
+        return exist;
     }
 
     @Override
