@@ -77,6 +77,10 @@ public class DBOpenHelper extends SQLiteOpenHelper {
             STUDENTS_CLASS + " TEXT, " +
             STUDENTS_PICTURE + " BLOB);";
 
+    private static final String DUMMY_STUDENTS = "INSERT INTO "+TABLE_STUDENTS+" (" +
+            STUDENTS_ZID+", "+STUDENTS_FIRSTNAME+", "+STUDENTS_SURNAME+", "+STUDENTS_SKILL+", "+STUDENTS_CLASS+", "+STUDENTS_PICTURE+") VALUES (" +
+            "'Z5019998', 'Jacob', 'Meyerowitz','???','W12A','???')";
+
     private static final String TUTORIAL_CREATE = "CREATE TABLE "+TABLE_TUTORIALS+" " +
             "(" + TUTORIALS_ID + " TEXT, " +
             TUTORIALS_RAWID + " INT, " +
@@ -109,6 +113,7 @@ public class DBOpenHelper extends SQLiteOpenHelper {
         db.execSQL(CLASS_CREATE);
         db.execSQL(DUMMY_CLASSES);
         db.execSQL(STUDENT_CREATE);
+        db.execSQL(DUMMY_STUDENTS);
         db.execSQL(TUTORIAL_CREATE);
         db.execSQL(DUMMY_TUTORIALS);
         db.execSQL(TUTORIAL_STUDENT_CREATE);

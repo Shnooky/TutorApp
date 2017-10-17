@@ -6,6 +6,8 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.example.xwc.tutorapp.Adapters.TutorialAdapter;
@@ -45,6 +47,16 @@ public class TutorialList extends AppCompatActivity {
         TutorialAdapter adapter = new TutorialAdapter(this, tuts);
 
         tutorialListView.setAdapter(adapter);
+
+        tutorialListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
+                Tutorial t = tuts.get(position);
+                Intent i = new Intent(getBaseContext(), TutorialStudentList.class);
+                i.putExtra("TUTORIALID",t.getTutorialId());
+                startActivity(i);
+            }
+        });
 
 
     }
