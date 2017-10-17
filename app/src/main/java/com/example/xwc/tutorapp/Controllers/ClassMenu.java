@@ -30,6 +30,7 @@ public class ClassMenu extends AppCompatActivity implements View.OnClickListener
 
         className = (TextView) findViewById(R.id.ClassName);
         viewRollHistory = (Button) findViewById(R.id.rollHistory);
+        viewRollHistory.setOnClickListener(this);
         startTutorial = (Button) findViewById(R.id.newTut);
         editClass = (Button) findViewById(R.id.editClass);
         editClass.setOnClickListener(this);
@@ -57,7 +58,7 @@ public class ClassMenu extends AppCompatActivity implements View.OnClickListener
 
         switch (v.getId()) {
             case R.id.rollHistory:
-                //intent = new Intent(this, ClassList.class);
+                intent = new Intent(this, TutorialList.class);
                 break;
             case R.id.newTut:
                 //intent = new Intent(this, StudentManager.class);
