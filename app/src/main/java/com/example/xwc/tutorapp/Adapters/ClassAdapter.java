@@ -32,7 +32,7 @@ public class ClassAdapter extends ArrayAdapter<Class> {
 
         TextView classView = (TextView) listItemView.findViewById(R.id.className);
         classView.setText(currentClass.getClassId() + " " + currentClass.getDay() + " " + currentClass.getStartTime() +
-                "-" + currentClass.getEndTime());
+                "-" + currentClass.getEndTime() + " " + currentClass.getLocation());
 
 
         TextView gradeView = (TextView) listItemView.findViewById(R.id.avGrade);

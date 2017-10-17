@@ -47,11 +47,28 @@ public class ClassList extends AppCompatActivity {
             }
         });
 
+        /*
         classesListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
                 Class c = classes.get(position);
                 Intent i = new Intent(getBaseContext(),ClassAdder.class);
+                i.putExtra("CLASSID", c.getClassId());
+                i.putExtra("DAY", c.getDay());
+                i.putExtra("STARTTIME", c.getStartTime());
+                i.putExtra("ENDTIME", c.getEndTime());
+                i.putExtra("LOCATION", c.getLocation());
+
+                startActivity(i);
+            }
+        });
+        */
+
+        classesListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
+                Class c = classes.get(position);
+                Intent i = new Intent(getBaseContext(),ClassMenu.class);
                 i.putExtra("CLASSID", c.getClassId());
                 i.putExtra("DAY", c.getDay());
                 i.putExtra("STARTTIME", c.getStartTime());
