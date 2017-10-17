@@ -51,7 +51,7 @@ public class ClassList extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
                 Class c = classes.get(position);
-                Intent i = new Intent(getBaseContext(),ClassAdder.class);
+                Intent i = new Intent(getBaseContext(),ClassMenu.class);
                 i.putExtra("CLASSID", c.getClassId());
                 i.putExtra("DAY", c.getDay());
                 i.putExtra("STARTTIME", c.getStartTime());

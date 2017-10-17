@@ -55,6 +55,7 @@ public class ClassProvider extends ContentProvider {
     public int update(Uri uri, ContentValues values, String selection, String[] selectionArgs) {
         return database.update(DBOpenHelper.TABLE_CLASSES,
                 values, selection, selectionArgs);
+
     }
 
 }
