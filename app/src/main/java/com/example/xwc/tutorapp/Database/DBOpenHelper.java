@@ -53,7 +53,7 @@ public class DBOpenHelper extends SQLiteOpenHelper {
 
     // DB Info
     private static final String DATABASE_NAME = "tutor.db";
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 2;
 
     private static final String CLASS_CREATE = "CREATE TABLE "+TABLE_CLASSES+" " +
             "("+ CLASSES_CLASS_ID +" TEXT, " +
@@ -69,7 +69,7 @@ public class DBOpenHelper extends SQLiteOpenHelper {
             STUDENTS_SURNAME + " TEXT, " +
             STUDENTS_SKILL + " TEXT, " +
             STUDENTS_CLASS + " TEXT, " +
-            STUDENTS_PICTURE + " TEXT);";
+            STUDENTS_PICTURE + " BLOB);";
 
     private static final String TUTORIAL_CREATE = "CREATE TABLE "+TABLE_TUTORIALS+" " +
             "(" + TUTORIALS_ID + " TEXT, " +
@@ -101,6 +101,4 @@ public class DBOpenHelper extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS ");
         onCreate(db);
     }
-
-
 }

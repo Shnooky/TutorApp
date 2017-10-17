@@ -63,7 +63,7 @@ public class StudentManager extends AppCompatActivity {
                     i.putExtra("SURNAME", c.getString(c.getColumnIndex(DBOpenHelper.STUDENTS_SURNAME)));
                     // TODO: CALCULATE GRADE FROM STUDENTS_TUTORIALS TABLE
                     //i.putExtra("GRADE", c.getString(c.getColumnIndex(DBOpenHelper.STUDENTS_GRADE)));
-                    i.putExtra("PICTURE", c.getString(c.getColumnIndex(DBOpenHelper.STUDENTS_PICTURE)));
+                    i.putExtra("PICTURE", c.getBlob(c.getColumnIndex(DBOpenHelper.STUDENTS_PICTURE)));
                     i.putExtra("SKILL", c.getString(c.getColumnIndex(DBOpenHelper.STUDENTS_SKILL)));
                     startActivity(i);
                 }
