@@ -79,7 +79,12 @@ public class DBOpenHelper extends SQLiteOpenHelper {
 
     private static final String DUMMY_STUDENTS = "INSERT INTO "+TABLE_STUDENTS+" (" +
             STUDENTS_ZID+", "+STUDENTS_FIRSTNAME+", "+STUDENTS_SURNAME+", "+STUDENTS_SKILL+", "+STUDENTS_CLASS+", "+STUDENTS_PICTURE+") VALUES (" +
-            "'Z5019998', 'Jacob', 'Meyerowitz','???','W12A','???')";
+            "'Z5019998', 'Jacob', 'Meyerowitz','???','W12A','???'), (" +
+            "'Z1234567', 'Bob', 'Smith','???','W12A','???'), (" +
+            "'Z7654321', 'Jenny', 'Smith','???','W12A','???'), (" +
+            "'Z5014884', 'James', 'Zhang','???','W15A','???'), (" +
+            "'Z1111111', 'Johnny', 'Bravo','???','W15A','???'), (" +
+            "'Z9999999', 'Benji', 'Bioer','???','W15A','???')";
 
     private static final String TUTORIAL_CREATE = "CREATE TABLE "+TABLE_TUTORIALS+" " +
             "(" + TUTORIALS_ID + " TEXT, " +
@@ -103,6 +108,27 @@ public class DBOpenHelper extends SQLiteOpenHelper {
             STUDENTS_TUTORIALS_ABSENT + " INT, " +
             STUDENTS_TUTORIALS_MARK + " DOUBLE);";
 
+    private static final String DUMMY_TUTORIAL_STUDENTS = "INSERT INTO "+TABLE_STUDENT_TUTORIALS+" (" +
+            STUDENTS_TUTORIALS_TUTORIAL_ID+", "+STUDENTS_TUTORIALS_ZID+", "+STUDENTS_TUTORIALS_LATE+", "+STUDENTS_TUTORIALS_ABSENT+", "+STUDENTS_TUTORIALS_MARK+") VALUES (" +
+            "'Tutorial 1', 'Z5019998',0,0,2.0), (" +
+            "'Tutorial 1', 'Z1234567',0,0,2.0), (" +
+            "'Tutorial 1', 'Z7654321',0,0,2.0), (" +
+            "'Tutorial 2', 'Z5019998',0,0,2.0), (" +
+            "'Tutorial 2', 'Z1234567',1,0,2.0), (" +
+            "'Tutorial 2', 'Z7654321',0,1,0.0), (" +
+            "'Tutorial 3', 'Z5019998',0,0,2.0), (" +
+            "'Tutorial 3', 'Z1234567',0,0,2.0), (" +
+            "'Tutorial 3', 'Z7654321',0,0,2.0), (" +
+            "'Tutorial 1', 'Z5014884',0,0,2.0), (" +
+            "'Tutorial 1', 'Z1234567',0,0,2.0), (" +
+            "'Tutorial 1', 'Z7654321',0,0,2.0), (" +
+            "'Tutorial 2', 'Z5014884',0,0,2.0), (" +
+            "'Tutorial 2', 'Z1234567',1,0,2.0), (" +
+            "'Tutorial 2', 'Z7654321',0,2,0.0), (" +
+            "'Tutorial 3', 'Z5014884',0,0,2.0), (" +
+            "'Tutorial 3', 'Z1234567',0,0,2.0), (" +
+            "'Tutorial 3', 'Z7654321',0,0,2.0)";
+
     public DBOpenHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
@@ -117,6 +143,7 @@ public class DBOpenHelper extends SQLiteOpenHelper {
         db.execSQL(TUTORIAL_CREATE);
         db.execSQL(DUMMY_TUTORIALS);
         db.execSQL(TUTORIAL_STUDENT_CREATE);
+        db.execSQL(DUMMY_TUTORIAL_STUDENTS);
     }
 
     @Override
