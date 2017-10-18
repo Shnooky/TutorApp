@@ -16,7 +16,9 @@
         android:textStyle="bold"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toLeftOf="@+id/txtLocation"
-        tools:layout_editor_absoluteY="377dp" />
+        app:layout_constraintHorizontal_bias="0.487"
+        app:layout_constraintTop_toTopOf="@+id/txtLocation"
+        android:layout_marginTop="8dp" />
 
     <TextView
         android:id="@+id/textView11"
@@ -28,7 +30,9 @@
         android:textStyle="bold"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toLeftOf="@+id/txtEndTime"
-        tools:layout_editor_absoluteY="298dp" />
+        app:layout_constraintHorizontal_bias="0.487"
+        app:layout_constraintTop_toTopOf="@+id/txtEndTime"
+        android:layout_marginTop="8dp" />
 
     <TextView
         android:id="@+id/textView7"
@@ -38,10 +42,11 @@
         android:layout_marginRight="8dp"
         android:text="Start Time"
         android:textStyle="bold"
-        app:layout_constraintHorizontal_bias="0.465"
+        app:layout_constraintHorizontal_bias="0.487"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toLeftOf="@+id/txtStartTime"
-        tools:layout_editor_absoluteY="215dp" />
+        app:layout_constraintTop_toTopOf="@+id/txtStartTime"
+        android:layout_marginTop="8dp" />
 
     <TextView
         android:id="@+id/textView6"
@@ -53,14 +58,18 @@
         android:textStyle="bold"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toLeftOf="@+id/txtDay"
-        tools:layout_editor_absoluteY="134dp" />
+        app:layout_constraintHorizontal_bias="0.487"
+        app:layout_constraintTop_toTopOf="@+id/txtDay"
+        android:layout_marginTop="12dp" />
 
     <Button
+        android:background="@drawable/gradient_lightrose"
+        android:textColor="#ffff"
         android:id="@+id/btnDeleteClass"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
-        android:layout_marginLeft="28dp"
+        android:layout_marginBottom="37dp"
+        android:layout_marginLeft="29dp"
         android:text="Delete"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent" />
@@ -146,6 +155,8 @@
         tools:layout_editor_absoluteX="115dp" />
 
     <Button
+        android:background="@drawable/gradient_lightrose"
+        android:textColor="#ffff"
         android:id="@+id/btnAddNewClass"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -153,7 +164,7 @@
         android:layout_marginRight="28dp"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginBottom="16dp" />
+        android:layout_marginBottom="37dp" />
 
     <TextView
         android:id="@+id/textView3"
@@ -165,6 +176,8 @@
         android:textStyle="bold"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toLeftOf="@+id/txtCourse"
-        tools:layout_editor_absoluteY="51dp" />
+        app:layout_constraintHorizontal_bias="0.487"
+        app:layout_constraintTop_toTopOf="@+id/txtCourse"
+        android:layout_marginTop="8dp" />
 
 </android.support.constraint.ConstraintLayout>
