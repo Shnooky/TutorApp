@@ -85,8 +85,8 @@ public class TutorialStudentList extends AppCompatActivity {
             if (c!= null && c.moveToNext()) {
                 // get new RAW ID
                 int rawID = c.getInt(0);
-                String tutorialDate = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
-                String tutorialID = "Tutorial " + (rawID + 1) + " @ " + tutorialDate;
+                String tutorialDate = new SimpleDateFormat("dd/MM/yyyy").format(new Date());
+                String tutorialID = "Tutorial " + (rawID + 1); //+ " @ " + tutorialDate;
                 // Create new tutorials entry
                 ContentValues insertValues = new ContentValues();
                 insertValues.put(DBOpenHelper.TUTORIALS_CLASS, currClass);
