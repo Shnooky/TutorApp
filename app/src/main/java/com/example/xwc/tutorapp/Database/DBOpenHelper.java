@@ -120,14 +120,14 @@ public class DBOpenHelper extends SQLiteOpenHelper {
             "'Tutorial 3', 'Z1234567',0,0,2.0), (" +
             "'Tutorial 3', 'Z7654321',0,0,2.0), (" +
             "'Tutorial 1', 'Z5014884',0,0,2.0), (" +
-            "'Tutorial 1', 'Z1234567',0,0,2.0), (" +
-            "'Tutorial 1', 'Z7654321',0,0,2.0), (" +
+            "'Tutorial 1', 'Z1111111',0,0,2.0), (" +
+            "'Tutorial 1', 'Z9999999',0,0,2.0), (" +
             "'Tutorial 2', 'Z5014884',0,0,2.0), (" +
-            "'Tutorial 2', 'Z1234567',1,0,2.0), (" +
-            "'Tutorial 2', 'Z7654321',0,2,0.0), (" +
+            "'Tutorial 2', 'Z1111111',1,0,2.0), (" +
+            "'Tutorial 2', 'Z9999999',0,2,0.0), (" +
             "'Tutorial 3', 'Z5014884',0,0,2.0), (" +
-            "'Tutorial 3', 'Z1234567',0,0,2.0), (" +
-            "'Tutorial 3', 'Z7654321',0,0,2.0)";
+            "'Tutorial 3', 'Z1111111',0,0,2.0), (" +
+            "'Tutorial 3', 'Z9999999',0,0,2.0)";
 
     public DBOpenHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
