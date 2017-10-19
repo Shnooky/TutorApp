@@ -33,6 +33,7 @@ public class TutorialStudentList extends AppCompatActivity {
     ListView studentsLV;
     private String currClass = null;
     private String currTutorialID = null;
+    private String currentClass = null;
 
     @Override
     public void onResume(){
@@ -78,7 +79,7 @@ public class TutorialStudentList extends AppCompatActivity {
             // Generate new Tutorial ID
             DBOpenHelper helper = new DBOpenHelper(getBaseContext());
             SQLiteDatabase database = helper.getWritableDatabase();
-            Cursor c = database.rawQuery("select count(RAW_ID) from TUTORIALS WHERE CLASS = ?", new String[]{
+            Cursor c = database.rawQuery("select count(TUTORIAL_ID) from TUTORIALS WHERE CLASS = ?", new String[]{
                     currClass
             });
 
@@ -118,6 +119,13 @@ public class TutorialStudentList extends AppCompatActivity {
     }
 
     private void loadStudents() {
+        Intent intent = getIntent();
+        if(intent.hasExtra("TUTORIAL_CLASS")) {
+            currentClass = intent.getStringExtra("TUTORIAL_CLASS");
+        } else {
+            currentClass = currClass;
+        }
+
         DBOpenHelper helper = new DBOpenHelper(getBaseContext());
         SQLiteDatabase database = helper.getWritableDatabase();
 
@@ -131,8 +139,8 @@ public class TutorialStudentList extends AppCompatActivity {
         while (c!= null && c.moveToNext()) {
             Cursor c2 = getContentResolver().query(StudentProvider.CONTENT_URI,
                     DBOpenHelper.STUDENTS_ALL_COLUMNS,
-                    "ZID = ?",
-                    new String[]{c.getString(c.getColumnIndex(DBOpenHelper.STUDENTS_TUTORIALS_ZID))}, null);
+                    "ZID = ? AND CLASS = ?",
+                    new String[]{c.getString(c.getColumnIndex(DBOpenHelper.STUDENTS_TUTORIALS_ZID)),currentClass}, null);
             if (c2!= null && c2.moveToNext()) {
 
                 String studentFirstName = c2.getString(c2.getColumnIndex(DBOpenHelper.STUDENTS_FIRSTNAME));

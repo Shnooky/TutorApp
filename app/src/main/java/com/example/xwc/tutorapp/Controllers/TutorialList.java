@@ -48,12 +48,16 @@ public class TutorialList extends AppCompatActivity {
 
         tutorialListView.setAdapter(adapter);
 
+        Intent intent = getIntent();
+       final String currentClass = intent.getStringExtra("CLASSID");
+
         tutorialListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
                 Tutorial t = tuts.get(position);
                 Intent i = new Intent(getBaseContext(), TutorialStudentList.class);
                 i.putExtra("TUTORIALID",t.getTutorialId());
+                i.putExtra("TUTORIAL_CLASS",currentClass);
                 startActivity(i);
             }
         });
