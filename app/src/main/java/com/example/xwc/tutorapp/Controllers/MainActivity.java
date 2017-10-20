@@ -3,12 +3,14 @@ package com.example.xwc.tutorapp.Controllers;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-
+import android.database.Cursor;
 import com.example.xwc.tutorapp.Database.DBOpenHelper;
 import com.example.xwc.tutorapp.R;
 
@@ -24,6 +26,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        //loadDummyData();
         mClassList = (Button) findViewById(R.id.classes);
         mClassList.setOnClickListener(this);
         mStudentProfile = (Button) findViewById(R.id.student);
@@ -65,6 +68,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 intent = new Intent(this, StudentManager.class);
                 break;
             case R.id.nameGame:
+                intent = new Intent(this, NameGameManager.class);
                 break;
             default:
 
@@ -73,5 +77,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             startActivity(intent);
         }
 
+    }
+
+    public void loadDummyData() {
+        DBOpenHelper helper = new DBOpenHelper(getBaseContext());
+        SQLiteDatabase database = helper.getWritableDatabase();
+        helper.onCreate(database);
+        helper.createDummyData(database);
     }
 }

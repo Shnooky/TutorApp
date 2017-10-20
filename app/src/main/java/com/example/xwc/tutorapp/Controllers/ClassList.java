@@ -47,20 +47,36 @@ public class ClassList extends AppCompatActivity {
             }
         });
 
-        classesListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
-                Class c = classes.get(position);
-                Intent i = new Intent(getBaseContext(),ClassMenu.class);
-                i.putExtra("CLASSID", c.getClassId());
-                i.putExtra("DAY", c.getDay());
-                i.putExtra("STARTTIME", c.getStartTime());
-                i.putExtra("ENDTIME", c.getEndTime());
-                i.putExtra("LOCATION", c.getLocation());
+        // Check whether the parent activity is name game or class menu
+        Intent i = getIntent();
+        if (i.hasExtra("NAMEGAME")) {
+            // Make listview click redirect to name quiz game
+            classesListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
+                    Class c = classes.get(position);
+                    Intent i = new Intent(getBaseContext(), NameGameQuiz.class);
+                    i.putExtra("CLASSID", c.getClassId());
+                    startActivity(i);
+                }
+            });
+        } else {
+            // Make listview click redirect to class/tutorial menu
+            classesListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
+                    Class c = classes.get(position);
+                    Intent i = new Intent(getBaseContext(),ClassMenu.class);
+                    i.putExtra("CLASSID", c.getClassId());
+                    i.putExtra("DAY", c.getDay());
+                    i.putExtra("STARTTIME", c.getStartTime());
+                    i.putExtra("ENDTIME", c.getEndTime());
+                    i.putExtra("LOCATION", c.getLocation());
 
-                startActivity(i);
-            }
-        });
+                    startActivity(i);
+                }
+            });
+        }
     }
 
     private void loadClasses() {

@@ -126,9 +126,6 @@ public class TutorialStudentList extends AppCompatActivity {
             currentClass = currClass;
         }
 
-        DBOpenHelper helper = new DBOpenHelper(getBaseContext());
-        SQLiteDatabase database = helper.getWritableDatabase();
-
         Cursor c = getContentResolver().query(StudentTutorialProvider.CONTENT_URI,
                 DBOpenHelper.STUDENTS_TUTORIALS_ALL_COLUMNS,
                 DBOpenHelper.STUDENTS_TUTORIALS_TUTORIAL_ID + " = ?",

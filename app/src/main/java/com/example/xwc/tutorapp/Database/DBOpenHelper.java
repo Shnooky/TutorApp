@@ -3,7 +3,7 @@ package com.example.xwc.tutorapp.Database;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-
+import android.database.Cursor;
 /**
  * Created by Jacob on 16/10/2017.
  */
@@ -56,7 +56,7 @@ public class DBOpenHelper extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "tutor.db";
     private static final int DATABASE_VERSION = 2;
 
-    private static final String CLASS_CREATE = "CREATE TABLE "+TABLE_CLASSES+" " +
+    private static final String CLASS_CREATE = "CREATE TABLE IF NOT EXISTS "+TABLE_CLASSES+" " +
             "("+ CLASSES_CLASS_ID +" TEXT, " +
             CLASSES_DAY + " TEXT, " +
             CLASSES_STARTTIME + " TEXT, " +
@@ -69,7 +69,7 @@ public class DBOpenHelper extends SQLiteOpenHelper {
             "'W12A', 'Wed', '1200', '1400', 'TUTOR', 'ASB'), (" +
             "'W15A', 'Wed', '1500', '1700', 'TUTOR', 'QUAD')";
 
-    private static final String STUDENT_CREATE = "CREATE TABLE "+TABLE_STUDENTS+" " +
+    private static final String STUDENT_CREATE = "CREATE TABLE IF NOT EXISTS "+TABLE_STUDENTS+" " +
             "(" + STUDENTS_ZID + " TEXT, " +
             STUDENTS_FIRSTNAME + " TEXT, " +
             STUDENTS_SURNAME + " TEXT, " +
@@ -84,9 +84,11 @@ public class DBOpenHelper extends SQLiteOpenHelper {
             "'Z7654321', 'Jenny', 'Smith','???','W12A','???'), (" +
             "'Z5014884', 'James', 'Zhang','???','W15A','???'), (" +
             "'Z1111111', 'Johnny', 'Bravo','???','W15A','???'), (" +
-            "'Z9999999', 'Benji', 'Bioer','???','W15A','???')";
+            "'Z9999999', 'Benji', 'Bioer','???','W15A','???'), (" +
+            "'Z5014883', 'Yenni', 'Tim','???','W12A','???'), (" +
+            "'Z5014885', 'Yeye', 'Jiang','???','W15A','???')";
 
-    private static final String TUTORIAL_CREATE = "CREATE TABLE "+TABLE_TUTORIALS+" " +
+    private static final String TUTORIAL_CREATE = "CREATE TABLE IF NOT EXISTS "+TABLE_TUTORIALS+" " +
             "(" + TUTORIALS_ID + " TEXT, " +
             TUTORIALS_RAWID + " INT, " +
             TUTORIALS_DATE + " TEXT, " +
@@ -101,7 +103,7 @@ public class DBOpenHelper extends SQLiteOpenHelper {
             "'Tutorial 2', '04/10/2017', 'W15A'), (" +
             "'Tutorial 1', '27/09/2017', 'W15A')";
 
-    private static final String TUTORIAL_STUDENT_CREATE = "CREATE TABLE "+TABLE_STUDENT_TUTORIALS+" " +
+    private static final String TUTORIAL_STUDENT_CREATE = "CREATE TABLE IF NOT EXISTS "+TABLE_STUDENT_TUTORIALS+" " +
             "("+STUDENTS_TUTORIALS_TUTORIAL_ID+" TEXT, " +
             STUDENTS_TUTORIALS_ZID + " TEXT, " +
             STUDENTS_TUTORIALS_LATE + " INT, " +
@@ -113,20 +115,26 @@ public class DBOpenHelper extends SQLiteOpenHelper {
             "'Tutorial 1', 'Z5019998',0,0,2.0), (" +
             "'Tutorial 1', 'Z1234567',0,0,2.0), (" +
             "'Tutorial 1', 'Z7654321',0,0,2.0), (" +
+            "'Tutorial 1', 'Z5014883',0,0,2.0), (" +
             "'Tutorial 2', 'Z5019998',0,0,2.0), (" +
             "'Tutorial 2', 'Z1234567',1,0,2.0), (" +
             "'Tutorial 2', 'Z7654321',0,1,0.0), (" +
+            "'Tutorial 2', 'Z5014883',0,0,2.0), (" +
             "'Tutorial 3', 'Z5019998',0,0,2.0), (" +
             "'Tutorial 3', 'Z1234567',0,0,2.0), (" +
             "'Tutorial 3', 'Z7654321',0,0,2.0), (" +
+            "'Tutorial 3', 'Z5014883',0,0,2.0), (" +
             "'Tutorial 1', 'Z5014884',0,0,2.0), (" +
             "'Tutorial 1', 'Z1111111',0,0,2.0), (" +
             "'Tutorial 1', 'Z9999999',0,0,2.0), (" +
+            "'Tutorial 1', 'Z5014885',0,0,2.0), (" +
             "'Tutorial 2', 'Z5014884',0,0,2.0), (" +
             "'Tutorial 2', 'Z1111111',1,0,2.0), (" +
             "'Tutorial 2', 'Z9999999',0,2,0.0), (" +
+            "'Tutorial 2', 'Z5014885',0,0,2.0), (" +
             "'Tutorial 3', 'Z5014884',0,0,2.0), (" +
             "'Tutorial 3', 'Z1111111',0,0,2.0), (" +
+            "'Tutorial 3', 'Z5014885',0,0,2.0), (" +
             "'Tutorial 3', 'Z9999999',0,0,2.0)";
 
     public DBOpenHelper(Context context) {
@@ -137,13 +145,9 @@ public class DBOpenHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         //need to check if database already exists, if it doesn't, then execute the following:
         db.execSQL(CLASS_CREATE);
-        db.execSQL(DUMMY_CLASSES);
         db.execSQL(STUDENT_CREATE);
-        db.execSQL(DUMMY_STUDENTS);
-        db.execSQL(TUTORIAL_CREATE);
-        db.execSQL(DUMMY_TUTORIALS);
         db.execSQL(TUTORIAL_STUDENT_CREATE);
-        db.execSQL(DUMMY_TUTORIAL_STUDENTS);
+        db.execSQL(TUTORIAL_CREATE);
     }
 
     @Override
@@ -152,5 +156,11 @@ public class DBOpenHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
+    public void createDummyData(SQLiteDatabase db) {
+        db.execSQL(DUMMY_CLASSES);
+        db.execSQL(DUMMY_STUDENTS);
+        db.execSQL(DUMMY_TUTORIAL_STUDENTS);
+        db.execSQL(DUMMY_TUTORIALS);
+    }
 
 }

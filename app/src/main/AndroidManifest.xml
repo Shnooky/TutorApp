@@ -28,6 +28,10 @@
         <activity android:name=".Controllers.TutorialStudentList"/>
         <activity android:name=".Controllers.TutorialStudentEditor"/>
 
+        <activity android:name=".Controllers.NameGameManager"/>
+        <activity android:name=".Controllers.NameGameQuiz"/>
+        <activity android:name=".Controllers.NameGameScore"/>
+
         <provider
             android:authorities="com.example.xwc.tutorapp.classProvider"
             android:name=".Database.ClassProvider" >
