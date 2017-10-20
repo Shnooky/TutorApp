@@ -17,7 +17,7 @@
         android:fontFamily="cursive"
         android:text="Class Name"
         android:textAlignment="center"
-        android:textSize="30sp"
+        android:textSize="24sp"
         android:textStyle="bold|italic"
         android:typeface="sans"
         app:layout_constraintHorizontal_bias="0.0"
