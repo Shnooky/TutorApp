@@ -9,6 +9,7 @@ import android.Manifest;
 import com.example.xwc.tutorapp.Database.ClassProvider;
 import com.example.xwc.tutorapp.Database.DBOpenHelper;
 import com.example.xwc.tutorapp.Database.StudentProvider;
+import com.example.xwc.tutorapp.Database.StudentTutorialProvider;
 import com.example.xwc.tutorapp.Model.Class;
 import com.example.xwc.tutorapp.R;
 import android.content.pm.*;
@@ -109,9 +110,11 @@ public class StudentProfile extends AppCompatActivity {
 
         btnDelete.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Intent i = new Intent(getBaseContext(), StudentProfile.class);
+                String studentToDelete = txtZID.getText().toString();
+                getContentResolver().delete(StudentProvider.CONTENT_URI,DBOpenHelper.STUDENTS_ZID+"=?",new String[] {studentToDelete});
+                getContentResolver().delete(StudentTutorialProvider.CONTENT_URI,DBOpenHelper.STUDENTS_TUTORIALS_ZID+"=?",new String[] {studentToDelete});
+                Intent i = new Intent(getBaseContext(),StudentManager.class);
                 startActivity(i);
-
             }
         });
 
