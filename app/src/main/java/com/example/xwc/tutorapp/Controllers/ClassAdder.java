@@ -25,7 +25,7 @@ public class ClassAdder extends AppCompatActivity {
     private EditText txtCourse;
     private EditText txtStartTime;
     private EditText txtEndTime;
-    private EditText txtDay;
+    private Spinner txtDay;
     private EditText txtLocation;
     private Button btnDelete;
 
@@ -40,7 +40,13 @@ public class ClassAdder extends AppCompatActivity {
         txtCourse = (EditText) findViewById(R.id.txtCourse);
         txtStartTime = (EditText) findViewById(R.id.txtStartTime);
         txtEndTime = (EditText) findViewById(R.id.txtEndTime);
-        txtDay = (EditText) findViewById(R.id.txtDay);
+        txtDay = (Spinner) findViewById(R.id.txtDay);
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+                android.R.layout.simple_spinner_item, new String[] {
+                "Mon", "Tue", "Wed", "Thu", "Fri"
+        });
+        txtDay.setAdapter(adapter);
         txtLocation = (EditText) findViewById(R.id.txtLocation);
 
         Button add_class_button = (Button) findViewById(R.id.btnAddNewClass);
@@ -52,7 +58,7 @@ public class ClassAdder extends AppCompatActivity {
             public void onClick(View v) {
                 ContentValues insertValues = new ContentValues();
                 insertValues.put(DBOpenHelper.CLASSES_CLASS_ID, txtCourse.getText().toString());
-                insertValues.put(DBOpenHelper.CLASSES_DAY, txtDay.getText().toString());
+                insertValues.put(DBOpenHelper.CLASSES_DAY, txtDay.getSelectedItem().toString());
                 insertValues.put(DBOpenHelper.CLASSES_ENDTIME, txtEndTime.getText().toString());
                 insertValues.put(DBOpenHelper.CLASSES_STARTTIME, txtStartTime.getText().toString());
                 insertValues.put(DBOpenHelper.CLASSES_LOCATION, txtLocation.getText().toString());
@@ -88,7 +94,8 @@ public class ClassAdder extends AppCompatActivity {
             updating_class_id = intent.getStringExtra("CLASSID");
             // Fill in data from DB
             txtCourse.setText(intent.getStringExtra("CLASSID"));
-            txtDay.setText(intent.getStringExtra("DAY"));
+            int getIndex = determineDay(intent.getStringExtra("DAY"));
+            txtDay.setSelection(getIndex);
             txtStartTime.setText(intent.getStringExtra("STARTTIME"));
             txtEndTime.setText(intent.getStringExtra("ENDTIME"));
             txtLocation.setText(intent.getStringExtra("LOCATION"));
@@ -99,6 +106,28 @@ public class ClassAdder extends AppCompatActivity {
             updating_class_id = null;
         }
 
+    }
+
+    private int determineDay(String day) {
+        int returnDay = 0;
+        switch (day) {
+            case "Mon":
+                returnDay=0;
+                break;
+            case "Tue":
+                returnDay=1;
+                break;
+            case "Wed":
+                returnDay=2;
+                break;
+            case "Thu":
+                returnDay=3;
+                break;
+            case "Fri":
+                returnDay=4;
+                break;
+        }
+        return returnDay;
     }
 }
 

@@ -14,30 +14,32 @@
         android:layout_marginLeft="8dp"
         android:layout_marginRight="127dp"
         android:layout_marginTop="16dp"
+        android:fontFamily="cursive"
         android:text="Class Name"
         android:textAlignment="center"
-        android:textSize="24sp"
-        android:textStyle="bold"
+        android:textSize="30sp"
+        android:textStyle="bold|italic"
+        android:typeface="sans"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>
 
     <Button
-        android:background="@drawable/gradient_lightrose"
-        android:textColor="#ffff"
         android:id="@+id/rollHistory"
-        android:layout_width="257dp"
-        android:layout_height="79dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginTop="79dp"
+        android:layout_width="254dp"
+        android:layout_height="73dp"
+        android:background="@drawable/gradient_lightrose"
         android:text="@string/view_roll_history"
+        android:textColor="#ffff"
         android:textSize="18sp"
         android:textStyle="bold"
-        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginTop="24dp"
+        app:layout_constraintTop_toBottomOf="@+id/imageView2"
+        android:layout_marginRight="8dp"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ClassName" />
+        android:layout_marginLeft="8dp"
+        app:layout_constraintLeft_toLeftOf="parent"/>
 
     <Button
         android:background="@drawable/gradient_lightrose"
@@ -45,32 +47,43 @@
         android:id="@+id/newTut"
         android:layout_width="254dp"
         android:layout_height="73dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginTop="54dp"
         android:text="@string/start_a_new_tutorial"
         android:textSize="18sp"
         android:textStyle="bold"
+        android:layout_marginTop="29dp"
+        app:layout_constraintTop_toBottomOf="@+id/rollHistory"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/rollHistory" />
-
-    <Button
-        android:background="@drawable/gradient_lightrose"
-        android:textColor="#ffff"
-        android:id="@+id/editClass"
-        android:layout_width="254dp"
-        android:layout_height="74dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
-        android:layout_marginTop="54dp"
+        app:layout_constraintRight_toRightOf="parent"/>
+
+    <Button
+        android:id="@+id/editClass"
+        android:layout_width="254dp"
+        android:layout_height="73dp"
+        android:background="@drawable/gradient_lightrose"
         android:text="@string/edit_class"
+        android:textColor="#ffff"
         android:textSize="18sp"
         android:textStyle="bold"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginTop="29dp"
         app:layout_constraintTop_toBottomOf="@+id/newTut"
-        app:layout_constraintHorizontal_bias="0.504" />
+        android:layout_marginRight="8dp"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginLeft="8dp"
+        app:layout_constraintLeft_toLeftOf="parent"/>
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="201dp"
+        android:layout_height="215dp"
+        app:srcCompat="@drawable/classroom"
+        android:layout_marginTop="14dp"
+        app:layout_constraintTop_toBottomOf="@+id/ClassName"
+        android:layout_marginRight="8dp"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginLeft="8dp"
+        app:layout_constraintLeft_toLeftOf="parent"/>
 
 </android.support.constraint.ConstraintLayout>
 

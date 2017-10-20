@@ -18,7 +18,9 @@
         app:layout_constraintRight_toLeftOf="@+id/txtLocation"
         app:layout_constraintHorizontal_bias="0.487"
         app:layout_constraintTop_toTopOf="@+id/txtLocation"
-        android:layout_marginTop="8dp" />
+        android:layout_marginTop="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"/>
 
     <TextView
         android:id="@+id/textView11"
@@ -32,7 +34,9 @@
         app:layout_constraintRight_toLeftOf="@+id/txtEndTime"
         app:layout_constraintHorizontal_bias="0.487"
         app:layout_constraintTop_toTopOf="@+id/txtEndTime"
-        android:layout_marginTop="8dp" />
+        android:layout_marginTop="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"/>
 
     <TextView
         android:id="@+id/textView7"
@@ -46,7 +50,9 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toLeftOf="@+id/txtStartTime"
         app:layout_constraintTop_toTopOf="@+id/txtStartTime"
-        android:layout_marginTop="8dp" />
+        android:layout_marginTop="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"/>
 
     <TextView
         android:id="@+id/textView6"
@@ -60,7 +66,9 @@
         app:layout_constraintRight_toLeftOf="@+id/txtDay"
         app:layout_constraintHorizontal_bias="0.487"
         app:layout_constraintTop_toTopOf="@+id/txtDay"
-        android:layout_marginTop="12dp" />
+        android:layout_marginTop="12dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"/>
 
     <Button
         android:background="@drawable/gradient_lightrose"
@@ -72,7 +80,8 @@
         android:layout_marginLeft="29dp"
         android:text="Delete"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent" />
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginStart="29dp"/>
 
     <EditText
         android:id="@+id/txtLocation"
@@ -81,14 +90,13 @@
         android:layout_marginEnd="28dp"
 
         android:layout_marginRight="28dp"
-        android:layout_marginStart="28dp"
 
-        android:hint="ASB 216"
+        android:hint="i.e. ASB 216"
         android:inputType="textPersonName"
         app:layout_constraintBottom_toTopOf="@+id/btnAddNewClass"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtEndTime"
-        tools:layout_editor_absoluteX="115dp" />
+        />
 
     <EditText
         android:id="@+id/txtEndTime"
@@ -97,14 +105,13 @@
         android:layout_marginEnd="28dp"
 
 
-        android:layout_marginRight="27dp"
-        android:layout_marginStart="28dp"
-        android:hint="3:00 PM"
+        android:layout_marginRight="28dp"
+        android:hint="i.e. 1400"
         android:inputType="textPersonName"
         app:layout_constraintBottom_toTopOf="@+id/txtLocation"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtStartTime"
-        tools:layout_editor_absoluteX="118dp" />
+        />
 
     <EditText
         android:id="@+id/txtStartTime"
@@ -114,30 +121,14 @@
         android:layout_marginEnd="28dp"
 
         android:layout_marginRight="28dp"
-        android:layout_marginStart="28dp"
 
-        android:hint="1:00 PM"
+        android:hint="i.e. 1200"
 
         android:inputType="textPersonName"
         app:layout_constraintBottom_toTopOf="@+id/txtEndTime"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtDay"
-        tools:layout_editor_absoluteX="119dp" />
-
-    <EditText
-        android:id="@+id/txtDay"
-        android:layout_width="239dp"
-        android:layout_height="42dp"
-        android:layout_marginEnd="28dp"
-
-        android:layout_marginRight="28dp"
-        android:layout_marginStart="28dp"
-        android:hint="Monday"
-        android:inputType="textPersonName"
-        app:layout_constraintBottom_toTopOf="@+id/txtStartTime"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtCourse"
-        tools:layout_editor_absoluteX="117dp" />
+        />
 
     <EditText
         android:id="@+id/txtCourse"
@@ -146,13 +137,12 @@
         android:layout_marginEnd="28dp"
 
         android:layout_marginRight="28dp"
-        android:layout_marginStart="28dp"
-        android:hint="INFS1609_A"
+        android:hint="i.e. M12A"
         android:inputType="textPersonName"
         app:layout_constraintBottom_toTopOf="@+id/txtDay"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:layout_editor_absoluteX="115dp" />
+        />
 
     <Button
         android:background="@drawable/gradient_lightrose"
@@ -164,7 +154,8 @@
         android:layout_marginRight="28dp"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginBottom="37dp" />
+        android:layout_marginBottom="37dp"
+        android:layout_marginEnd="28dp"/>
 
     <TextView
         android:id="@+id/textView3"
@@ -172,12 +163,25 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
-        android:text="Course ID"
+        android:layout_marginTop="8dp"
+        android:text="Class Section"
         android:textStyle="bold"
+        app:layout_constraintHorizontal_bias="0.487"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toLeftOf="@+id/txtCourse"
-        app:layout_constraintHorizontal_bias="0.487"
         app:layout_constraintTop_toTopOf="@+id/txtCourse"
-        android:layout_marginTop="8dp" />
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"/>
+
+    <Spinner
+        android:id="@+id/txtDay"
+        android:layout_width="239dp"
+        android:layout_height="42dp"
+        android:layout_marginEnd="28dp"
+        android:layout_marginRight="28dp"
+        android:inputType="textPersonName"
+        app:layout_constraintBottom_toTopOf="@+id/txtStartTime"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtCourse"/>
 
 </android.support.constraint.ConstraintLayout>
