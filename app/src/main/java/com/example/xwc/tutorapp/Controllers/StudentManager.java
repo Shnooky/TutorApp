@@ -73,8 +73,8 @@ public class StudentManager extends AppCompatActivity {
         btnAdd.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Intent i = new Intent(getBaseContext(), StudentProfile.class);
+                i.putExtra("HideGrades",true);
                 startActivity(i);
-
             }
         });
 

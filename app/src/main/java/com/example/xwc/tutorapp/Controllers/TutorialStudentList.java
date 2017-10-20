@@ -5,8 +5,10 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.widget.*;
 import android.content.Intent;
+
 import com.example.xwc.tutorapp.Adapters.ClassAdapter;
 import com.example.xwc.tutorapp.Adapters.TutorialStudentAdapter;
 import com.example.xwc.tutorapp.Database.ClassProvider;
@@ -18,8 +20,10 @@ import com.example.xwc.tutorapp.Model.Class;
 import com.example.xwc.tutorapp.Model.StudentTutorial;
 import com.example.xwc.tutorapp.Model.Tutorial;
 import com.example.xwc.tutorapp.R;
+
 import android.view.View;
 import android.database.Cursor;
+
 import java.util.Date;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -29,6 +33,7 @@ import java.util.ArrayList;
  */
 
 public class TutorialStudentList extends AppCompatActivity {
+    private FloatingActionButton delete_tutorial_button;
     ArrayList<StudentTutorial> students = new ArrayList<>();
     ListView studentsLV;
     private String currClass = null;
@@ -36,7 +41,7 @@ public class TutorialStudentList extends AppCompatActivity {
     private String currentClass = null;
 
     @Override
-    public void onResume(){
+    public void onResume() {
         super.onResume();
         if (currTutorialID == null || currClass == null) {
             return;
@@ -58,7 +63,7 @@ public class TutorialStudentList extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
                 StudentTutorial s = students.get(position);
-                Intent i = new Intent(getBaseContext(),TutorialStudentEditor.class);
+                Intent i = new Intent(getBaseContext(), TutorialStudentEditor.class);
                 i.putExtra("TUTORIALID", s.getmTutorialID());
                 i.putExtra("ZID", s.getMzID());
                 i.putExtra("LATE", s.ismLate());
@@ -68,6 +73,9 @@ public class TutorialStudentList extends AppCompatActivity {
                 startActivity(i);
             }
         });
+
+        delete_tutorial_button = (FloatingActionButton) findViewById(R.id.delete_tutorial_button);
+
 
         Intent i = getIntent();
         currClass = i.getStringExtra("CLASSID");
@@ -83,7 +91,7 @@ public class TutorialStudentList extends AppCompatActivity {
                     currClass
             });
 
-            if (c!= null && c.moveToNext()) {
+            if (c != null && c.moveToNext()) {
                 // get new RAW ID
                 int rawID = c.getInt(0);
                 String tutorialDate = new SimpleDateFormat("dd/MM/yyyy").format(new Date());
@@ -93,17 +101,17 @@ public class TutorialStudentList extends AppCompatActivity {
                 insertValues.put(DBOpenHelper.TUTORIALS_CLASS, currClass);
                 insertValues.put(DBOpenHelper.TUTORIALS_DATE, tutorialDate);
                 insertValues.put(DBOpenHelper.TUTORIALS_ID, tutorialID);
-                insertValues.put(DBOpenHelper.TUTORIALS_RAWID, rawID+1);
+                insertValues.put(DBOpenHelper.TUTORIALS_RAWID, rawID + 1);
                 getContentResolver().insert(TutorialProvider.CONTENT_URI, insertValues);
 
                 // Create new tutorial-student recordset
                 c = getContentResolver().query(StudentProvider.CONTENT_URI,
                         DBOpenHelper.STUDENTS_ALL_COLUMNS,
-                        DBOpenHelper.STUDENTS_CLASS + " IN (SELECT "+DBOpenHelper.CLASSES_CLASS_ID+" from "+
-                                DBOpenHelper.TABLE_CLASSES + " where "+DBOpenHelper.CLASSES_CLASS_ID+" = ?)",
-                        new String[] {currClass}, null);
+                        DBOpenHelper.STUDENTS_CLASS + " IN (SELECT " + DBOpenHelper.CLASSES_CLASS_ID + " from " +
+                                DBOpenHelper.TABLE_CLASSES + " where " + DBOpenHelper.CLASSES_CLASS_ID + " = ?)",
+                        new String[]{currClass}, null);
 
-                while (c!= null && c.moveToNext()) {
+                while (c != null && c.moveToNext()) {
                     insertValues = new ContentValues();
                     insertValues.put(DBOpenHelper.STUDENTS_TUTORIALS_ZID, c.getString(c.getColumnIndex(DBOpenHelper.STUDENTS_ZID)));
                     insertValues.put(DBOpenHelper.STUDENTS_TUTORIALS_ABSENT, "false");
@@ -116,11 +124,42 @@ public class TutorialStudentList extends AppCompatActivity {
             }
         }
         loadStudents();
+
+        delete_tutorial_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Class returnClass = new Class();
+                DBOpenHelper helper = new DBOpenHelper(getBaseContext());
+                SQLiteDatabase database = helper.getWritableDatabase();
+                getContentResolver().delete(TutorialProvider.CONTENT_URI, DBOpenHelper.TUTORIALS_ID + " = ?" + " AND " + DBOpenHelper.TUTORIALS_CLASS + " = ?",
+                        new String[]{currTutorialID, currentClass});
+                database.execSQL("DELETE FROM STUDENT_TUTORIALS WHERE TUTORIAL_ID = ? AND ZID IN (SELECT ZID FROM STUDENTS WHERE CLASS = ?)", new String[]{currTutorialID, currentClass});
+                Cursor c = getContentResolver().query(ClassProvider.CONTENT_URI, DBOpenHelper.CLASSES_ALL_COLUMNS, DBOpenHelper.CLASSES_CLASS_ID + "=?", new String[]{currentClass}, null);
+                while (c != null && c.moveToNext()) {
+                 returnClass =  new Class(currentClass,
+                            c.getString(c.getColumnIndex(DBOpenHelper.CLASSES_DAY)),
+                            c.getString(c.getColumnIndex(DBOpenHelper.CLASSES_STARTTIME)),
+                            c.getString(c.getColumnIndex(DBOpenHelper.CLASSES_ENDTIME)),
+                            c.getString(c.getColumnIndex(DBOpenHelper.CLASSES_TUTOR)),
+                            c.getString(c.getColumnIndex(DBOpenHelper.CLASSES_LOCATION)),
+                    0,0);
+                }
+                finish();
+                Intent i = new Intent(getBaseContext(), ClassMenu.class);
+                i.putExtra("CLASSID", currentClass);
+                i.putExtra("DAY", returnClass.getDay());
+                i.putExtra("STARTTIME", returnClass.getStartTime());
+                i.putExtra("ENDTIME", returnClass.getEndTime());
+                i.putExtra("LOCATION", returnClass.getLocation());
+                startActivity(i);
+            }
+
+        });
     }
 
     private void loadStudents() {
         Intent intent = getIntent();
-        if(intent.hasExtra("TUTORIAL_CLASS")) {
+        if (intent.hasExtra("TUTORIAL_CLASS")) {
             currentClass = intent.getStringExtra("TUTORIAL_CLASS");
         } else {
             currentClass = currClass;
@@ -133,12 +172,12 @@ public class TutorialStudentList extends AppCompatActivity {
 
         students.clear();
 
-        while (c!= null && c.moveToNext()) {
+        while (c != null && c.moveToNext()) {
             Cursor c2 = getContentResolver().query(StudentProvider.CONTENT_URI,
                     DBOpenHelper.STUDENTS_ALL_COLUMNS,
                     "ZID = ? AND CLASS = ?",
-                    new String[]{c.getString(c.getColumnIndex(DBOpenHelper.STUDENTS_TUTORIALS_ZID)),currentClass}, null);
-            if (c2!= null && c2.moveToNext()) {
+                    new String[]{c.getString(c.getColumnIndex(DBOpenHelper.STUDENTS_TUTORIALS_ZID)), currentClass}, null);
+            if (c2 != null && c2.moveToNext()) {
 
                 String studentFirstName = c2.getString(c2.getColumnIndex(DBOpenHelper.STUDENTS_FIRSTNAME));
                 String studentLastName = c2.getString(c2.getColumnIndex(DBOpenHelper.STUDENTS_SURNAME));

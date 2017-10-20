@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -14,6 +15,10 @@ import com.example.xwc.tutorapp.Model.Class;
 
 import com.example.xwc.tutorapp.Model.Tutorial;
 import com.example.xwc.tutorapp.R;
+
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 
 public class ClassMenu extends AppCompatActivity implements View.OnClickListener {
@@ -27,6 +32,12 @@ public class ClassMenu extends AppCompatActivity implements View.OnClickListener
     private Button editClass;
 
     private Class thisClass;
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        reEstablish();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,11 +67,7 @@ public class ClassMenu extends AppCompatActivity implements View.OnClickListener
                     "-" + thisClass.getEndTime() + " " + thisClass.getLocation());
         }
 
-        viewRollHistory.setEnabled(false);
-        String[] IdToGet = {thisClass.getClassId()};
-        if(tutorialsExist(IdToGet)) {
-            viewRollHistory.setEnabled(true);
-        }
+      reEstablish();
 
     }
 
@@ -104,6 +111,14 @@ public class ClassMenu extends AppCompatActivity implements View.OnClickListener
         }
         if (intent != null) {
             startActivity(intent);
+        }
+    }
+
+    private void reEstablish() {
+        viewRollHistory.setEnabled(false);
+        String[] IdToGet = {thisClass.getClassId()};
+        if(tutorialsExist(IdToGet)) {
+            viewRollHistory.setEnabled(true);
         }
     }
 

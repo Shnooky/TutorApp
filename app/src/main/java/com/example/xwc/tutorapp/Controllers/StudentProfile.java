@@ -9,6 +9,7 @@ import android.Manifest;
 import com.example.xwc.tutorapp.Database.ClassProvider;
 import com.example.xwc.tutorapp.Database.DBOpenHelper;
 import com.example.xwc.tutorapp.Database.StudentProvider;
+import com.example.xwc.tutorapp.Database.StudentTutorialProvider;
 import com.example.xwc.tutorapp.Model.Class;
 import com.example.xwc.tutorapp.R;
 import android.content.pm.*;
@@ -29,6 +30,7 @@ import android.graphics.Bitmap.CompressFormat;
 public class StudentProfile extends AppCompatActivity {
     private Spinner cboCurrentClass;
     private TextView lblGrade;
+    private TextView gradeLabel;
     private EditText txtZID;
     private EditText txtFirstName;
     private EditText txtSurname;
@@ -51,6 +53,7 @@ public class StudentProfile extends AppCompatActivity {
         // Get references to UI elements
         cboCurrentClass = (Spinner) findViewById(R.id.cboStudentClass);
         lblGrade = (TextView) findViewById(R.id.lblStudentGrade);
+        gradeLabel = (TextView) findViewById(R.id.gradeLabel);
 
         txtZID = (EditText) findViewById(R.id.txtStudentZID);
         txtFirstName = (EditText) findViewById(R.id.txtStudentFirstname);
@@ -109,9 +112,11 @@ public class StudentProfile extends AppCompatActivity {
 
         btnDelete.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Intent i = new Intent(getBaseContext(), StudentProfile.class);
+                String studentToDelete = txtZID.getText().toString();
+                getContentResolver().delete(StudentProvider.CONTENT_URI,DBOpenHelper.STUDENTS_ZID+"=?",new String[] {studentToDelete});
+                getContentResolver().delete(StudentTutorialProvider.CONTENT_URI,DBOpenHelper.STUDENTS_TUTORIALS_ZID+"=?",new String[] {studentToDelete});
+                Intent i = new Intent(getBaseContext(),StudentManager.class);
                 startActivity(i);
-
             }
         });
 
@@ -149,6 +154,13 @@ public class StudentProfile extends AppCompatActivity {
             btnUpdate.setText("Add");
             btnDelete.setVisibility(View.INVISIBLE);
             lblGrade.setText("n/a");
+        }
+
+        gradeLabel.setVisibility(View.VISIBLE);
+        lblGrade.setVisibility(View.VISIBLE);
+        if(i.hasExtra("HideGrades")) {
+            lblGrade.setVisibility(View.INVISIBLE);
+            gradeLabel.setVisibility(View.INVISIBLE);
         }
     }
 
