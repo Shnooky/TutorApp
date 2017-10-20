@@ -12,7 +12,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-
+import java.math.*;
 import com.example.xwc.tutorapp.Model.Class;
 import com.example.xwc.tutorapp.R;
 
@@ -39,10 +39,10 @@ public class ClassAdapter extends ArrayAdapter<Class> {
 
 
         TextView gradeView = (TextView) listItemView.findViewById(R.id.avGrade);
-        gradeView.setText(Double.toString(currentClass.getAverageGrade()));
+        gradeView.setText(Double.toString(Math.round(currentClass.getAverageGrade()*100)/100.0));
 
         TextView numStuView = (TextView) listItemView.findViewById(R.id.numberStudents);
-        gradeView.setText(Integer.toString(currentClass.getNumStu()));
+        numStuView.setText(Integer.toString(currentClass.getNumStu()));
 
         ImageView image = (ImageView) listItemView.findViewById(R.id.classImage);
         Random rn = new Random();

@@ -80,8 +80,11 @@ public class ClassList extends AppCompatActivity {
     }
 
     private void loadClasses() {
-        Cursor c = getContentResolver().query(ClassProvider.CONTENT_URI,
-                DBOpenHelper.CLASSES_ALL_COLUMNS, null,null, null);
+        Cursor c = DBOpenHelper.runSQL("select CLASSES.*, COUNT(DISTINCT STUDENTS.ZID) as 'TOTAL', " +
+                "AVG(STUDENT_TUTORIALS.MARK) AS 'AVGMARK' from CLASSES INNER JOIN STUDENTS" +
+                " ON (CLASSES.CLASS_ID = STUDENTS.CLASS) INNER JOIN STUDENT_TUTORIALS ON " +
+                "(STUDENTS.ZID = STUDENT_TUTORIALS.ZID) GROUP BY CLASSES.CLASS_ID", null);
+
         classes.clear();
         while (c!= null && c.moveToNext()) {
             classes.add(new Class(c.getString(c.getColumnIndex(DBOpenHelper.CLASSES_CLASS_ID)),
@@ -90,8 +93,8 @@ public class ClassList extends AppCompatActivity {
                     c.getString(c.getColumnIndex(DBOpenHelper.CLASSES_ENDTIME)),
                     c.getString(c.getColumnIndex(DBOpenHelper.CLASSES_TUTOR)),
                     c.getString(c.getColumnIndex(DBOpenHelper.CLASSES_LOCATION)),
-                    22,
-                    0));
+                    c.getInt(c.getColumnIndex("TOTAL")),
+                    c.getDouble(c.getColumnIndex("AVGMARK"))));
         }
 
         // Fill list

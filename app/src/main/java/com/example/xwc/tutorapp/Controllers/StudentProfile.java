@@ -156,11 +156,20 @@ public class StudentProfile extends AppCompatActivity {
             lblGrade.setText("n/a");
         }
 
-        gradeLabel.setVisibility(View.VISIBLE);
-        lblGrade.setVisibility(View.VISIBLE);
+
         if(i.hasExtra("HideGrades")) {
             lblGrade.setVisibility(View.INVISIBLE);
             gradeLabel.setVisibility(View.INVISIBLE);
+        } else {
+            gradeLabel.setVisibility(View.VISIBLE);
+            lblGrade.setVisibility(View.VISIBLE);
+            // Calculate avg grade
+            Cursor cc = DBOpenHelper.runSQL("select AVG(STUDENT_TUTORIALS.MARK) AS 'AVGMARK' FROM STUDENT_TUTORIALS" +
+                    " INNER JOIN STUDENTS ON (STUDENTS.ZID = STUDENT_TUTORIALS.ZID) WHERE " +
+                    "STUDENTS.ZID = ?", new String[]{i.getStringExtra("ZID")});
+            if (cc!= null && cc.moveToNext()) {
+                lblGrade.setText(cc.getString(cc.getColumnIndex("AVGMARK")));
+            }
         }
     }
 

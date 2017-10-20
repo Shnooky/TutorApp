@@ -13,19 +13,19 @@ import android.widget.Button;
 import android.database.Cursor;
 import com.example.xwc.tutorapp.Database.DBOpenHelper;
 import com.example.xwc.tutorapp.R;
+import android.content.Context;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
-
+    public static Context appContext;
     private Button mClassList;
-
     private Button mStudentProfile;
-
     private Button mNameGame;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        appContext = getApplicationContext();
         //loadDummyData();
         mClassList = (Button) findViewById(R.id.classes);
         mClassList.setOnClickListener(this);
