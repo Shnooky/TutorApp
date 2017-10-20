@@ -37,7 +37,7 @@ public class ClassList extends AppCompatActivity {
 
         // Grab references to UI elements
         classesListView = (ListView) findViewById(R.id.classlist);
-        FloatingActionButton add_class_button = (FloatingActionButton) findViewById(R.id.add_class_button);
+        add_class_button = (FloatingActionButton) findViewById(R.id.add_class_button);
 
         // Set events for UI elements
         add_class_button.setOnClickListener(new View.OnClickListener() {

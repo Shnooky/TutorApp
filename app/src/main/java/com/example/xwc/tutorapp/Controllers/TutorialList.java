@@ -38,6 +38,12 @@ public class TutorialList extends AppCompatActivity {
     }
 
     @Override
+    public void onRestart() {
+        super.onRestart();
+        loadTutorials();
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.tutorial_activity);
@@ -62,6 +68,7 @@ public class TutorialList extends AppCompatActivity {
             }
         });
 
+        loadTutorials();
 
     }
 
