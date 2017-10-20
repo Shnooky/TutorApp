@@ -30,6 +30,7 @@ import android.graphics.Bitmap.CompressFormat;
 public class StudentProfile extends AppCompatActivity {
     private Spinner cboCurrentClass;
     private TextView lblGrade;
+    private TextView gradeLabel;
     private EditText txtZID;
     private EditText txtFirstName;
     private EditText txtSurname;
@@ -52,6 +53,7 @@ public class StudentProfile extends AppCompatActivity {
         // Get references to UI elements
         cboCurrentClass = (Spinner) findViewById(R.id.cboStudentClass);
         lblGrade = (TextView) findViewById(R.id.lblStudentGrade);
+        gradeLabel = (TextView) findViewById(R.id.gradeLabel);
 
         txtZID = (EditText) findViewById(R.id.txtStudentZID);
         txtFirstName = (EditText) findViewById(R.id.txtStudentFirstname);
@@ -152,6 +154,13 @@ public class StudentProfile extends AppCompatActivity {
             btnUpdate.setText("Add");
             btnDelete.setVisibility(View.INVISIBLE);
             lblGrade.setText("n/a");
+        }
+
+        gradeLabel.setVisibility(View.VISIBLE);
+        lblGrade.setVisibility(View.VISIBLE);
+        if(i.hasExtra("HideGrades")) {
+            lblGrade.setVisibility(View.INVISIBLE);
+            gradeLabel.setVisibility(View.INVISIBLE);
         }
     }
 
