@@ -4,6 +4,9 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.database.Cursor;
+
+import com.example.xwc.tutorapp.Controllers.MainActivity;
+
 /**
  * Created by Jacob on 16/10/2017.
  */
@@ -163,4 +166,9 @@ public class DBOpenHelper extends SQLiteOpenHelper {
         db.execSQL(DUMMY_TUTORIALS);
     }
 
+    public static Cursor runSQL(String sql, String[] args) {
+        DBOpenHelper helper = new DBOpenHelper(MainActivity.appContext);
+        SQLiteDatabase database = helper.getWritableDatabase();
+        return database.rawQuery(sql, args);
+    }
 }
