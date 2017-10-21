@@ -1,17 +1,21 @@
 package com.example.xwc.tutorapp.Controllers;
+
 import java.util.ArrayList;
+
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.content.Intent;
 import android.Manifest;
+
 import com.example.xwc.tutorapp.Database.ClassProvider;
 import com.example.xwc.tutorapp.Database.DBOpenHelper;
 import com.example.xwc.tutorapp.Database.StudentProvider;
 import com.example.xwc.tutorapp.Database.StudentTutorialProvider;
 import com.example.xwc.tutorapp.Model.Class;
 import com.example.xwc.tutorapp.R;
+
 import android.content.pm.*;
 import android.os.Build;
 import android.util.Log;
@@ -19,12 +23,17 @@ import android.view.View;
 import android.widget.*;
 import android.graphics.*;
 import android.net.Uri;
+
 import org.w3c.dom.Text;
+
 import java.io.File;
+
 import android.os.Environment;
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.io.ByteArrayOutputStream;
+
 import android.graphics.Bitmap.CompressFormat;
 
 public class StudentProfile extends AppCompatActivity {
@@ -68,15 +77,15 @@ public class StudentProfile extends AppCompatActivity {
         // Set up UI
 
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
-                android.R.layout.simple_spinner_item, new String[] {
+                android.R.layout.simple_spinner_item, new String[]{
                 "Low", "Moderate", "High", "Exceptional"
         });
         cboSkill.setAdapter(adapter);
 
         ArrayList<String> classes = new ArrayList<>();
         Cursor c = getContentResolver().query(ClassProvider.CONTENT_URI,
-                DBOpenHelper.CLASSES_ALL_COLUMNS, null,null, null);
-        while (c!= null && c.moveToNext()) {
+                DBOpenHelper.CLASSES_ALL_COLUMNS, null, null, null);
+        while (c != null && c.moveToNext()) {
             classes.add(c.getString(c.getColumnIndex(DBOpenHelper.CLASSES_CLASS_ID)));
         }
         cboCurrentClass.setAdapter(
@@ -87,35 +96,41 @@ public class StudentProfile extends AppCompatActivity {
 
         btnUpdate.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                ContentValues insertValues = new ContentValues();
-                insertValues.put(DBOpenHelper.STUDENTS_ZID, txtZID.getText().toString());
-                insertValues.put(DBOpenHelper.STUDENTS_CLASS, cboCurrentClass.getSelectedItem().toString());
-                insertValues.put(DBOpenHelper.STUDENTS_FIRSTNAME, txtFirstName.getText().toString());
-                insertValues.put(DBOpenHelper.STUDENTS_SURNAME, txtSurname.getText().toString());
-                insertValues.put(DBOpenHelper.STUDENTS_SKILL, cboSkill.getSelectedItem().toString());
-                if (student_photo != null) {
-                    insertValues.put(DBOpenHelper.STUDENTS_PICTURE, getBytes(student_photo));
+                String error = validateInput();
+                if (error.isEmpty()) {
+                    ContentValues insertValues = new ContentValues();
+                    insertValues.put(DBOpenHelper.STUDENTS_ZID, txtZID.getText().toString());
+                    insertValues.put(DBOpenHelper.STUDENTS_CLASS, cboCurrentClass.getSelectedItem().toString());
+                    insertValues.put(DBOpenHelper.STUDENTS_FIRSTNAME, txtFirstName.getText().toString());
+                    insertValues.put(DBOpenHelper.STUDENTS_SURNAME, txtSurname.getText().toString());
+                    insertValues.put(DBOpenHelper.STUDENTS_SKILL, cboSkill.getSelectedItem().toString());
+                    if (student_photo != null) {
+                        insertValues.put(DBOpenHelper.STUDENTS_PICTURE, getBytes(student_photo));
+                    }
+
+                    if (updating_student != null) {
+                        // update existing student
+                        getContentResolver().update(StudentProvider.CONTENT_URI,
+                                insertValues, DBOpenHelper.STUDENTS_ZID + " = ?", new String[]{updating_student});
+                    } else {
+                        // add new student
+                        getContentResolver().insert(StudentProvider.CONTENT_URI,
+                                insertValues);
+                    }
+                    finish();
+                } else {
+                    Toast.makeText(getApplicationContext(), error, Toast.LENGTH_SHORT).show();
                 }
 
-                if (updating_student != null) {
-                    // update existing student
-                    getContentResolver().update(StudentProvider.CONTENT_URI,
-                            insertValues, DBOpenHelper.STUDENTS_ZID + " = ?", new String[] {updating_student});
-                } else {
-                    // add new student
-                    getContentResolver().insert(StudentProvider.CONTENT_URI,
-                            insertValues);
-                }
-                finish();
             }
         });
 
         btnDelete.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 String studentToDelete = txtZID.getText().toString();
-                getContentResolver().delete(StudentProvider.CONTENT_URI,DBOpenHelper.STUDENTS_ZID+"=?",new String[] {studentToDelete});
-                getContentResolver().delete(StudentTutorialProvider.CONTENT_URI,DBOpenHelper.STUDENTS_TUTORIALS_ZID+"=?",new String[] {studentToDelete});
-                Intent i = new Intent(getBaseContext(),StudentManager.class);
+                getContentResolver().delete(StudentProvider.CONTENT_URI, DBOpenHelper.STUDENTS_ZID + "=?", new String[]{studentToDelete});
+                getContentResolver().delete(StudentTutorialProvider.CONTENT_URI, DBOpenHelper.STUDENTS_TUTORIALS_ZID + "=?", new String[]{studentToDelete});
+                Intent i = new Intent(getBaseContext(), StudentManager.class);
                 startActivity(i);
             }
         });
@@ -139,7 +154,7 @@ public class StudentProfile extends AppCompatActivity {
             txtFirstName.setText(i.getStringExtra("FIRSTNAME").toString());
             txtSurname.setText(i.getStringExtra("SURNAME").toString());
             txtZID.setText(i.getStringExtra("ZID").toString());
-            selectSpinnerValue (cboCurrentClass, i.getStringExtra("CLASS").toString());
+            selectSpinnerValue(cboCurrentClass, i.getStringExtra("CLASS").toString());
             txtFirstName.setText(i.getStringExtra("FIRSTNAME").toString());
             selectSpinnerValue(cboSkill, i.getStringExtra("SKILL").toString());
             updating_student = i.getStringExtra("ZID").toString();
@@ -157,7 +172,7 @@ public class StudentProfile extends AppCompatActivity {
         }
 
 
-        if(i.hasExtra("HideGrades")) {
+        if (i.hasExtra("HideGrades")) {
             lblGrade.setVisibility(View.INVISIBLE);
             gradeLabel.setVisibility(View.INVISIBLE);
         } else {
@@ -167,17 +182,29 @@ public class StudentProfile extends AppCompatActivity {
             Cursor cc = DBOpenHelper.runSQL("select AVG(STUDENT_TUTORIALS.MARK) AS 'AVGMARK' FROM STUDENT_TUTORIALS" +
                     " INNER JOIN STUDENTS ON (STUDENTS.ZID = STUDENT_TUTORIALS.ZID) WHERE " +
                     "STUDENTS.ZID = ?", new String[]{i.getStringExtra("ZID")});
-            if (cc!= null && cc.moveToNext()) {
+            if (cc != null && cc.moveToNext()) {
                 lblGrade.setText(cc.getString(cc.getColumnIndex("AVGMARK")));
             }
         }
     }
 
-    private void selectSpinnerValue(Spinner spinner, String myString)
-    {
+    private String validateInput() {
+        String error = "";
+        String checkZID = txtZID.getText().toString();
+        String checkFirstname = txtFirstName.getText().toString();
+        String checkSurname = txtSurname.getText().toString();
+        if (checkZID.length()!=8 || (!Character.toString(checkZID.charAt(0)).equals("Z") && !Character.toString(checkZID.charAt(0)).equals("z"))) {
+            error = "Please ensure a valid ZID is entered (z#######)";
+        } else if (checkFirstname.isEmpty() || checkSurname.isEmpty()) {
+            error = "Please ensure a firstname and surname is entered";
+        }
+        return error;
+    }
+
+    private void selectSpinnerValue(Spinner spinner, String myString) {
         int index = 0;
-        for(int i = 0; i < spinner.getCount(); i++){
-            if(spinner.getItemAtPosition(i).toString().equals(myString)){
+        for (int i = 0; i < spinner.getCount(); i++) {
+            if (spinner.getItemAtPosition(i).toString().equals(myString)) {
                 spinner.setSelection(i);
                 break;
             }

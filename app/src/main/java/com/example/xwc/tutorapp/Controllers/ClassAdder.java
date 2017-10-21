@@ -56,25 +56,29 @@ public class ClassAdder extends AppCompatActivity {
         // Set events for UI elements
         add_class_button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                ContentValues insertValues = new ContentValues();
-                insertValues.put(DBOpenHelper.CLASSES_CLASS_ID, txtCourse.getText().toString());
-                insertValues.put(DBOpenHelper.CLASSES_DAY, txtDay.getSelectedItem().toString());
-                insertValues.put(DBOpenHelper.CLASSES_ENDTIME, txtEndTime.getText().toString());
-                insertValues.put(DBOpenHelper.CLASSES_STARTTIME, txtStartTime.getText().toString());
-                insertValues.put(DBOpenHelper.CLASSES_LOCATION, txtLocation.getText().toString());
-                // TODO: Make name editable
-                insertValues.put(DBOpenHelper.CLASSES_TUTOR, "Jacob");
-                if (updating_class_id != null) {
-                    getContentResolver().update(ClassProvider.CONTENT_URI,
-                            insertValues, DBOpenHelper.CLASSES_CLASS_ID + " = ?", new String[] {updating_class_id});
+                String error = validateInput();
+                if(error.isEmpty()) {
+                    ContentValues insertValues = new ContentValues();
+                    insertValues.put(DBOpenHelper.CLASSES_CLASS_ID, txtCourse.getText().toString());
+                    insertValues.put(DBOpenHelper.CLASSES_DAY, txtDay.getSelectedItem().toString());
+                    insertValues.put(DBOpenHelper.CLASSES_ENDTIME, txtEndTime.getText().toString());
+                    insertValues.put(DBOpenHelper.CLASSES_STARTTIME, txtStartTime.getText().toString());
+                    insertValues.put(DBOpenHelper.CLASSES_LOCATION, txtLocation.getText().toString());
+                    // TODO: Make name editable
+                    insertValues.put(DBOpenHelper.CLASSES_TUTOR, "Jacob");
+                    if (updating_class_id != null) {
+                        getContentResolver().update(ClassProvider.CONTENT_URI,
+                                insertValues, DBOpenHelper.CLASSES_CLASS_ID + " = ?", new String[]{updating_class_id});
+                    } else {
+                        getContentResolver().insert(ClassProvider.CONTENT_URI,
+                                insertValues);
+                    }
+                    finish();
+                    Intent intent = new Intent(getBaseContext(), ClassList.class);
+                    startActivity(intent);
                 } else {
-                    getContentResolver().insert(ClassProvider.CONTENT_URI,
-                            insertValues);
+                    Toast.makeText(getApplicationContext(),error,Toast.LENGTH_LONG).show();
                 }
-                finish();
-                Intent intent = new Intent(getBaseContext(),ClassList.class);
-                startActivity(intent);
-
             }
         });
 
@@ -106,6 +110,20 @@ public class ClassAdder extends AppCompatActivity {
             updating_class_id = null;
         }
 
+    }
+
+    private String validateInput() {
+        String error="";
+        String checkID = txtCourse.getText().toString();
+        String checkStart = txtStartTime.getText().toString();
+        String checkEnd = txtEndTime.getText().toString();
+        String checkLocation = txtLocation.getText().toString();
+        if(checkStart.length()!=4||checkEnd.length()!=4) {
+            error = "Format should be 4 digit 24-hour time: i.e. 1200 for 12pm";
+        } else if(checkLocation.isEmpty()) {
+            error = "Please enter a location";
+        }
+        return error;
     }
 
     private int determineDay(String day) {
