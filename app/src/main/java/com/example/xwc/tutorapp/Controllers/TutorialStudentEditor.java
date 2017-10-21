@@ -122,6 +122,21 @@ public class TutorialStudentEditor extends AppCompatActivity {
 
         });
 
+        btnConsultation.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Cursor c = getContentResolver().query(StudentProvider.CONTENT_URI,
+                        DBOpenHelper.STUDENTS_ALL_COLUMNS, DBOpenHelper.STUDENTS_ZID +
+                                " = ?",
+                        new String[]{currZID}, null);
+                if (c!= null && c.moveToNext()) {
+                    Intent i = new Intent(getBaseContext(), StudentConsultation.class);
+                    i.putExtra("SKILL",c.getString(c.getColumnIndex(DBOpenHelper.STUDENTS_SKILL)));
+                    i.putExtra("STUNAME",lblStudentName.getText());
+                    startActivity(i);
+                }
+            }
+        });
+
 
         Intent i = getIntent();
         currTutorialID = i.getStringExtra("TUTORIALID");

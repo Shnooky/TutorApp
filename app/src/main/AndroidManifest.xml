@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           package="com.example.xwc.tutorapp">
-    <uses-permission android:name="android.permission.CAMERA" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
+    <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+
     <application
         android:allowBackup="true"
         android:icon="@drawable/smarttutor"
@@ -11,7 +13,6 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
         <activity android:name=".Controllers.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -27,29 +28,25 @@
         <activity android:name=".Controllers.StudentManager"/>
         <activity android:name=".Controllers.TutorialStudentList"/>
         <activity android:name=".Controllers.TutorialStudentEditor"/>
-
         <activity android:name=".Controllers.NameGameManager"/>
         <activity android:name=".Controllers.NameGameQuiz"/>
         <activity android:name=".Controllers.NameGameScore"/>
-
+        <activity android:name=".Controllers.StudentConsultation"/>
         <provider
-            android:authorities="com.example.xwc.tutorapp.classProvider"
-            android:name=".Database.ClassProvider" >
+            android:name=".Database.ClassProvider"
+            android:authorities="com.example.xwc.tutorapp.classProvider">
         </provider>
-
         <provider
-            android:authorities="com.example.xwc.tutorapp.studentProvider"
-            android:name=".Database.StudentProvider" >
+            android:name=".Database.StudentProvider"
+            android:authorities="com.example.xwc.tutorapp.studentProvider">
         </provider>
-
         <provider
-            android:authorities="com.example.xwc.tutorapp.tutorialProvider"
-            android:name=".Database.TutorialProvider" >
+            android:name=".Database.TutorialProvider"
+            android:authorities="com.example.xwc.tutorapp.tutorialProvider">
         </provider>
-
         <provider
-            android:authorities="com.example.xwc.tutorapp.studentTutorialProvider"
-            android:name=".Database.StudentTutorialProvider" >
+            android:name=".Database.StudentTutorialProvider"
+            android:authorities="com.example.xwc.tutorapp.studentTutorialProvider">
         </provider>
     </application>
 
