@@ -3,6 +3,7 @@ package com.example.xwc.tutorapp.Controllers;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.widget.*;
 import android.content.Intent;
 import com.example.xwc.tutorapp.Adapters.ClassAdapter;
@@ -77,16 +78,19 @@ public class ClassList extends AppCompatActivity {
                 }
             });
         }
+        loadClasses();
     }
 
     private void loadClasses() {
+        Log.d("","Load classes");
         Cursor c = DBOpenHelper.runSQL("select CLASSES.*, COUNT(DISTINCT STUDENTS.ZID) as 'TOTAL', " +
-                "AVG(STUDENT_TUTORIALS.MARK) AS 'AVGMARK' from CLASSES INNER JOIN STUDENTS" +
-                " ON (CLASSES.CLASS_ID = STUDENTS.CLASS) INNER JOIN STUDENT_TUTORIALS ON " +
+                "AVG(STUDENT_TUTORIALS.MARK) AS 'AVGMARK' from CLASSES LEFT OUTER JOIN STUDENTS" +
+                " ON (CLASSES.CLASS_ID = STUDENTS.CLASS) LEFT OUTER JOIN STUDENT_TUTORIALS ON " +
                 "(STUDENTS.ZID = STUDENT_TUTORIALS.ZID) GROUP BY CLASSES.CLASS_ID", null);
 
         classes.clear();
         while (c!= null && c.moveToNext()) {
+            Log.d("","Getting class from database");
             classes.add(new Class(c.getString(c.getColumnIndex(DBOpenHelper.CLASSES_CLASS_ID)),
                     c.getString(c.getColumnIndex(DBOpenHelper.CLASSES_DAY)),
                     c.getString(c.getColumnIndex(DBOpenHelper.CLASSES_STARTTIME)),

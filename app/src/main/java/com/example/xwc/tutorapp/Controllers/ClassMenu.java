@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.xwc.tutorapp.Database.DBOpenHelper;
 import com.example.xwc.tutorapp.Database.TutorialProvider;
@@ -36,7 +37,7 @@ public class ClassMenu extends AppCompatActivity implements View.OnClickListener
     @Override
     protected void onResume() {
         super.onResume();
-        reEstablish();
+        tutorialsExist(new String[] {thisClass.getClassId()});
     }
 
     @Override
@@ -67,7 +68,7 @@ public class ClassMenu extends AppCompatActivity implements View.OnClickListener
                     "-" + thisClass.getEndTime() + " " + thisClass.getLocation());
         }
 
-      reEstablish();
+      tutorialsExist(new String[] {thisClass.getClassId()});
 
     }
 
@@ -88,12 +89,17 @@ public class ClassMenu extends AppCompatActivity implements View.OnClickListener
 
         switch (v.getId()) {
             case R.id.rollHistory:
-                intent = new Intent(this, TutorialList.class);
-                intent.putExtra("CLASSID", thisClass.getClassId());
-                intent.putExtra("DAY", thisClass.getDay());
-                intent.putExtra("STARTTIME", thisClass.getStartTime());
-                intent.putExtra("ENDTIME", thisClass.getEndTime());
-                intent.putExtra("LOCATION", thisClass.getLocation());
+                if(tutorialsExist(new String[] {thisClass.getClassId()})) {
+                    intent = new Intent(this, TutorialList.class);
+                    intent.putExtra("CLASSID", thisClass.getClassId());
+                    intent.putExtra("DAY", thisClass.getDay());
+                    intent.putExtra("STARTTIME", thisClass.getStartTime());
+                    intent.putExtra("ENDTIME", thisClass.getEndTime());
+                    intent.putExtra("LOCATION", thisClass.getLocation());
+                } else {
+                    Log.d("","display toast");
+                    Toast.makeText(getApplicationContext(),"There are no tutorials to display, please add a new tutorial",Toast.LENGTH_LONG).show();
+                }
                 break;
             case R.id.newTut:
                 intent = new Intent(this, TutorialStudentList.class);
@@ -111,14 +117,6 @@ public class ClassMenu extends AppCompatActivity implements View.OnClickListener
         }
         if (intent != null) {
             startActivity(intent);
-        }
-    }
-
-    private void reEstablish() {
-        viewRollHistory.setEnabled(false);
-        String[] IdToGet = {thisClass.getClassId()};
-        if(tutorialsExist(IdToGet)) {
-            viewRollHistory.setEnabled(true);
         }
     }
 
