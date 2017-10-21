@@ -36,6 +36,8 @@ public class TutorialStudentEditor extends AppCompatActivity {
 
     private Button btnUpdate;
     private Button btnViewProfile;
+    private Button btnConsultation;
+    private Button btnParticipation;
     private ImageView imgStudent;
     private String currZID, currTutorialID;
 
@@ -52,6 +54,8 @@ public class TutorialStudentEditor extends AppCompatActivity {
 
         btnUpdate = (Button) findViewById(R.id.btnUpdateStudentGrades);
         btnViewProfile = (Button) findViewById(R.id.btnViewStudentProfile);
+        btnConsultation = (Button) findViewById(R.id.consultation);
+        btnParticipation = (Button) findViewById(R.id.participation);
 
         imgStudent = (ImageView) findViewById(R.id.imgStudentTutorial);
 
@@ -97,6 +101,26 @@ public class TutorialStudentEditor extends AppCompatActivity {
             }
         });
 
+        btnParticipation.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                ContentValues insertValues = new ContentValues();
+                if(btnParticipation.getText().equals("Add Participation Mark")) {
+                    insertValues.put(DBOpenHelper.STUDENTS_TUTORIALS_PARTICIPATION, 1);
+                    getContentResolver().update(StudentTutorialProvider.CONTENT_URI, insertValues, DBOpenHelper.STUDENTS_TUTORIALS_ZID + " = ? AND " +
+                            DBOpenHelper.STUDENTS_TUTORIALS_TUTORIAL_ID + " = ?", new String[]{currZID, currTutorialID});
+                    Log.d("d","participation mark added");
+                    btnParticipation.setText("Remove Participation Mark");
+                }
+                else if(btnParticipation.getText().equals("Remove Participation Mark")) {
+                    insertValues.put(DBOpenHelper.STUDENTS_TUTORIALS_PARTICIPATION, 0);
+                    getContentResolver().update(StudentTutorialProvider.CONTENT_URI, insertValues, DBOpenHelper.STUDENTS_TUTORIALS_ZID + " = ? AND " +
+                            DBOpenHelper.STUDENTS_TUTORIALS_TUTORIAL_ID + " = ?", new String[]{currZID, currTutorialID});
+                    Log.d("d","participation mark removed");
+                    btnParticipation.setText("Add Participation Mark");
+                }
+            }
+
+        });
 
 
         Intent i = getIntent();
@@ -109,6 +133,14 @@ public class TutorialStudentEditor extends AppCompatActivity {
         chkLate.setChecked(i.getBooleanExtra("LATE", false));
         chkAbsent.setChecked(i.getBooleanExtra("ABSENT", false));
         txtGrade.setText(i.getStringExtra("GRADE"));
+        String participated = i.getStringExtra("PART");
+        Log.d("participated? ",participated);
+        if(participated.equals("1")) {
+            btnParticipation.setText("Remove Participation Mark");
+        } else {
+            btnParticipation.setText("Add Participation Mark");
+        }
+
     }
 
 

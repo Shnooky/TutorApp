@@ -51,7 +51,7 @@ public class TutorialAdapter extends ArrayAdapter<Tutorial> {
 
         ImageView image = (ImageView) listItemView.findViewById(R.id.tutImage);
         Random rn = new Random();
-        switch(rn.nextInt(3-1+1)+1) {
+        switch(rn.nextInt(4-1+1)+1) {
             case 1:
                 image.setColorFilter(ContextCompat.getColor(getContext(),R.color.colorAccent));
                 break;
@@ -62,6 +62,7 @@ public class TutorialAdapter extends ArrayAdapter<Tutorial> {
                 image.setColorFilter(ContextCompat.getColor(getContext(),R.color.colorPrimaryDark));
                 break;
             default:
+                image.setColorFilter(ContextCompat.getColor(getContext(),android.support.design.R.color.accent_material_light));
                 break;
 
         }

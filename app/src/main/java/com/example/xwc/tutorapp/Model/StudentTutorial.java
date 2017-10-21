@@ -20,13 +20,15 @@ public class StudentTutorial {
     private boolean mLate;
     private boolean mAbsent;
     private double mMark;
+    private int mParticipation;
 
-    public StudentTutorial(String mzID, String firstName, String lastName, String mTutorialID, boolean mLate, boolean mAbsent, double mMark) {
+    public StudentTutorial(String mzID, String firstName, String lastName, String mTutorialID, boolean mLate, boolean mAbsent, double mMark, int participation) {
         this.mzID = mzID;
         this.mTutorialID = mTutorialID;
         this.mLate = mLate;
         this.mAbsent = mAbsent;
         this.mMark = mMark;
+        this.mParticipation = participation;
         this.firstName= firstName;
         this.lastName = lastName;
     }
@@ -48,7 +50,7 @@ public class StudentTutorial {
     }
 
     public StudentTutorial() {
-        this("","","","", false, false,0);
+        this("","","","", false, false,0,0);
     }
 
     public String getMzID() {
@@ -89,5 +91,13 @@ public class StudentTutorial {
 
     public void setmMark(double mMark) {
         this.mMark = mMark;
+    }
+
+    public int getParticipation() {
+        return mParticipation;
+    }
+
+    public void setParticipation(int participation) {
+        mParticipation = participation;
     }
 }

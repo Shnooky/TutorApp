@@ -51,8 +51,9 @@ public class DBOpenHelper extends SQLiteOpenHelper {
     public static final String STUDENTS_TUTORIALS_LATE = "LATE";
     public static final String STUDENTS_TUTORIALS_ABSENT = "ABSENT";
     public static final String STUDENTS_TUTORIALS_MARK = "MARK";
+    public static final String STUDENTS_TUTORIALS_PARTICIPATION = "PARTICIPATION";
     public static final String[] STUDENTS_TUTORIALS_ALL_COLUMNS = {
-            STUDENTS_TUTORIALS_TUTORIAL_ID, STUDENTS_TUTORIALS_ZID, STUDENTS_TUTORIALS_LATE, STUDENTS_TUTORIALS_ABSENT, STUDENTS_TUTORIALS_MARK
+            STUDENTS_TUTORIALS_TUTORIAL_ID, STUDENTS_TUTORIALS_ZID, STUDENTS_TUTORIALS_LATE, STUDENTS_TUTORIALS_ABSENT, STUDENTS_TUTORIALS_MARK, STUDENTS_TUTORIALS_PARTICIPATION
     };
 
     // DB Info
@@ -111,34 +112,36 @@ public class DBOpenHelper extends SQLiteOpenHelper {
             STUDENTS_TUTORIALS_ZID + " TEXT, " +
             STUDENTS_TUTORIALS_LATE + " INT, " +
             STUDENTS_TUTORIALS_ABSENT + " INT, " +
-            STUDENTS_TUTORIALS_MARK + " DOUBLE);";
+            STUDENTS_TUTORIALS_MARK + " DOUBLE, " +
+            STUDENTS_TUTORIALS_PARTICIPATION+" INT);";
 
     private static final String DUMMY_TUTORIAL_STUDENTS = "INSERT INTO "+TABLE_STUDENT_TUTORIALS+" (" +
-            STUDENTS_TUTORIALS_TUTORIAL_ID+", "+STUDENTS_TUTORIALS_ZID+", "+STUDENTS_TUTORIALS_LATE+", "+STUDENTS_TUTORIALS_ABSENT+", "+STUDENTS_TUTORIALS_MARK+") VALUES (" +
-            "'Tutorial 1', 'Z5019998',0,0,2.0), (" +
-            "'Tutorial 1', 'Z1234567',0,0,2.0), (" +
-            "'Tutorial 1', 'Z7654321',0,0,2.0), (" +
-            "'Tutorial 1', 'Z5014883',0,0,2.0), (" +
-            "'Tutorial 2', 'Z5019998',0,0,2.0), (" +
-            "'Tutorial 2', 'Z1234567',1,0,2.0), (" +
-            "'Tutorial 2', 'Z7654321',0,1,0.0), (" +
-            "'Tutorial 2', 'Z5014883',0,0,2.0), (" +
-            "'Tutorial 3', 'Z5019998',0,0,2.0), (" +
-            "'Tutorial 3', 'Z1234567',0,0,2.0), (" +
-            "'Tutorial 3', 'Z7654321',0,0,2.0), (" +
-            "'Tutorial 3', 'Z5014883',0,0,2.0), (" +
-            "'Tutorial 1', 'Z5014884',0,0,2.0), (" +
-            "'Tutorial 1', 'Z1111111',0,0,2.0), (" +
-            "'Tutorial 1', 'Z9999999',0,0,2.0), (" +
-            "'Tutorial 1', 'Z5014885',0,0,2.0), (" +
-            "'Tutorial 2', 'Z5014884',0,0,2.0), (" +
-            "'Tutorial 2', 'Z1111111',1,0,2.0), (" +
-            "'Tutorial 2', 'Z9999999',0,2,0.0), (" +
-            "'Tutorial 2', 'Z5014885',0,0,2.0), (" +
-            "'Tutorial 3', 'Z5014884',0,0,2.0), (" +
-            "'Tutorial 3', 'Z1111111',0,0,2.0), (" +
-            "'Tutorial 3', 'Z5014885',0,0,2.0), (" +
-            "'Tutorial 3', 'Z9999999',0,0,2.0)";
+            STUDENTS_TUTORIALS_TUTORIAL_ID+", "+STUDENTS_TUTORIALS_ZID+", "+STUDENTS_TUTORIALS_LATE+", "+STUDENTS_TUTORIALS_ABSENT+", "+
+            STUDENTS_TUTORIALS_MARK+", "+STUDENTS_TUTORIALS_PARTICIPATION+") VALUES (" +
+            "'Tutorial 1', 'Z5019998',0,0,2.0,0), (" +
+            "'Tutorial 1', 'Z1234567',0,0,2.0,0), (" +
+            "'Tutorial 1', 'Z7654321',0,0,2.0,0), (" +
+            "'Tutorial 1', 'Z5014883',0,0,2.0,0), (" +
+            "'Tutorial 2', 'Z5019998',0,0,2.0,0), (" +
+            "'Tutorial 2', 'Z1234567',1,0,2.0,0), (" +
+            "'Tutorial 2', 'Z7654321',0,1,0.0,0), (" +
+            "'Tutorial 2', 'Z5014883',0,0,2.0,0), (" +
+            "'Tutorial 3', 'Z5019998',0,0,2.0,0), (" +
+            "'Tutorial 3', 'Z1234567',0,0,2.0,0), (" +
+            "'Tutorial 3', 'Z7654321',0,0,2.0,0), (" +
+            "'Tutorial 3', 'Z5014883',0,0,2.0,0), (" +
+            "'Tutorial 1', 'Z5014884',0,0,2.0,0), (" +
+            "'Tutorial 1', 'Z1111111',0,0,2.0,0), (" +
+            "'Tutorial 1', 'Z9999999',0,0,2.0,0), (" +
+            "'Tutorial 1', 'Z5014885',0,0,2.0,0), (" +
+            "'Tutorial 2', 'Z5014884',0,0,2.0,0), (" +
+            "'Tutorial 2', 'Z1111111',1,0,2.0,0), (" +
+            "'Tutorial 2', 'Z9999999',0,2,0.0,0), (" +
+            "'Tutorial 2', 'Z5014885',0,0,2.0,0), (" +
+            "'Tutorial 3', 'Z5014884',0,0,2.0,0), (" +
+            "'Tutorial 3', 'Z1111111',0,0,2.0,0), (" +
+            "'Tutorial 3', 'Z5014885',0,0,2.0,0), (" +
+            "'Tutorial 3', 'Z9999999',0,0,2.0,0)";
 
     public DBOpenHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -151,6 +154,7 @@ public class DBOpenHelper extends SQLiteOpenHelper {
         db.execSQL(STUDENT_CREATE);
         db.execSQL(TUTORIAL_STUDENT_CREATE);
         db.execSQL(TUTORIAL_CREATE);
+        createDummyData(db);
     }
 
     @Override

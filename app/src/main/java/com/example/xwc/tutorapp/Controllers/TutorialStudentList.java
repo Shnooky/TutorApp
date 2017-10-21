@@ -39,11 +39,25 @@ public class TutorialStudentList extends AppCompatActivity {
     private String currClass = null;
     private String currTutorialID = null;
     private String currentClass = null;
+    private TutorialStudentAdapter adapter = null;
 
     @Override
     public void onResume() {
         super.onResume();
-        if (currTutorialID == null || currClass == null) {
+        students.clear();
+        adapter.clear();
+        if (currTutorialID == null && currClass == null) {
+            return;
+        }
+        loadStudents();
+    }
+
+    @Override
+    public void onRestart() {
+        super.onRestart();
+        students.clear();
+        adapter.clear();
+        if (currTutorialID == null && currClass == null) {
             return;
         }
         loadStudents();
@@ -70,6 +84,7 @@ public class TutorialStudentList extends AppCompatActivity {
                 i.putExtra("GRADE", Double.toString(s.getmMark()));
                 i.putExtra("ABSENT", s.ismAbsent());
                 i.putExtra("NAME", s.getFirstName() + " " + s.getLastName());
+                i.putExtra("PART",Integer.toString(s.getParticipation()));
                 startActivity(i);
             }
         });
@@ -188,13 +203,14 @@ public class TutorialStudentList extends AppCompatActivity {
                         c.getString(c.getColumnIndex(DBOpenHelper.STUDENTS_TUTORIALS_TUTORIAL_ID)),
                         c.getString(c.getColumnIndex(DBOpenHelper.STUDENTS_TUTORIALS_LATE)).equals("true"),
                         c.getString(c.getColumnIndex(DBOpenHelper.STUDENTS_TUTORIALS_ABSENT)).equals("true"),
-                        c.getDouble(c.getColumnIndex(DBOpenHelper.STUDENTS_TUTORIALS_MARK))
+                        c.getDouble(c.getColumnIndex(DBOpenHelper.STUDENTS_TUTORIALS_MARK)),
+                        c.getInt(c.getColumnIndex(DBOpenHelper.STUDENTS_TUTORIALS_PARTICIPATION))
                 ));
             }
         }
 
         // Fill list
-        TutorialStudentAdapter adapter = new TutorialStudentAdapter(this, students);
+        adapter = new TutorialStudentAdapter(this, students);
         studentsLV.setAdapter(adapter);
     }
 }
