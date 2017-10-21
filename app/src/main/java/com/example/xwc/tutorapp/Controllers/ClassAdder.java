@@ -4,6 +4,7 @@ package com.example.xwc.tutorapp.Controllers;
  * Created by jameszhang on 17/10/2017.
  */
 
+import android.database.Cursor;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
@@ -59,7 +60,7 @@ public class ClassAdder extends AppCompatActivity {
                 String error = validateInput();
                 if(error.isEmpty()) {
                     ContentValues insertValues = new ContentValues();
-                    insertValues.put(DBOpenHelper.CLASSES_CLASS_ID, txtCourse.getText().toString());
+                    insertValues.put(DBOpenHelper.CLASSES_CLASS_ID, generateID());
                     insertValues.put(DBOpenHelper.CLASSES_DAY, txtDay.getSelectedItem().toString());
                     insertValues.put(DBOpenHelper.CLASSES_ENDTIME, txtEndTime.getText().toString());
                     insertValues.put(DBOpenHelper.CLASSES_STARTTIME, txtStartTime.getText().toString());
@@ -110,6 +111,41 @@ public class ClassAdder extends AppCompatActivity {
             updating_class_id = null;
         }
 
+    }
+
+    private String generateID() {
+        String day = txtDay.getSelectedItem().toString();
+        String dayTrunc = "";
+        String startTime = txtStartTime.getText().toString();
+        char newEndChar = 'A';
+        switch(day) {
+            case "Mon":
+                dayTrunc = "M";
+                break;
+            case "Tue":
+                dayTrunc = "T";
+                break;
+            case "Wed":
+                dayTrunc = "W";
+                break;
+            case "Thu":
+                dayTrunc = "H";
+                break;
+            case "Fri":
+                dayTrunc = "F";
+                break;
+            default:
+                dayTrunc = "?";
+                break;
+        }
+        Cursor c = getContentResolver().query(ClassProvider.CONTENT_URI,DBOpenHelper.CLASSES_ALL_COLUMNS,DBOpenHelper.CLASSES_DAY+"=? AND "+
+                DBOpenHelper.CLASSES_STARTTIME+"=?",new String[] {day,startTime},null);
+        while (c != null && c.moveToNext()) {
+            char endChar = c.getString(c.getColumnIndex(DBOpenHelper.CLASSES_CLASS_ID)).charAt(3);
+            int endCharAsNum = endChar+1;
+            newEndChar = (char) endCharAsNum;
+        }
+        return dayTrunc+startTime.substring(0,2)+newEndChar;
     }
 
     private String validateInput() {
