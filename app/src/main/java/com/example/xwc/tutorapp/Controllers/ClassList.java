@@ -20,6 +20,7 @@ import java.util.ArrayList;
 
 /**
  * Created by Jacob and James on 15/10/2017.
+ * Displays a list of classes to the user.
  */
 
 public class ClassList extends AppCompatActivity {

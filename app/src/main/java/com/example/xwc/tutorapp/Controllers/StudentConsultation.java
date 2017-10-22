@@ -16,7 +16,10 @@ import com.example.xwc.tutorapp.Database.StudentProvider;
 import com.example.xwc.tutorapp.R;
 
 import org.w3c.dom.Text;
-
+/*
+Created by Jacob and James on 21/10/2017.
+Presents a timer with varying time limits based on the student's coding skill.
+ */
 public class StudentConsultation extends AppCompatActivity {
     private TextView mStuName;
     private TextView mSkill;
@@ -43,15 +46,19 @@ public class StudentConsultation extends AppCompatActivity {
         mProgressBar.setProgress(progress);
         mCountdown = (TextView) findViewById(R.id.countdown);
         final long startTime = calculate();
+        //create a CountDownTimer object based on the calculated max milliseconds, count up by 1 second.
         mCountDownTimer = new CountDownTimer(startTime, 1000) {
             @Override
+            //what happens after every second (1000 milliseconds)
             public void onTick(long l) {
                 mCountdown.setText(Long.toString(l / 1000));
                 progress++;
+                //update progress-bar based on timer's completion
                 mProgressBar.setProgress((int)(progress*100/(startTime/1000)));
             }
 
             @Override
+            //what happens when the timer finishes
             public void onFinish() {
                 mCountdown.setText("DONE!");
                 progress++;
@@ -67,6 +74,13 @@ public class StudentConsultation extends AppCompatActivity {
         });
     }
 
+    /*
+    Determine seconds to count down based on coding skills:
+    Low: 5 minutes
+    Moderate: 3 minutes
+    High: 1.5 minutes
+    Exceptional: 30 seconds
+     */
     private long calculate() {
         long milis = 0;
         String skill = "";
