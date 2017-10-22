@@ -69,7 +69,6 @@ public class TutorialList extends AppCompatActivity {
         });
 
         loadTutorials();
-
     }
 
     private void loadTutorials() {

@@ -45,7 +45,7 @@ public class ClassAdapter extends ArrayAdapter<Class> {
         numStuView.setText(Integer.toString(currentClass.getNumStu()));
 
 
-        // Grab overall participation
+        // Set overall participation
         TextView lblPart = (TextView) listItemView.findViewById(R.id.lblPart);
         lblPart.setText(currentClass.getParticipation() + " / " + currentClass.getNumStu());
 

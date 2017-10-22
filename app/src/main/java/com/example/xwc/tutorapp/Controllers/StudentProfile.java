@@ -119,9 +119,12 @@ public class StudentProfile extends AppCompatActivity {
                         getContentResolver().insert(StudentProvider.CONTENT_URI,
                                 insertValues);
                     }
+                    Intent i = new Intent();
+                    i.putExtra("IMG", getBytes(student_photo));
+                    setResult(TutorialStudentEditor.UPDATE_STUDENT, i);
                     finish();
                 } else {
-                    Toast.makeText(getApplicationContext(), error, Toast.LENGTH_SHORT).show();
+                    CommonMethods.showToast(error);
                 }
 
             }

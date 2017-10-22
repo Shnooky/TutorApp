@@ -158,11 +158,15 @@ public class DBOpenHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int i, int j) {
-        db.execSQL("DROP TABLE IF EXISTS ");
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_STUDENTS);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_CLASSES);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_TUTORIALS);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_STUDENT_TUTORIALS);
         onCreate(db);
     }
 
     public void createDummyData(SQLiteDatabase db) {
+        onUpgrade(db,1,1);
         db.execSQL(DUMMY_CLASSES);
         db.execSQL(DUMMY_STUDENTS);
         db.execSQL(DUMMY_TUTORIAL_STUDENTS);
@@ -174,4 +178,5 @@ public class DBOpenHelper extends SQLiteOpenHelper {
         SQLiteDatabase database = helper.getWritableDatabase();
         return database.rawQuery(sql, args);
     }
+
 }

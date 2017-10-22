@@ -13,10 +13,10 @@ public class Class {
     private String mLocation;
     private int mNumStu;
     private double mAverageGrade;
-    private int mPart;
+    private double mPart;
 
     public Class(String classId, String day, String startTime, String endTime, String tutor, String location, int numStu, double averageGrade,
-                 int part) {
+                 double part) {
         mClassId = classId;
         mDay = day;
         mStartTime = startTime;
@@ -96,11 +96,11 @@ public class Class {
         mAverageGrade = averageGrade;
     }
 
-    public void setParticipation(int part) {
+    public void setParticipation(double part) {
         mPart = part;
     }
 
-    public int getParticipation() {
+    public double getParticipation() {
         return mPart;
     }
 }

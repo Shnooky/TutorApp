@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.Gravity;
 import android.widget.*;
 import android.content.Intent;
 import com.example.xwc.tutorapp.Adapters.ClassAdapter;
@@ -13,7 +14,8 @@ import com.example.xwc.tutorapp.Model.Class;
 import com.example.xwc.tutorapp.R;
 import android.view.View;
 import android.database.Cursor;
-
+import android.view.ViewGroup;
+import android.view.ViewGroup.LayoutParams;
 import java.util.ArrayList;
 
 /**
@@ -47,6 +49,9 @@ public class ClassList extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+
+
 
         // Check whether the parent activity is name game or class menu
         Intent i = getIntent();
@@ -101,8 +106,12 @@ public class ClassList extends AppCompatActivity {
                     c.getString(c.getColumnIndex(DBOpenHelper.CLASSES_LOCATION)),
                     c.getInt(c.getColumnIndex("TOTAL")),
                     c.getDouble(c.getColumnIndex("AVGMARK")),
-                    c.getInt(c.getColumnIndex("PART"))));
+                    c.getDouble(c.getColumnIndex("PART"))));
         }
+
+
+
+        classesListView.setEmptyView(findViewById(R.id.emptyView));
 
         // Fill list
         ClassAdapter adapter = new ClassAdapter(this, classes);
