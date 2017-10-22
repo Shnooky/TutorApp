@@ -108,6 +108,7 @@ public class StudentProfile extends AppCompatActivity {
                     i.putExtra("IMG", student_photo != null ? getBytes(student_photo): (updating_student != null ? getIntent().getByteArrayExtra("PICTURE"):null));
                     i.putExtra("NAME", txtFirstName.getText().toString() + " " + txtSurname.getText().toString());
                     setResult(TutorialStudentEditor.UPDATE_STUDENT, i);
+                    CommonMethods.showToast("Student successfully added/modified");
                     finish();
                 } else {
                     CommonMethods.showToast(error);
