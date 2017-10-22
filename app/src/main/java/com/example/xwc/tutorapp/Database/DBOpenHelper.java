@@ -83,14 +83,14 @@ public class DBOpenHelper extends SQLiteOpenHelper {
 
     private static final String DUMMY_STUDENTS = "INSERT INTO "+TABLE_STUDENTS+" (" +
             STUDENTS_ZID+", "+STUDENTS_FIRSTNAME+", "+STUDENTS_SURNAME+", "+STUDENTS_SKILL+", "+STUDENTS_CLASS+", "+STUDENTS_PICTURE+") VALUES (" +
-            "'Z5019998', 'Jacob', 'Meyerowitz','???','W12A','???'), (" +
-            "'Z1234567', 'Bob', 'Smith','???','W12A','???'), (" +
-            "'Z7654321', 'Jenny', 'Smith','???','W12A','???'), (" +
-            "'Z5014884', 'James', 'Zhang','???','W15A','???'), (" +
-            "'Z1111111', 'Johnny', 'Bravo','???','W15A','???'), (" +
-            "'Z9999999', 'Benji', 'Bioer','???','W15A','???'), (" +
-            "'Z5014883', 'Yenni', 'Tim','???','W12A','???'), (" +
-            "'Z5014885', 'Yeye', 'Jiang','???','W15A','???')";
+            "'Z5019998', 'Jacob', 'Meyerowitz','Exceptional','W12A','???'), (" +
+            "'Z1234567', 'Bob', 'Smith','High','W12A','???'), (" +
+            "'Z7654321', 'Jenny', 'Smith','Moderate','W12A','???'), (" +
+            "'Z5014884', 'James', 'Zhang','Exceptional','W15A','???'), (" +
+            "'Z1111111', 'Johnny', 'Bravo','Low','W15A','???'), (" +
+            "'Z9999999', 'Benji', 'Bioer','Moderate','W15A','???'), (" +
+            "'Z5014883', 'Yenni', 'Tim','Exceptional','W12A','???'), (" +
+            "'Z5014885', 'Yeye', 'Jiang','High','W15A','???')";
 
     private static final String TUTORIAL_CREATE = "CREATE TABLE IF NOT EXISTS "+TABLE_TUTORIALS+" " +
             "(" + TUTORIALS_ID + " TEXT, " +
