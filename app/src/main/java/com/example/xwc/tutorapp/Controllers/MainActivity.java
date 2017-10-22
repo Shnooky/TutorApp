@@ -14,7 +14,10 @@ import android.database.Cursor;
 import com.example.xwc.tutorapp.Database.DBOpenHelper;
 import com.example.xwc.tutorapp.R;
 import android.content.Context;
-
+/*
+Created by: Jacob and James on 15/10/2017
+First activity - main menu.
+ */
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     public static Context appContext;
     private Button mClassList;
@@ -27,7 +30,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         appContext = getApplicationContext();
-        //loadDummyData();
+
+        // Grab references to UI elements
         mClassList = (Button) findViewById(R.id.classes);
         mClassList.setOnClickListener(this);
         mStudentProfile = (Button) findViewById(R.id.student);
@@ -37,6 +41,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btnDummyData = (Button) findViewById(R.id.btnDummyData);
         btnDummyData.setOnClickListener(this);
 
+        //Check build versions for Camera Permissions.
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (checkSelfPermission(Manifest.permission.CAMERA)
                     != PackageManager.PERMISSION_GRANTED) {
@@ -56,6 +61,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
+    /*
+    Set OnClickListener's for Classes, Student Manager and The Name Game.
+     */
     @Override
     public void onClick(View v) {
         Intent intent = null;
@@ -80,6 +88,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     }
 
+/*
+Load dummy data upon button click
+ */
     public void loadDummyData() {
         DBOpenHelper helper = new DBOpenHelper(getBaseContext());
         SQLiteDatabase database = helper.getWritableDatabase();
