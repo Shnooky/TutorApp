@@ -7,13 +7,12 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.database.Cursor;
 import com.example.xwc.tutorapp.Database.DBOpenHelper;
 import com.example.xwc.tutorapp.R;
 import android.content.Context;
+
 /*
 Created by: Jacob and James on 15/10/2017
 First activity - main menu.

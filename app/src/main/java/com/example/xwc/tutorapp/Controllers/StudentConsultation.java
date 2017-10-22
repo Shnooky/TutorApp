@@ -1,8 +1,6 @@
 package com.example.xwc.tutorapp.Controllers;
 
 import android.content.Intent;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -10,9 +8,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-
-import com.example.xwc.tutorapp.Database.DBOpenHelper;
-import com.example.xwc.tutorapp.Database.StudentProvider;
 import com.example.xwc.tutorapp.R;
 
 import org.w3c.dom.Text;

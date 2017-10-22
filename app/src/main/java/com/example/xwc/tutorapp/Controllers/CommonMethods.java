@@ -56,4 +56,16 @@ public class CommonMethods {
                 new String[]{zID});
         return (c != null && c.getCount() > 0);
     }
+    /*
+    Check if string is a valid double/int
+     */
+    public static boolean isNumeric(String s) {
+        try {
+            double d = Double.parseDouble(s);
+
+        } catch (Exception e) {
+            return false;
+        }
+        return true;
+    }
 }

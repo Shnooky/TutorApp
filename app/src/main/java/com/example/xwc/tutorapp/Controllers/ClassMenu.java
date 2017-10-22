@@ -55,9 +55,9 @@ public class ClassMenu extends AppCompatActivity implements View.OnClickListener
         startTutorial.setOnClickListener(this);
 
 
-/*
-Get information from the intent
- */
+        /*
+        Get information from the intent
+         */
         Intent intent = getIntent();
         if (intent.hasExtra("CLASSID")) {
             setupClassUI(intent);

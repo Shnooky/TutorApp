@@ -2,30 +2,17 @@ package com.example.xwc.tutorapp.Controllers;
 
 import android.content.Intent;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
-import android.media.Image;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.*;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
-
-import com.example.xwc.tutorapp.Adapters.TutorialStudentAdapter;
 import com.example.xwc.tutorapp.Database.DBOpenHelper;
 import com.example.xwc.tutorapp.Database.StudentProvider;
 import com.example.xwc.tutorapp.Model.Student;
-import com.example.xwc.tutorapp.Database.TutorialProvider;
-import com.example.xwc.tutorapp.Model.Class;
-
-import com.example.xwc.tutorapp.Model.StudentTutorial;
-import com.example.xwc.tutorapp.Model.Tutorial;
 import com.example.xwc.tutorapp.R;
-
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 
 /*

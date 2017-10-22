@@ -5,22 +5,14 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
-
 import com.example.xwc.tutorapp.Adapters.TutorialAdapter;
 import com.example.xwc.tutorapp.Database.DBOpenHelper;
-import com.example.xwc.tutorapp.Database.TutorialProvider;
 import com.example.xwc.tutorapp.Model.*;
 import com.example.xwc.tutorapp.R;
-
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 
 /**
  * Created by Jacob and James on 15/10/2017.

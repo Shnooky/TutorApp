@@ -1,21 +1,13 @@
 package com.example.xwc.tutorapp.Controllers;
-import java.util.ArrayList;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.content.Intent;
-import android.Manifest;
-import com.example.xwc.tutorapp.Database.ClassProvider;
 import com.example.xwc.tutorapp.Database.DBOpenHelper;
 import com.example.xwc.tutorapp.Database.StudentProvider;
 import com.example.xwc.tutorapp.Database.StudentTutorialProvider;
-import com.example.xwc.tutorapp.Model.Class;
-import com.example.xwc.tutorapp.Model.Student;
 import com.example.xwc.tutorapp.R;
-import android.content.pm.*;
-import android.os.Build;
-import android.util.Log;
 import android.view.View;
 import android.widget.*;
 
@@ -67,6 +59,11 @@ public class TutorialStudentEditor extends AppCompatActivity {
         */
         btnUpdate.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+                // Check if grade field is a valid number
+                if (!CommonMethods.isNumeric(txtGrade.getText().toString())) {
+                    CommonMethods.showToast("Grade field must be a valid number");
+                    return;
+                }
                 ContentValues insertValues = new ContentValues();
                 insertValues.put(DBOpenHelper.STUDENTS_TUTORIALS_MARK, Double.parseDouble(txtGrade.getText().toString()));
                 insertValues.put(DBOpenHelper.STUDENTS_TUTORIALS_LATE, chkLate.isChecked() ? 1 : 0);
@@ -120,7 +117,7 @@ public class TutorialStudentEditor extends AppCompatActivity {
             }
         });
 
-// Setup UI
+        // Setup UI
         Intent i = getIntent();
         currTutorialID = i.getStringExtra("TUTORIALID");
         currZID = i.getStringExtra("ZID");

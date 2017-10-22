@@ -58,7 +58,7 @@
 
     <Button
         android:id="@+id/classes"
-        android:layout_width="230dp"
+        android:layout_width="229dp"
         android:layout_height="56dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"

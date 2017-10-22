@@ -7,23 +7,13 @@ package com.example.xwc.tutorapp.Controllers;
 
 import android.database.Cursor;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.*;
 import android.content.Intent;
-import com.example.xwc.tutorapp.Adapters.ClassAdapter;
-import com.example.xwc.tutorapp.Database.ClassProvider;
 import com.example.xwc.tutorapp.Database.DBOpenHelper;
 import com.example.xwc.tutorapp.Database.StudentProvider;
-import com.example.xwc.tutorapp.Model.*;
-import com.example.xwc.tutorapp.Model.Class;
 import com.example.xwc.tutorapp.R;
 import android.view.*;
-import android.content.ContentValues;
-
-import java.nio.DoubleBuffer;
-import java.util.ArrayList;
-
 
 public class StudentManager extends AppCompatActivity {
     private EditText txtSearch;
@@ -46,15 +36,13 @@ public class StudentManager extends AppCompatActivity {
             public void onClick(View v) {
 
                 String zid = txtSearch.getText().toString();
-                String firstName = (txtSearch.getText().toString().contains(" ")) ? txtSearch.getText().toString().split(" ")[0] : "";
-                String lastName = (txtSearch.getText().toString().contains(" ")) ? txtSearch.getText().toString().split(" ")[1] : "";
 
                 //search for the student in the database.
                 Cursor c = getContentResolver().query(StudentProvider.CONTENT_URI,
                         DBOpenHelper.STUDENTS_ALL_COLUMNS, DBOpenHelper.STUDENTS_ZID +
-                                " = ? OR (" + DBOpenHelper.STUDENTS_FIRSTNAME
-                        + "=? AND " + DBOpenHelper.STUDENTS_SURNAME + " = ?)",
-                        new String[]{zid, firstName, lastName}, null);
+                                " LIKE ('%' || ? || '%') OR ((" + DBOpenHelper.STUDENTS_FIRSTNAME
+                        + " || " + DBOpenHelper.STUDENTS_SURNAME + ") LIKE ('%' || ? || '%'))",
+                        new String[]{zid, txtSearch.getText().toString()}, null);
 
                 //if student found, create an intent with the data, to be sent to the StudentProfile activity.
                 if (c!= null && c.moveToNext()) {

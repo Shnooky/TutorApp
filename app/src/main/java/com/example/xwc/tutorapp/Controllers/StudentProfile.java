@@ -7,31 +7,15 @@ import android.database.Cursor;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.content.Intent;
-import android.Manifest;
-
 import com.example.xwc.tutorapp.Database.ClassProvider;
 import com.example.xwc.tutorapp.Database.DBOpenHelper;
 import com.example.xwc.tutorapp.Database.StudentProvider;
 import com.example.xwc.tutorapp.Database.StudentTutorialProvider;
-import com.example.xwc.tutorapp.Model.Class;
 import com.example.xwc.tutorapp.R;
-
-import android.content.pm.*;
-import android.os.Build;
-import android.util.Log;
 import android.view.View;
 import android.widget.*;
 import android.graphics.*;
 import android.net.Uri;
-
-import org.w3c.dom.Text;
-
-import java.io.File;
-
-import android.os.Environment;
-
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.io.ByteArrayOutputStream;
 
 import android.graphics.Bitmap.CompressFormat;
