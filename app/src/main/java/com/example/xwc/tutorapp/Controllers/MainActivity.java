@@ -12,7 +12,8 @@ import android.widget.Button;
 import com.example.xwc.tutorapp.Database.DBOpenHelper;
 import com.example.xwc.tutorapp.R;
 import android.content.Context;
-
+import android.os.AsyncTask;
+import android.app.ProgressDialog;
 /*
 Created by: Jacob and James on 15/10/2017
 First activity - main menu.
@@ -23,7 +24,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private Button mStudentProfile;
     private Button mNameGame;
     private Button btnDummyData;
-
+    ProgressDialog pd;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -91,9 +92,27 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 Load dummy data upon button click
  */
     public void loadDummyData() {
-        DBOpenHelper helper = new DBOpenHelper(getBaseContext());
-        SQLiteDatabase database = helper.getWritableDatabase();
-        helper.createDummyData(database);
-        CommonMethods.showToast("Sample data loaded!");
+        pd = new ProgressDialog(MainActivity.this);
+        pd.setMessage("Adding Sample Data...");
+        pd.show();
+        new DummyWorker().execute();
+    }
+
+    private class DummyWorker extends AsyncTask<String, Void, String> {
+
+        @Override
+        protected String doInBackground(String... params) {
+            DBOpenHelper helper = new DBOpenHelper(getBaseContext());
+            SQLiteDatabase database = helper.getWritableDatabase();
+            helper.createDummyData(database);
+            return "";
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            super.onPostExecute(result);
+            CommonMethods.showToast("Sample data loaded!");
+            pd.cancel();
+        }
     }
 }

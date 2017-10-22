@@ -143,6 +143,7 @@ public class TutorialStudentEditor extends AppCompatActivity {
                 finish();
             } else if (resultCode == UPDATE_STUDENT) {
                 imgStudent.setImageBitmap(StudentProfile.getImage(data.getByteArrayExtra("IMG")));
+                lblStudentName.setText(data.getStringExtra("NAME"));
             }
         }
     }

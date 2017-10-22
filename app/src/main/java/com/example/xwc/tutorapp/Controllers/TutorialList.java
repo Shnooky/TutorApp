@@ -22,7 +22,6 @@ import java.util.ArrayList;
 public class TutorialList extends AppCompatActivity {
     ArrayList<Tutorial> tuts = new ArrayList<>();
     ListView tutorialListView;
-    SQLiteDatabase d;
 
     @Override
     public void onResume() {
