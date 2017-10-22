@@ -44,9 +44,14 @@ public class ClassAdapter extends ArrayAdapter<Class> {
         TextView numStuView = (TextView) listItemView.findViewById(R.id.numberStudents);
         numStuView.setText(Integer.toString(currentClass.getNumStu()));
 
+
+        // Grab overall participation
+        TextView lblPart = (TextView) listItemView.findViewById(R.id.lblPart);
+        lblPart.setText(currentClass.getParticipation() + " / " + currentClass.getNumStu());
+
         ImageView image = (ImageView) listItemView.findViewById(R.id.classImage);
         Random rn = new Random();
-        switch(rn.nextInt(3-1+1)+1) {
+        switch(rn.nextInt(3)+1) {
             case 1:
                 image.setImageResource(R.drawable.mon);
                 image.setColorFilter(ContextCompat.getColor(getContext(),R.color.colorAccent));

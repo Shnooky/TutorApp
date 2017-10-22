@@ -1,10 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/studentLLayout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:padding="16dp"
+    android:weightSum="1">
+    <ImageView
+        android:layout_width="78dp"
+        android:layout_height="78dp"
+        android:layout_marginRight="5dp"
+        android:src="@drawable/smarttutor"
+        android:id="@+id/imgStudent_LV"
+ />
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:padding="16dp">
+    android:padding="16dp"
+ >
 
     <TextView
         android:id="@+id/v_studentName"
@@ -28,15 +42,15 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="Status"
-            android:textStyle="bold"/>
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/v_studentStatus"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="2"
-            android:text="avGrade"/>
+            android:text="avGrade" />
 
     </LinearLayout>
-
+</LinearLayout>
 </LinearLayout>

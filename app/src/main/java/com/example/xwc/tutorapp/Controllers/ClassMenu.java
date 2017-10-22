@@ -23,15 +23,12 @@ import java.util.Date;
 
 
 public class ClassMenu extends AppCompatActivity implements View.OnClickListener {
-
+    public static final int EDIT_CLASS = 100;
+    public static final int DELETE_CLASS = 101;
     private TextView className;
-
     private Button viewRollHistory;
-
     private Button startTutorial;
-
     private Button editClass;
-
     private Class thisClass;
 
     @Override
@@ -62,8 +59,8 @@ public class ClassMenu extends AppCompatActivity implements View.OnClickListener
             String thisClassStart = intent.getStringExtra("STARTTIME");
             String thisClassEnd = intent.getStringExtra("ENDTIME");
             String thisClassLocation = intent.getStringExtra("LOCATION");
-
-           thisClass = new Class(thisClassName,thisClassDay,thisClassStart,thisClassEnd,"",thisClassLocation,22,0.0);
+            int thisClassPart = intent.getIntExtra("PART", 0);
+           thisClass = new Class(thisClassName,thisClassDay,thisClassStart,thisClassEnd,"",thisClassLocation,22,0.0, thisClassPart);
             className.setText(thisClass.getClassId() + " " + thisClass.getDay() + " " + thisClass.getStartTime() +
                     "-" + thisClass.getEndTime() + " " + thisClass.getLocation());
         }
@@ -115,8 +112,22 @@ public class ClassMenu extends AppCompatActivity implements View.OnClickListener
                 break;
             default:
         }
-        if (intent != null) {
+        if (intent != null && v.getId() == R.id.editClass) {
+            startActivityForResult(intent, EDIT_CLASS);
+        } else {
             startActivity(intent);
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        if (requestCode == EDIT_CLASS) {
+            if (resultCode == DELETE_CLASS) {
+                // Class deleted, so we must exit it's menu activity
+                finish();
+
+            }
         }
     }
 

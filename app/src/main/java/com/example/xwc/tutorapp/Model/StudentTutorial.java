@@ -22,7 +22,17 @@ public class StudentTutorial {
     private double mMark;
     private int mParticipation;
 
-    public StudentTutorial(String mzID, String firstName, String lastName, String mTutorialID, boolean mLate, boolean mAbsent, double mMark, int participation) {
+    public byte[] getmImg() {
+        return mImg;
+    }
+
+    public void setmImg(byte[] mImg) {
+        this.mImg = mImg;
+    }
+
+    private byte[] mImg;
+
+    public StudentTutorial(String mzID, String firstName, String lastName, String mTutorialID, boolean mLate, boolean mAbsent, double mMark, int participation, byte[] img) {
         this.mzID = mzID;
         this.mTutorialID = mTutorialID;
         this.mLate = mLate;
@@ -31,6 +41,7 @@ public class StudentTutorial {
         this.mParticipation = participation;
         this.firstName= firstName;
         this.lastName = lastName;
+        this.mImg = img;
     }
 
     public String getFirstName() {
@@ -50,7 +61,7 @@ public class StudentTutorial {
     }
 
     public StudentTutorial() {
-        this("","","","", false, false,0,0);
+        this("","","","", false, false,0,0, null);
     }
 
     public String getMzID() {

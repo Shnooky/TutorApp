@@ -13,8 +13,10 @@ public class Class {
     private String mLocation;
     private int mNumStu;
     private double mAverageGrade;
+    private int mPart;
 
-    public Class(String classId, String day, String startTime, String endTime, String tutor, String location, int numStu, double averageGrade) {
+    public Class(String classId, String day, String startTime, String endTime, String tutor, String location, int numStu, double averageGrade,
+                 int part) {
         mClassId = classId;
         mDay = day;
         mStartTime = startTime;
@@ -23,10 +25,11 @@ public class Class {
         mLocation = location;
         mNumStu = numStu;
         mAverageGrade = averageGrade;
+        mPart = part;
     }
 
     public Class() {
-        this("","","","","","",0,0.0);
+        this("","","","","","",0,0.0, 0);
     }
 
     public String getClassId() {
@@ -91,5 +94,13 @@ public class Class {
 
     public void setAverageGrade(double averageGrade) {
         mAverageGrade = averageGrade;
+    }
+
+    public void setParticipation(int part) {
+        mPart = part;
+    }
+
+    public int getParticipation() {
+        return mPart;
     }
 }

@@ -108,6 +108,7 @@ public class NameGameQuiz extends AppCompatActivity implements View.OnClickListe
             i.putExtra("SCORE", totalScore);
             i.putExtra("TOTAL", studentsList.size());
             startActivity(i);
+            finish();
             return;
         }
 

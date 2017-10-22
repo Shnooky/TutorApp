@@ -28,6 +28,8 @@ import java.io.ByteArrayOutputStream;
 import android.graphics.Bitmap.CompressFormat;
 
 public class TutorialStudentEditor extends AppCompatActivity {
+    public static final int EDIT_STUDENT = 200;
+    public static final int DELETE_STUDENT = 201;
     private CheckBox chkAbsent;
     private CheckBox chkLate;
     private EditText txtGrade;
@@ -69,8 +71,8 @@ public class TutorialStudentEditor extends AppCompatActivity {
             public void onClick(View v) {
                 ContentValues insertValues = new ContentValues();
                 insertValues.put(DBOpenHelper.STUDENTS_TUTORIALS_MARK, Double.parseDouble(txtGrade.getText().toString()));
-                insertValues.put(DBOpenHelper.STUDENTS_TUTORIALS_LATE, Boolean.toString(chkLate.isChecked()));
-                insertValues.put(DBOpenHelper.STUDENTS_TUTORIALS_ABSENT, Boolean.toString(chkAbsent.isChecked()));
+                insertValues.put(DBOpenHelper.STUDENTS_TUTORIALS_LATE, chkLate.isChecked() ? 1 : 0);
+                insertValues.put(DBOpenHelper.STUDENTS_TUTORIALS_ABSENT, chkAbsent.isChecked() ? 1 : 0);
 
                 getContentResolver().update(StudentTutorialProvider.CONTENT_URI,
                             insertValues, DBOpenHelper.STUDENTS_TUTORIALS_ZID + " = ? AND " +
@@ -96,7 +98,7 @@ public class TutorialStudentEditor extends AppCompatActivity {
                     //i.putExtra("GRADE", c.getString(c.getColumnIndex(DBOpenHelper.STUDENTS_GRADE)));
                     i.putExtra("PICTURE", c.getBlob(c.getColumnIndex(DBOpenHelper.STUDENTS_PICTURE)));
                     i.putExtra("SKILL", c.getString(c.getColumnIndex(DBOpenHelper.STUDENTS_SKILL)));
-                    startActivity(i);
+                    startActivityForResult(i, EDIT_STUDENT);
                 }
             }
         });
@@ -145,8 +147,8 @@ public class TutorialStudentEditor extends AppCompatActivity {
         lblStudentName.setText(i.getStringExtra("NAME"));
 
         // Setup UI
-        chkLate.setChecked(i.getBooleanExtra("LATE", false));
-        chkAbsent.setChecked(i.getBooleanExtra("ABSENT", false));
+        chkLate.setChecked(i.getIntExtra("LATE", 0) == 1);
+        chkAbsent.setChecked(i.getIntExtra("ABSENT", 0) == 1);
         txtGrade.setText(i.getStringExtra("GRADE"));
         String participated = i.getStringExtra("PART");
         Log.d("participated? ",participated);
@@ -158,5 +160,13 @@ public class TutorialStudentEditor extends AppCompatActivity {
 
     }
 
-
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == EDIT_STUDENT) {
+            if (resultCode == DELETE_STUDENT) {
+                // Student deleted, so we must exit the mark editor activity
+                finish();
+            }
+        }
+    }
 }

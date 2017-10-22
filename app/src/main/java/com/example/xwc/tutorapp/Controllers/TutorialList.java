@@ -76,14 +76,24 @@ public class TutorialList extends AppCompatActivity {
         Intent intent = getIntent();
         String[] classID = {intent.getStringExtra("CLASSID")};
         if (intent.hasExtra("CLASSID")) {
-            Cursor c = getContentResolver().query(TutorialProvider.CONTENT_URI,
-                    DBOpenHelper.TUTORIALS_ALL_COLUMNS, DBOpenHelper.TUTORIALS_CLASS +"=?", classID, null);
+            Cursor c =  DBOpenHelper.runSQL("select CLASSES.CLASS_ID, STUDENT_TUTORIALS.TUTORIAL_ID, " +
+                    "(select TUTORIALS.DATE from TUTORIALS where TUTORIALS.TUTORIAL_ID = STUDENT_TUTORIALS.TUTORIAL_ID) AS 'TDATE', " +
+                    "SUM(STUDENT_TUTORIALS.LATE) AS 'TOTALLATE', " +
+                    "SUM(STUDENT_TUTORIALS.ABSENT) AS 'TOTALABSENT' FROM STUDENTS " +
+                    "INNER JOIN CLASSES ON (STUDENTS.CLASS = CLASSES.CLASS_ID) " +
+                    "INNER JOIN STUDENT_TUTORIALS ON (STUDENTS.ZID = STUDENT_TUTORIALS.ZID) " +
+                    "WHERE STUDENTS.CLASS = ? GROUP BY CLASSES.CLASS_ID, STUDENT_TUTORIALS.TUTORIAL_ID, TDATE", classID) ;
+
+
+
+            // getContentResolver().query(TutorialProvider.CONTENT_URI,
+                    //DBOpenHelper.TUTORIALS_ALL_COLUMNS, DBOpenHelper.TUTORIALS_CLASS +"=?", classID, null);
             tuts.clear();
             while (c != null && c.moveToNext()) {
                 tuts.add(new Tutorial(c.getString(c.getColumnIndex(DBOpenHelper.TUTORIALS_ID)),
-                        c.getString(c.getColumnIndex(DBOpenHelper.TUTORIALS_DATE)),
-                        0,
-                        0
+                        c.getString(c.getColumnIndex("TDATE")),
+                        c.getInt(c.getColumnIndex("TOTALABSENT")),
+                        c.getInt(c.getColumnIndex("TOTALLATE"))
                 ));
             }
         }

@@ -136,7 +136,7 @@ public class DBOpenHelper extends SQLiteOpenHelper {
             "'Tutorial 1', 'Z5014885',0,0,2.0,0), (" +
             "'Tutorial 2', 'Z5014884',0,0,2.0,0), (" +
             "'Tutorial 2', 'Z1111111',1,0,2.0,0), (" +
-            "'Tutorial 2', 'Z9999999',0,2,0.0,0), (" +
+            "'Tutorial 2', 'Z9999999',0,1,0.0,0), (" +
             "'Tutorial 2', 'Z5014885',0,0,2.0,0), (" +
             "'Tutorial 3', 'Z5014884',0,0,2.0,0), (" +
             "'Tutorial 3', 'Z1111111',0,0,2.0,0), (" +
@@ -154,12 +154,11 @@ public class DBOpenHelper extends SQLiteOpenHelper {
         db.execSQL(STUDENT_CREATE);
         db.execSQL(TUTORIAL_STUDENT_CREATE);
         db.execSQL(TUTORIAL_CREATE);
-        createDummyData(db);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int i, int j) {
-        //db.execSQL("DROP TABLE IF EXISTS ");
+        db.execSQL("DROP TABLE IF EXISTS ");
         onCreate(db);
     }
 

@@ -59,6 +59,7 @@ public class ClassList extends AppCompatActivity {
                     Intent i = new Intent(getBaseContext(), NameGameQuiz.class);
                     i.putExtra("CLASSID", c.getClassId());
                     startActivity(i);
+                    finish();
                 }
             });
         } else {
@@ -73,7 +74,7 @@ public class ClassList extends AppCompatActivity {
                     i.putExtra("STARTTIME", c.getStartTime());
                     i.putExtra("ENDTIME", c.getEndTime());
                     i.putExtra("LOCATION", c.getLocation());
-
+                    i.putExtra("PART", c.getParticipation());
                     startActivity(i);
                 }
             });
@@ -84,7 +85,8 @@ public class ClassList extends AppCompatActivity {
     private void loadClasses() {
         Log.d("","Load classes");
         Cursor c = DBOpenHelper.runSQL("select CLASSES.*, COUNT(DISTINCT STUDENTS.ZID) as 'TOTAL', " +
-                "AVG(STUDENT_TUTORIALS.MARK) AS 'AVGMARK' from CLASSES LEFT OUTER JOIN STUDENTS" +
+                "AVG(STUDENT_TUTORIALS.MARK) AS 'AVGMARK', AVG(STUDENT_TUTORIALS.PARTICIPATION)" +
+                " AS 'PART' from CLASSES LEFT OUTER JOIN STUDENTS" +
                 " ON (CLASSES.CLASS_ID = STUDENTS.CLASS) LEFT OUTER JOIN STUDENT_TUTORIALS ON " +
                 "(STUDENTS.ZID = STUDENT_TUTORIALS.ZID) GROUP BY CLASSES.CLASS_ID", null);
 
@@ -98,7 +100,8 @@ public class ClassList extends AppCompatActivity {
                     c.getString(c.getColumnIndex(DBOpenHelper.CLASSES_TUTOR)),
                     c.getString(c.getColumnIndex(DBOpenHelper.CLASSES_LOCATION)),
                     c.getInt(c.getColumnIndex("TOTAL")),
-                    c.getDouble(c.getColumnIndex("AVGMARK"))));
+                    c.getDouble(c.getColumnIndex("AVGMARK")),
+                    c.getInt(c.getColumnIndex("PART"))));
         }
 
         // Fill list

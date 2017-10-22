@@ -9,8 +9,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.example.xwc.tutorapp.Controllers.StudentProfile;
 import com.example.xwc.tutorapp.Model.Class;
 import com.example.xwc.tutorapp.Model.StudentTutorial;
 import com.example.xwc.tutorapp.R;
@@ -34,14 +37,31 @@ public class TutorialStudentAdapter extends ArrayAdapter<StudentTutorial> {
         TextView lblStudent = (TextView) listItemView.findViewById(R.id.v_studentName);
         TextView lblStatus = (TextView) listItemView.findViewById(R.id.v_studentStatus);
         lblStudent.setText(currentST.getFirstName() + " " + currentST.getLastName() + " - " + currentST.getMzID());
-
+        LinearLayout itemLayout = (LinearLayout) listItemView.findViewById(R.id.studentLLayout);
+        ImageView imgStudent = listItemView.findViewById(R.id.imgStudent_LV);
         if (currentST.ismAbsent()) {
             lblStatus.setText("Absent");
+            itemLayout.setBackgroundResource(R.drawable.layout_absent);
         } else if (currentST.ismLate()) {
-            lblStatus.setText("Current Mark: " + currentST.getmMark() + " (Late)");
+            if (currentST.getParticipation() > 0) {
+                lblStatus.setText("Current Mark: " + currentST.getmMark() + " (Participated & Late)");
+                itemLayout.setBackgroundResource(R.drawable.layout_part);
+            } else {
+                lblStatus.setText("Current Mark: " + currentST.getmMark() + " (Late)");
+            }
+            itemLayout.setBackgroundResource(R.drawable.layout_late);
         } else {
-            lblStatus.setText("Current Mark: " + currentST.getmMark());
+            if (currentST.getParticipation() > 0) {
+                lblStatus.setText("Current Mark: " + currentST.getmMark() + " (Participated)");
+                itemLayout.setBackgroundResource(R.drawable.layout_part);
+            } else {
+                lblStatus.setText("Current Mark: " + currentST.getmMark());
+            }
         }
+
+
+
+        imgStudent.setImageBitmap(StudentProfile.getImage(currentST.getmImg()));
 
         return listItemView;
     }

@@ -8,7 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.*;
 import android.content.Intent;
-
+import android.graphics.BitmapFactory;
 import com.example.xwc.tutorapp.Adapters.ClassAdapter;
 import com.example.xwc.tutorapp.Adapters.TutorialStudentAdapter;
 import com.example.xwc.tutorapp.Database.ClassProvider;
@@ -80,9 +80,9 @@ public class TutorialStudentList extends AppCompatActivity {
                 Intent i = new Intent(getBaseContext(), TutorialStudentEditor.class);
                 i.putExtra("TUTORIALID", s.getmTutorialID());
                 i.putExtra("ZID", s.getMzID());
-                i.putExtra("LATE", s.ismLate());
+                i.putExtra("LATE", s.ismLate() ? 1 : 0);
                 i.putExtra("GRADE", Double.toString(s.getmMark()));
-                i.putExtra("ABSENT", s.ismAbsent());
+                i.putExtra("ABSENT", s.ismAbsent() ? 1 : 0);
                 i.putExtra("NAME", s.getFirstName() + " " + s.getLastName());
                 i.putExtra("PART",Integer.toString(s.getParticipation()));
                 startActivity(i);
@@ -94,7 +94,6 @@ public class TutorialStudentList extends AppCompatActivity {
 
         Intent i = getIntent();
         currClass = i.getStringExtra("CLASSID");
-
         if (i.hasExtra("TUTORIALID")) {
             // We're displaying a historical recordset
             currTutorialID = i.getStringExtra("TUTORIALID");
@@ -129,10 +128,11 @@ public class TutorialStudentList extends AppCompatActivity {
                 while (c != null && c.moveToNext()) {
                     insertValues = new ContentValues();
                     insertValues.put(DBOpenHelper.STUDENTS_TUTORIALS_ZID, c.getString(c.getColumnIndex(DBOpenHelper.STUDENTS_ZID)));
-                    insertValues.put(DBOpenHelper.STUDENTS_TUTORIALS_ABSENT, "false");
-                    insertValues.put(DBOpenHelper.STUDENTS_TUTORIALS_LATE, "false");
+                    insertValues.put(DBOpenHelper.STUDENTS_TUTORIALS_ABSENT, 0);
+                    insertValues.put(DBOpenHelper.STUDENTS_TUTORIALS_LATE, 0);
                     insertValues.put(DBOpenHelper.STUDENTS_TUTORIALS_MARK, 0);
                     insertValues.put(DBOpenHelper.STUDENTS_TUTORIALS_TUTORIAL_ID, tutorialID);
+                    insertValues.put(DBOpenHelper.STUDENTS_TUTORIALS_PARTICIPATION, 0);
                     getContentResolver().insert(StudentTutorialProvider.CONTENT_URI, insertValues);
                 }
                 currTutorialID = tutorialID;
@@ -149,24 +149,7 @@ public class TutorialStudentList extends AppCompatActivity {
                 getContentResolver().delete(TutorialProvider.CONTENT_URI, DBOpenHelper.TUTORIALS_ID + " = ?" + " AND " + DBOpenHelper.TUTORIALS_CLASS + " = ?",
                         new String[]{currTutorialID, currentClass});
                 database.execSQL("DELETE FROM STUDENT_TUTORIALS WHERE TUTORIAL_ID = ? AND ZID IN (SELECT ZID FROM STUDENTS WHERE CLASS = ?)", new String[]{currTutorialID, currentClass});
-                Cursor c = getContentResolver().query(ClassProvider.CONTENT_URI, DBOpenHelper.CLASSES_ALL_COLUMNS, DBOpenHelper.CLASSES_CLASS_ID + "=?", new String[]{currentClass}, null);
-                while (c != null && c.moveToNext()) {
-                 returnClass =  new Class(currentClass,
-                            c.getString(c.getColumnIndex(DBOpenHelper.CLASSES_DAY)),
-                            c.getString(c.getColumnIndex(DBOpenHelper.CLASSES_STARTTIME)),
-                            c.getString(c.getColumnIndex(DBOpenHelper.CLASSES_ENDTIME)),
-                            c.getString(c.getColumnIndex(DBOpenHelper.CLASSES_TUTOR)),
-                            c.getString(c.getColumnIndex(DBOpenHelper.CLASSES_LOCATION)),
-                    0,0);
-                }
                 finish();
-                Intent i = new Intent(getBaseContext(), ClassMenu.class);
-                i.putExtra("CLASSID", currentClass);
-                i.putExtra("DAY", returnClass.getDay());
-                i.putExtra("STARTTIME", returnClass.getStartTime());
-                i.putExtra("ENDTIME", returnClass.getEndTime());
-                i.putExtra("LOCATION", returnClass.getLocation());
-                startActivity(i);
             }
 
         });
@@ -186,8 +169,9 @@ public class TutorialStudentList extends AppCompatActivity {
                 new String[]{currTutorialID}, null);
 
         students.clear();
-
+        int count = 0;
         while (c != null && c.moveToNext()) {
+            //Log.d("XWCABC", c.getString(c.getColumnIndex(DBOpenHelper.STUDENTS_TUTORIALS_TUTORIAL_ID))+":" + count++);
             Cursor c2 = getContentResolver().query(StudentProvider.CONTENT_URI,
                     DBOpenHelper.STUDENTS_ALL_COLUMNS,
                     "ZID = ? AND CLASS = ?",
@@ -196,15 +180,17 @@ public class TutorialStudentList extends AppCompatActivity {
 
                 String studentFirstName = c2.getString(c2.getColumnIndex(DBOpenHelper.STUDENTS_FIRSTNAME));
                 String studentLastName = c2.getString(c2.getColumnIndex(DBOpenHelper.STUDENTS_SURNAME));
+                byte[] studentImg = c2.getBlob(c2.getColumnIndex(DBOpenHelper.STUDENTS_PICTURE));
 
                 students.add(new StudentTutorial(c.getString(c.getColumnIndex(DBOpenHelper.STUDENTS_TUTORIALS_ZID)),
                         studentFirstName,
                         studentLastName,
                         c.getString(c.getColumnIndex(DBOpenHelper.STUDENTS_TUTORIALS_TUTORIAL_ID)),
-                        c.getString(c.getColumnIndex(DBOpenHelper.STUDENTS_TUTORIALS_LATE)).equals("true"),
-                        c.getString(c.getColumnIndex(DBOpenHelper.STUDENTS_TUTORIALS_ABSENT)).equals("true"),
+                        c.getInt(c.getColumnIndex(DBOpenHelper.STUDENTS_TUTORIALS_LATE))==1,
+                        c.getInt(c.getColumnIndex(DBOpenHelper.STUDENTS_TUTORIALS_ABSENT))==1,
                         c.getDouble(c.getColumnIndex(DBOpenHelper.STUDENTS_TUTORIALS_MARK)),
-                        c.getInt(c.getColumnIndex(DBOpenHelper.STUDENTS_TUTORIALS_PARTICIPATION))
+                        c.getInt(c.getColumnIndex(DBOpenHelper.STUDENTS_TUTORIALS_PARTICIPATION)),
+                        studentImg
                 ));
             }
         }

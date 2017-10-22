@@ -44,7 +44,7 @@ public class StudentProfile extends AppCompatActivity {
     private EditText txtFirstName;
     private EditText txtSurname;
     private Spinner cboSkill;
-
+    private TextView lblPart;
     private Button btnUpdate;
     private Button btnDelete;
     private ImageView imgStudent;
@@ -68,7 +68,7 @@ public class StudentProfile extends AppCompatActivity {
         txtFirstName = (EditText) findViewById(R.id.txtStudentFirstname);
         txtSurname = (EditText) findViewById(R.id.txtStudentSurname);
         cboSkill = (Spinner) findViewById(R.id.cboCodingSkill);
-
+        lblPart = (TextView) findViewById(R.id.lblPart);
         btnUpdate = (Button) findViewById(R.id.btnUpdateStudent);
         btnDelete = (Button) findViewById(R.id.btnDeleteStudent);
 
@@ -130,8 +130,8 @@ public class StudentProfile extends AppCompatActivity {
                 String studentToDelete = txtZID.getText().toString();
                 getContentResolver().delete(StudentProvider.CONTENT_URI, DBOpenHelper.STUDENTS_ZID + "=?", new String[]{studentToDelete});
                 getContentResolver().delete(StudentTutorialProvider.CONTENT_URI, DBOpenHelper.STUDENTS_TUTORIALS_ZID + "=?", new String[]{studentToDelete});
-                Intent i = new Intent(getBaseContext(), StudentManager.class);
-                startActivity(i);
+                setResult(TutorialStudentEditor.DELETE_STUDENT, null);
+                finish();
             }
         });
 
@@ -161,14 +161,13 @@ public class StudentProfile extends AppCompatActivity {
             btnUpdate.setText("Update");
             btnDelete.setVisibility(View.VISIBLE);
             byte[] img = i.getByteArrayExtra("PICTURE");
-            if (img != null) {
-                imgStudent.setImageBitmap(getImage(img));
-            }
+            imgStudent.setImageBitmap(getImage(img));
         } else {
             updating_student = null;
             btnUpdate.setText("Add");
             btnDelete.setVisibility(View.INVISIBLE);
             lblGrade.setText("n/a");
+            imgStudent.setImageBitmap(getImage(null));
         }
 
 
@@ -179,11 +178,14 @@ public class StudentProfile extends AppCompatActivity {
             gradeLabel.setVisibility(View.VISIBLE);
             lblGrade.setVisibility(View.VISIBLE);
             // Calculate avg grade
-            Cursor cc = DBOpenHelper.runSQL("select AVG(STUDENT_TUTORIALS.MARK) AS 'AVGMARK' FROM STUDENT_TUTORIALS" +
+            Cursor cc = DBOpenHelper.runSQL("select AVG(STUDENT_TUTORIALS.MARK) AS 'AVGMARK'" +
+                    ", AVG(STUDENT_TUTORIALS.PARTICIPATION) AS 'AVGPART' FROM STUDENT_TUTORIALS" +
                     " INNER JOIN STUDENTS ON (STUDENTS.ZID = STUDENT_TUTORIALS.ZID) WHERE " +
                     "STUDENTS.ZID = ?", new String[]{i.getStringExtra("ZID")});
             if (cc != null && cc.moveToNext()) {
                 lblGrade.setText(cc.getString(cc.getColumnIndex("AVGMARK")));
+                lblPart.setText(cc.getString(cc.getColumnIndex("AVGPART")));
+
             }
         }
     }
@@ -230,7 +232,13 @@ public class StudentProfile extends AppCompatActivity {
 
     // convert from byte array to bitmap
     public static Bitmap getImage(byte[] image) {
-        return BitmapFactory.decodeByteArray(image, 0, image.length);
+        if (image == null || image.length < 10) {
+            return BitmapFactory.decodeResource(MainActivity.appContext.getResources(),
+                        R.drawable.smarttutor);
+        } else {
+            return BitmapFactory.decodeByteArray(image, 0, image.length);
+        }
+
     }
 
 

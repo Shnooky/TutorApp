@@ -74,9 +74,8 @@ public class ClassAdder extends AppCompatActivity {
                         getContentResolver().insert(ClassProvider.CONTENT_URI,
                                 insertValues);
                     }
+                    setResult(RESULT_OK, null);
                     finish();
-                    Intent intent = new Intent(getBaseContext(), ClassList.class);
-                    startActivity(intent);
                 } else {
                     Toast.makeText(getApplicationContext(),error,Toast.LENGTH_LONG).show();
                 }
@@ -87,9 +86,8 @@ public class ClassAdder extends AppCompatActivity {
             public void onClick(View v) {
                 getContentResolver().delete(ClassProvider.CONTENT_URI,
                             DBOpenHelper.CLASSES_CLASS_ID + " = ?", new String[] {updating_class_id});
+                setResult(ClassMenu.DELETE_CLASS, null);
                 finish();
-                Intent intent = new Intent(getBaseContext(),ClassList.class);
-                startActivity(intent);
             }
         });
 
@@ -110,7 +108,6 @@ public class ClassAdder extends AppCompatActivity {
             btnDelete.setVisibility(View.INVISIBLE);
             updating_class_id = null;
         }
-
     }
 
     private String generateID() {
