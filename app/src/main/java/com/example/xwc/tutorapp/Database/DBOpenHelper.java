@@ -14,7 +14,7 @@ import android.graphics.Bitmap;
 import com.example.xwc.tutorapp.Controllers.MainActivity;
 
 /**
- * Created by Jacob on 16/10/2017.
+ * Created by Jacob and James on 16/10/2017.
  */
 
 public class DBOpenHelper extends SQLiteOpenHelper {
@@ -66,6 +66,7 @@ public class DBOpenHelper extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "tutor.db";
     private static final int DATABASE_VERSION = 2;
 
+    //Classes table creation
     private static final String CLASS_CREATE = "CREATE TABLE IF NOT EXISTS "+TABLE_CLASSES+" " +
             "("+ CLASSES_CLASS_ID +" TEXT, " +
             CLASSES_DAY + " TEXT, " +
@@ -74,11 +75,14 @@ public class DBOpenHelper extends SQLiteOpenHelper {
             CLASSES_TUTOR + " TEXT, " +
             CLASSES_LOCATION + " TEXT);";
 
+    //Dummy data for Classes
     private static final String DUMMY_CLASSES = "INSERT INTO "+TABLE_CLASSES+" (" +
             CLASSES_CLASS_ID+", "+CLASSES_DAY+", "+CLASSES_STARTTIME+", "+CLASSES_ENDTIME+", "+CLASSES_TUTOR+", "+CLASSES_LOCATION+") VALUES (" +
             "'W12A', 'Wed', '1200', '1400', 'TUTOR', 'ASB'), (" +
             "'W15A', 'Wed', '1500', '1700', 'TUTOR', 'QUAD')";
 
+
+    //Students table creation
     private static final String STUDENT_CREATE = "CREATE TABLE IF NOT EXISTS "+TABLE_STUDENTS+" " +
             "(" + STUDENTS_ZID + " TEXT, " +
             STUDENTS_FIRSTNAME + " TEXT, " +
@@ -87,6 +91,8 @@ public class DBOpenHelper extends SQLiteOpenHelper {
             STUDENTS_CLASS + " TEXT, " +
             STUDENTS_PICTURE + " BLOB);";
 
+
+    //Dummy data for students
     private static final String DUMMY_STUDENTS = "INSERT INTO "+TABLE_STUDENTS+" (" +
             STUDENTS_ZID+", "+STUDENTS_FIRSTNAME+", "+STUDENTS_SURNAME+", "+STUDENTS_SKILL+", "+STUDENTS_CLASS+", "+STUDENTS_PICTURE+") VALUES (" +
             "'Z5019998', 'Jacob', 'Meyerowitz','Exceptional','W12A','???'), (" +
@@ -98,12 +104,15 @@ public class DBOpenHelper extends SQLiteOpenHelper {
             "'Z5014883', 'Yenni', 'Tim','Exceptional','W12A','???'), (" +
             "'Z5014885', 'Yeye', 'Jiang','High','W15A','???')";
 
+
+    //Tutorial table creation
     private static final String TUTORIAL_CREATE = "CREATE TABLE IF NOT EXISTS "+TABLE_TUTORIALS+" " +
             "(" + TUTORIALS_ID + " TEXT, " +
             TUTORIALS_RAWID + " INT, " +
             TUTORIALS_DATE + " TEXT, " +
             TUTORIALS_CLASS + " TEXT);";
 
+    //Dummy data for tutorials
     private static final String DUMMY_TUTORIALS = "INSERT INTO "+TABLE_TUTORIALS+" (" +
             TUTORIALS_ID+", "+TUTORIALS_DATE+", "+TUTORIALS_CLASS+") VALUES (" +
             "'Tutorial 3', '11/10/2017', 'W12A'), (" +
@@ -113,6 +122,10 @@ public class DBOpenHelper extends SQLiteOpenHelper {
             "'Tutorial 2', '04/10/2017', 'W15A'), (" +
             "'Tutorial 1', '27/09/2017', 'W15A')";
 
+
+    /*Bridging entity (between Tutorial and Students) represents many-to-many relationship between Students and Tutorials
+    i.e. many students attend many tutorials.
+     */
     private static final String TUTORIAL_STUDENT_CREATE = "CREATE TABLE IF NOT EXISTS "+TABLE_STUDENT_TUTORIALS+" " +
             "("+STUDENTS_TUTORIALS_TUTORIAL_ID+" TEXT, " +
             STUDENTS_TUTORIALS_ZID + " TEXT, " +
@@ -121,6 +134,7 @@ public class DBOpenHelper extends SQLiteOpenHelper {
             STUDENTS_TUTORIALS_MARK + " DOUBLE, " +
             STUDENTS_TUTORIALS_PARTICIPATION+" INT);";
 
+    //Dummy data for briding entity
     private static final String DUMMY_TUTORIAL_STUDENTS = "INSERT INTO "+TABLE_STUDENT_TUTORIALS+" (" +
             STUDENTS_TUTORIALS_TUTORIAL_ID+", "+STUDENTS_TUTORIALS_ZID+", "+STUDENTS_TUTORIALS_LATE+", "+STUDENTS_TUTORIALS_ABSENT+", "+
             STUDENTS_TUTORIALS_MARK+", "+STUDENTS_TUTORIALS_PARTICIPATION+") VALUES (" +
@@ -155,7 +169,6 @@ public class DBOpenHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        //need to check if database already exists, if it doesn't, then execute the following:
         db.execSQL(CLASS_CREATE);
         db.execSQL(STUDENT_CREATE);
         db.execSQL(TUTORIAL_STUDENT_CREATE);
@@ -171,6 +184,7 @@ public class DBOpenHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
+    //Should only be called on requested (linked to a TextView on MainActivity)
     public void createDummyData(SQLiteDatabase db) {
         onUpgrade(db,1,1);
         db.execSQL(DUMMY_CLASSES);
@@ -214,6 +228,7 @@ public class DBOpenHelper extends SQLiteOpenHelper {
 
     }
 
+    //Can be called and used to run raw SQL queries and surpass ContentProvider limitations.
     public static Cursor runSQL(String sql, String[] args) {
         DBOpenHelper helper = new DBOpenHelper(MainActivity.appContext);
         SQLiteDatabase database = helper.getWritableDatabase();

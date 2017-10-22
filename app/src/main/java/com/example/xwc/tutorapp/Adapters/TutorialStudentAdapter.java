@@ -1,7 +1,8 @@
 package com.example.xwc.tutorapp.Adapters;
 
 /**
- * Created by Jacob on 15/10/2017.
+ * Created by Jacob and James on 15/10/2017.
+ * Custom adapter for Students, Tutorial-level
  */
 
 import android.content.Context;
@@ -58,8 +59,6 @@ public class TutorialStudentAdapter extends ArrayAdapter<StudentTutorial> {
                 lblStatus.setText("Mark: " + currentST.getmMark());
             }
         }
-
-
 
         imgStudent.setImageBitmap(StudentProfile.getImage(currentST.getmImg()));
 

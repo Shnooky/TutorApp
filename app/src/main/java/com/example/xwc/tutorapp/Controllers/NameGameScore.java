@@ -10,9 +10,9 @@ import com.example.xwc.tutorapp.R;
 
 
 /**
- * Created by jameszhang on 20/10/2017.
+ * Created by Jacob and James on 20/10/2017.
+ * Displays the user's score.
  */
-
 public class NameGameScore extends AppCompatActivity {
     private TextView lblScore;
     private Button btnEnd;
@@ -26,6 +26,7 @@ public class NameGameScore extends AppCompatActivity {
         Intent i = getIntent();
         String scoreText = i.getIntExtra("SCORE", 0) + " out of " + i.getIntExtra("TOTAL", 0);
         lblScore.setText(scoreText);
+        //Buttons returns the user back to the home screen (MainActivity)
         btnEnd = (Button) findViewById(R.id.endGame);
         btnEnd.setOnClickListener(new View.OnClickListener() {
             public void onClick (View v) {

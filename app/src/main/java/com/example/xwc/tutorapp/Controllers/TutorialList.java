@@ -23,7 +23,8 @@ import java.util.ArrayList;
 import java.util.Date;
 
 /**
- * Created by Jacob on 15/10/2017.
+ * Created by Jacob and James on 15/10/2017.
+ * Displays a list of tutorials to the user.
  */
 
 public class TutorialList extends AppCompatActivity {
@@ -48,15 +49,12 @@ public class TutorialList extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.tutorial_activity);
 
+        // Grab references to UI elements
         tutorialListView = (ListView) findViewById(R.id.tutoriallist);
-
         TutorialAdapter adapter = new TutorialAdapter(this, tuts);
-
         tutorialListView.setAdapter(adapter);
-
         Intent intent = getIntent();
        final String currentClass = intent.getStringExtra("CLASSID");
-
         tutorialListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
@@ -71,6 +69,10 @@ public class TutorialList extends AppCompatActivity {
         loadTutorials();
     }
 
+    /*
+    Load tutorials from the database. Due to the complexity of the query (i.e. need to obtain the total absentees and late arrivals),
+     a rawQuery is used instead of ContentProvider methods.
+     */
     private void loadTutorials() {
         Intent intent = getIntent();
         String[] classID = {intent.getStringExtra("CLASSID")};
@@ -84,8 +86,6 @@ public class TutorialList extends AppCompatActivity {
                     "WHERE STUDENTS.CLASS = ? GROUP BY CLASSES.CLASS_ID, STUDENT_TUTORIALS.TUTORIAL_ID, TDATE " +
                     "ORDER BY STUDENT_TUTORIALS.TUTORIAL_ID DESC", classID) ;
 
-            // getContentResolver().query(TutorialProvider.CONTENT_URI,
-                    //DBOpenHelper.TUTORIALS_ALL_COLUMNS, DBOpenHelper.TUTORIALS_CLASS +"=?", classID, null);
             tuts.clear();
             while (c != null && c.moveToNext()) {
                 tuts.add(new Tutorial(c.getString(c.getColumnIndex(DBOpenHelper.TUTORIALS_ID)),

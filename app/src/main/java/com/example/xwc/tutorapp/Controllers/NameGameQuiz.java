@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.*;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+
 import com.example.xwc.tutorapp.Adapters.TutorialStudentAdapter;
 import com.example.xwc.tutorapp.Database.DBOpenHelper;
 import com.example.xwc.tutorapp.Database.StudentProvider;
@@ -27,6 +28,10 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 
+/*
+Created by: Jacob and James on 20/10/2017
+Activity that handles the Name Game quiz
+ */
 public class NameGameQuiz extends AppCompatActivity implements View.OnClickListener {
 
     // UI variables
@@ -49,7 +54,7 @@ public class NameGameQuiz extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.namegame_quiz_activity);
-
+// Grab references to UI elements
         btnOption1 = (Button) findViewById(R.id.btnNGOption1);
         btnOption2 = (Button) findViewById(R.id.btnNGOption2);
         btnOption3 = (Button) findViewById(R.id.btnNGOption3);
@@ -68,10 +73,14 @@ public class NameGameQuiz extends AppCompatActivity implements View.OnClickListe
             // Free for all
             studentsList = getStudentsList("*");
         } else {
+            //Class-specific
             String classID = intent.getStringExtra("CLASSID");
             studentsList = getStudentsList(classID);
         }
 
+        /*
+        Prevents the game from starting if there are not enough students enrolled in the class (less than 4)
+         */
         if (studentsList == null) {
             AlertDialog.Builder builder1 = new AlertDialog.Builder(this);
             builder1.setTitle("Name Game");
@@ -98,7 +107,6 @@ public class NameGameQuiz extends AppCompatActivity implements View.OnClickListe
 
         loadNextQ();
     }
-
 
 
     private void loadNextQ() {
@@ -150,15 +158,23 @@ public class NameGameQuiz extends AppCompatActivity implements View.OnClickListe
         restoreAllButtons();
     }
 
+    /*
+    Determine if answer is correct
+     */
     private boolean correctAnswer(int ansIdx) {
         return answers.get(ansIdx).equals(currStudent.getFirstName() + " " + currStudent.getSurname());
     }
 
-    // Button correct/incorrect marker functions
+    /*
+    Mark the answer as correct (green)
+     */
     private void markAsCorrect(int id) {
         ((Button) findViewById(id)).setBackgroundResource(R.drawable.correct_answer);
     }
 
+    /*
+    Mark the answer as incorrect (red)
+    */
     private void markAsIncorrect(int id) {
         ((Button) findViewById(id)).setBackgroundResource(R.drawable.incorrect_answer);
     }
@@ -215,6 +231,10 @@ public class NameGameQuiz extends AppCompatActivity implements View.OnClickListe
         btnNext.setVisibility(View.VISIBLE);
     }
 
+    /*
+    Get the list of Students - logic handles whether we are getting students from one class or combining
+    a list from all classes.
+     */
     private ArrayList<Student> getStudentsList(String classID) {
         ArrayList<Student> students = new ArrayList<>();
 
@@ -238,7 +258,7 @@ public class NameGameQuiz extends AppCompatActivity implements View.OnClickListe
 
         students.clear();
 
-        while (c!= null && c.moveToNext()) {
+        while (c != null && c.moveToNext()) {
             students.add(new Student(c.getString(c.getColumnIndex(DBOpenHelper.STUDENTS_ZID)),
                     c.getString(c.getColumnIndex(DBOpenHelper.STUDENTS_FIRSTNAME)),
                     c.getString(c.getColumnIndex(DBOpenHelper.STUDENTS_SURNAME)),
@@ -246,7 +266,7 @@ public class NameGameQuiz extends AppCompatActivity implements View.OnClickListe
                     c.getString(c.getColumnIndex(DBOpenHelper.STUDENTS_CLASS)),
                     0,
                     c.getBlob(c.getColumnIndex(DBOpenHelper.STUDENTS_PICTURE))
-                    ));
+            ));
         }
 
         return students;

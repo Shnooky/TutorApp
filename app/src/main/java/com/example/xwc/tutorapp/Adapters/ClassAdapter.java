@@ -1,7 +1,8 @@
 package com.example.xwc.tutorapp.Adapters;
 
 /**
- * Created by Jacob on 15/10/2017.
+ * Created by Jacob and James on 15/10/2017.
+ * Custom adapter for Classes
  */
 
 import android.content.Context;
@@ -44,6 +45,7 @@ public class ClassAdapter extends ArrayAdapter<Class> {
         numStuView.setText(Integer.toString(currentClass.getNumStu()));
 
         ImageView image = (ImageView) listItemView.findViewById(R.id.classImage);
+        //Place a random symbol.
         Random rn = new Random();
         switch(rn.nextInt(3)+1) {
             case 1:

@@ -9,18 +9,19 @@ import com.example.xwc.tutorapp.Database.DBOpenHelper;
 import com.example.xwc.tutorapp.Database.StudentProvider;
 import android.content.ContentResolver;
 /**
- * Created by Jacob on 15/10/2017.
+ * Created by Jacob and James on 15/10/2017.
+ * Java Bean for Student-Tutorial adapter
  */
 
 public class StudentTutorial {
-    private String mzID;
-    private String firstName;
-    private String lastName;
-    private String mTutorialID;
-    private boolean mLate;
-    private boolean mAbsent;
-    private double mMark;
-    private int mParticipation;
+    private String mzID; //ZID of student
+    private String firstName; //student first name
+    private String lastName; //student surname
+    private String mTutorialID; //attended tutorial
+    private boolean mLate; //whether student was late
+    private boolean mAbsent; //whether student was absent
+    private double mMark; //mark for that tutorial
+    private int mParticipation; //participation status for that tutorial
 
     public byte[] getmImg() {
         return mImg;

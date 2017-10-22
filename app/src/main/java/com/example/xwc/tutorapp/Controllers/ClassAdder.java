@@ -1,7 +1,8 @@
 package com.example.xwc.tutorapp.Controllers;
 
 /**
- * Created by jameszhang on 17/10/2017.
+ * Created by Jacob and James on 17/10/2017.
+ * Screen for Adding or Updating a Class
  */
 
 import android.database.Cursor;
@@ -44,7 +45,10 @@ public class ClassAdder extends AppCompatActivity {
         txtStartTime = (EditText) findViewById(R.id.txtStartTime);
         txtEndTime = (EditText) findViewById(R.id.txtEndTime);
         txtDay = (Spinner) findViewById(R.id.txtDay);
+        Button add_class_button = (Button) findViewById(R.id.btnAddNewClass);
+        Button btnDelete = (Button) findViewById(R.id.btnDeleteClass);
 
+        //Creating Spinner and adding drop-down options
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_spinner_item, new String[] {
                 "Mon", "Tue", "Wed", "Thu", "Fri"
@@ -52,11 +56,9 @@ public class ClassAdder extends AppCompatActivity {
         txtDay.setAdapter(adapter);
         txtLocation = (EditText) findViewById(R.id.txtLocation);
 
-        Button add_class_button = (Button) findViewById(R.id.btnAddNewClass);
-        Button btnDelete = (Button) findViewById(R.id.btnDeleteClass);
-
-
-        // Set events for UI elements
+        /* Set OnClickListener for Add Button - validates input before adding data to the database.
+        Different ContentProvider methods are called depending on whether the class is being updated or created.
+         */
         add_class_button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 String error = validateInput();
@@ -86,7 +88,6 @@ public class ClassAdder extends AppCompatActivity {
                     i.putExtra("STARTTIME", txtStartTime.getText().toString());
                     i.putExtra("ENDTIME", txtEndTime.getText().toString());
                     i.putExtra("LOCATION", txtLocation.getText().toString());
-
                     setResult(ClassMenu.UPDATE_CLASS, i);
                     finish();
                 } else {
@@ -95,6 +96,8 @@ public class ClassAdder extends AppCompatActivity {
             }
         });
 
+        /* Set OnClickListener for Delete button
+         */
         btnDelete.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Cursor c = DBOpenHelper.runSQL("select * from STUDENTS where CLASS = ?", new String[]{updating_class_id});
@@ -138,6 +141,12 @@ public class ClassAdder extends AppCompatActivity {
         }
     }
 
+    /*
+    Automatically generate the ID for the Class based on Day and Start time. This follows how UNSW's generates a Section ID for each course tutorial.
+    If classes occur on the same day and time, the end character will be incremented using ASCII manipulation.
+    For example: A class on Monday at 12pm will have an ID of M12A, another class on the same day and time (probably in a different location)
+    will have an ID of M12B
+     */
     private String generateID() {
         String day = txtDay.getSelectedItem().toString();
         String dayTrunc = "";
@@ -173,6 +182,10 @@ public class ClassAdder extends AppCompatActivity {
         return dayTrunc+startTime.substring(0,2)+newEndChar;
     }
 
+    /* Validate input by ensuring that there are no blank fields and that the starttime and endtime are entered correctly.
+    Validation on day field is not necessary as the Spinner ensured that data entry is valid.
+    If the data entered is invalid, the caller method creates a Toast to alert the user.
+     */
     private String validateInput() {
         String error="";
         String checkID = txtCourse.getText().toString();
@@ -187,6 +200,7 @@ public class ClassAdder extends AppCompatActivity {
         return error;
     }
 
+    //Sets the Spinner to the correct value according to what is stored in the database.
     private int determineDay(String day) {
         int returnDay = 0;
         switch (day) {

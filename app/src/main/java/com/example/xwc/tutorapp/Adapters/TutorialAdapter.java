@@ -21,7 +21,8 @@ import java.util.List;
 import java.util.Random;
 
 /**
- * Created by Jacob on 15/10/2017.
+ *  Created by Jacob and James on 15/10/2017.
+ * Custom adapter for Tutorials
  */
 
 public class TutorialAdapter extends ArrayAdapter<Tutorial> {
@@ -30,8 +31,6 @@ public class TutorialAdapter extends ArrayAdapter<Tutorial> {
         super(context,0,tutorials);
     }
 
-    @NonNull
-    @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         View listItemView = convertView;
         if (listItemView == null) {
@@ -50,6 +49,7 @@ public class TutorialAdapter extends ArrayAdapter<Tutorial> {
         latesView.setText(Integer.toString(currentTutorial.getLates()));
 
         ImageView image = (ImageView) listItemView.findViewById(R.id.tutImage);
+        //Randomly change the colour of the symbol
         Random rn = new Random();
         switch(rn.nextInt(4-1+1)+1) {
             case 1:

@@ -21,7 +21,10 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-
+/*
+Created by: Jacob and James on 15/10/2017
+Upon choosing a class, the user arrives to the Class Menu, allowing them to view a history of tutorial rolls, start a new tutorial or edit a class's details.
+ */
 public class ClassMenu extends AppCompatActivity implements View.OnClickListener {
     public static final int EDIT_CLASS = 100;
     public static final int DELETE_CLASS = 101;
@@ -42,6 +45,7 @@ public class ClassMenu extends AppCompatActivity implements View.OnClickListener
         super.onCreate(savedInstanceState);
         setContentView(R.layout.class_menu);
 
+        // Grab references to UI elements
         className = (TextView) findViewById(R.id.ClassName);
         viewRollHistory = (Button) findViewById(R.id.rollHistory);
         viewRollHistory.setOnClickListener(this);
@@ -51,31 +55,39 @@ public class ClassMenu extends AppCompatActivity implements View.OnClickListener
         startTutorial.setOnClickListener(this);
 
 
-
+/*
+Get information from the intent
+ */
         Intent intent = getIntent();
         if (intent.hasExtra("CLASSID")) {
             setupClassUI(intent);
         }
     }
 
+    /*
+    Method dedicated to seting up the UI based on the Intent
+     */
     public void setupClassUI(Intent intent) {
         String thisClassName = intent.getStringExtra("CLASSID");
         String thisClassDay = intent.getStringExtra("DAY");
         String thisClassStart = intent.getStringExtra("STARTTIME");
         String thisClassEnd = intent.getStringExtra("ENDTIME");
         String thisClassLocation = intent.getStringExtra("LOCATION");
-        thisClass = new Class(thisClassName,thisClassDay,thisClassStart,thisClassEnd,"",thisClassLocation,22,0.0, 0);
+        thisClass = new Class(thisClassName, thisClassDay, thisClassStart, thisClassEnd, "", thisClassLocation, 22, 0.0, 0);
         className.setText(thisClass.getClassId() + " " + thisClass.getDay() + " " + thisClass.getStartTime() +
                 "-" + thisClass.getEndTime() + " " + thisClass.getLocation());
     }
 
+    /*
+    Set OnClickListener's for Roll History, New Tutorial or Edit Class.
+     */
     @Override
     public void onClick(View v) {
         Intent intent = null;
 
         switch (v.getId()) {
             case R.id.rollHistory:
-                if(CommonMethods.hasTutorials(thisClass.getClassId())) {
+                if (CommonMethods.hasTutorials(thisClass.getClassId())) {
                     intent = new Intent(this, TutorialList.class);
                     intent.putExtra("CLASSID", thisClass.getClassId());
                     intent.putExtra("DAY", thisClass.getDay());
@@ -87,7 +99,7 @@ public class ClassMenu extends AppCompatActivity implements View.OnClickListener
                 }
                 break;
             case R.id.newTut:
-                if(CommonMethods.hasStudents(thisClass.getClassId())) {
+                if (CommonMethods.hasStudents(thisClass.getClassId())) {
                     intent = new Intent(this, TutorialStudentList.class);
                     intent.putExtra("CLASSID", thisClass.getClassId());
                 } else {
@@ -111,6 +123,9 @@ public class ClassMenu extends AppCompatActivity implements View.OnClickListener
         }
     }
 
+    /*
+   If the class exists, reset the UI (this prevents the menu from being shown if a class has been deleted)
+    */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 

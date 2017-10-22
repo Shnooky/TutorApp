@@ -19,6 +19,11 @@ import android.util.Log;
 import android.view.View;
 import android.widget.*;
 
+/*
+Created by: Jacob and James on 20/10/2017
+Student manager on the tutorial level - allows user to edit participation and grade for the tutorial,
+as well as attendance information (attended vs. absent vs. late), begin a consultation, or view their profile.
+ */
 public class TutorialStudentEditor extends AppCompatActivity {
     public static final int EDIT_STUDENT = 200;
     public static final int DELETE_STUDENT = 201;
@@ -47,22 +52,19 @@ public class TutorialStudentEditor extends AppCompatActivity {
         chkAbsent = (RadioButton) findViewById(R.id.chkAbsent);
         chkLate = (RadioButton) findViewById(R.id.chkLate);
         chkPresent = (RadioButton) findViewById(R.id.chkPresent);
-
         txtGrade = (EditText) findViewById(R.id.txtStudentGrade);
-
         btnUpdate = (Button) findViewById(R.id.btnUpdateStudentGrades);
         btnViewProfile = (Button) findViewById(R.id.btnViewStudentProfile);
         btnConsultation = (Button) findViewById(R.id.consultation);
         chkPart = (CheckBox) findViewById(R.id.chkPartSE);
-
         imgStudent = (ImageView) findViewById(R.id.imgStudentTutorial);
-
         lblStudentName = (TextView) findViewById(R.id.lblStudentTutorialName);
         lblStudentZID = (TextView) findViewById(R.id.lblStudentTutorialZID);
 
 
-        // Set up UI Events
-
+        /*
+       Set OnClickListener for Update Button
+        */
         btnUpdate.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 ContentValues insertValues = new ContentValues();
@@ -77,6 +79,9 @@ public class TutorialStudentEditor extends AppCompatActivity {
             }
         });
 
+        /*
+        Brings the user to the student's profile for subsequent updating
+         */
         btnViewProfile.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Cursor c = getContentResolver().query(StudentProvider.CONTENT_URI,
@@ -97,6 +102,9 @@ public class TutorialStudentEditor extends AppCompatActivity {
             }
         });
 
+        /*
+        Starts a consultation with the student.
+         */
         btnConsultation.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Cursor c = getContentResolver().query(StudentProvider.CONTENT_URI,
@@ -112,14 +120,12 @@ public class TutorialStudentEditor extends AppCompatActivity {
             }
         });
 
-
+// Setup UI
         Intent i = getIntent();
         currTutorialID = i.getStringExtra("TUTORIALID");
         currZID = i.getStringExtra("ZID");
         lblStudentZID.setText(i.getStringExtra("ZID"));
         lblStudentName.setText(i.getStringExtra("NAME"));
-
-        // Setup UI
         chkLate.setChecked(i.getIntExtra("LATE", 0) == 1);
         chkAbsent.setChecked(i.getIntExtra("ABSENT", 0) == 1);
         chkPresent.setChecked(!chkLate.isChecked() && !chkAbsent.isChecked()); // if none are checked, student must be present
@@ -129,6 +135,9 @@ public class TutorialStudentEditor extends AppCompatActivity {
         imgStudent.setImageBitmap(StudentProfile.getImage(i.getByteArrayExtra("IMG")));
     }
 
+    /*
+    If we are deleting a student, we don't want this screen to display itself.
+     */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == EDIT_STUDENT) {

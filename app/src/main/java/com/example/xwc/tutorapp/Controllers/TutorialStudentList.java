@@ -29,9 +29,9 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 /**
- * Created by Jacob, but really created by James on 15/10/2017.
+ * Created by Jacob and James on 15/10/2017.
+ * Display all students enrolled in the class, and their mark and attendance status for the chosen tutorial.
  */
-
 public class TutorialStudentList extends AppCompatActivity {
     private FloatingActionButton delete_tutorial_button;
     ArrayList<StudentTutorial> students = new ArrayList<>();
@@ -70,9 +70,9 @@ public class TutorialStudentList extends AppCompatActivity {
 
         // Grab references to UI elements
         studentsLV = (ListView) findViewById(R.id.studentsList);
+        delete_tutorial_button = (FloatingActionButton) findViewById(R.id.delete_tutorial_button);
 
         // Set events for UI elements
-
         studentsLV.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
@@ -89,10 +89,6 @@ public class TutorialStudentList extends AppCompatActivity {
                 startActivity(i);
             }
         });
-
-        delete_tutorial_button = (FloatingActionButton) findViewById(R.id.delete_tutorial_button);
-
-
         Intent i = getIntent();
         currClass = i.getStringExtra("CLASSID");
         if (i.hasExtra("TUTORIALID")) {
@@ -141,6 +137,10 @@ public class TutorialStudentList extends AppCompatActivity {
         }
         loadStudents();
 
+/*
+Set up OnClickListener for Delete Tutorial Floating action Button - Deletes the tutorial.
+Due to complexity of database structure, a ContentProvider method cannot be used here.
+ */
         delete_tutorial_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -156,6 +156,9 @@ public class TutorialStudentList extends AppCompatActivity {
         });
     }
 
+    /*
+    Loads students from the database
+     */
     private void loadStudents() {
         Intent intent = getIntent();
         if (intent.hasExtra("TUTORIAL_CLASS")) {

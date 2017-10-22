@@ -1,19 +1,20 @@
 package com.example.xwc.tutorapp.Model;
 
 /**
- * Created by Jacob on 15/10/2017.
+ * Created by Jacob and James on 15/10/2017.
+ * Java bean for Classes
  */
 
 public class Class {
-    private String mClassId;
-    private String mDay;
-    private String mStartTime;
-    private String mEndTime;
-    private String mTutor;
-    private String mLocation;
-    private int mNumStu;
-    private double mAverageGrade;
-    private double mPart;
+    private String mClassId; //Section ID
+    private String mDay; //Day of class
+    private String mStartTime; //Class starttime
+    private String mEndTime; //Class end time
+    private String mTutor; //TODO: delete this
+    private String mLocation; //Location of class
+    private int mNumStu; //Number of students in the class
+    private double mAverageGrade; //Average grade of class
+    private double mPart; //TODO: delete this
 
     public Class(String classId, String day, String startTime, String endTime, String tutor, String location, int numStu, double averageGrade,
                  double part) {

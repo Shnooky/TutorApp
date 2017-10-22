@@ -35,7 +35,10 @@ import java.util.Date;
 import java.io.ByteArrayOutputStream;
 
 import android.graphics.Bitmap.CompressFormat;
-
+/*
+Created by: Jacob and James on 15/10/2017
+For Student adding, browsing and editing.
+ */
 public class StudentProfile extends AppCompatActivity {
     private Spinner cboCurrentClass;
     private TextView lblGrade;
@@ -64,7 +67,6 @@ public class StudentProfile extends AppCompatActivity {
         cboCurrentClass = (Spinner) findViewById(R.id.cboStudentClass);
         lblGrade = (TextView) findViewById(R.id.lblStudentGrade);
         gradeLabel = (TextView) findViewById(R.id.gradeLabel);
-
         txtZID = (EditText) findViewById(R.id.txtStudentZID);
         txtFirstName = (EditText) findViewById(R.id.txtStudentFirstname);
         txtSurname = (EditText) findViewById(R.id.txtStudentSurname);
@@ -73,17 +75,14 @@ public class StudentProfile extends AppCompatActivity {
         lblPartLabel = (TextView) findViewById(R.id.lblPartLabel);
         btnUpdate = (Button) findViewById(R.id.btnUpdateStudent);
         btnDelete = (Button) findViewById(R.id.btnDeleteStudent);
-
         imgStudent = (ImageView) findViewById(R.id.imgStudent);
 
-        // Set up UI
-
+        //Creating Spinner and adding drop-down options
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_spinner_item, new String[]{
                 "Low", "Moderate", "High", "Exceptional"
         });
         cboSkill.setAdapter(adapter);
-
         ArrayList<String> classes = new ArrayList<>();
         Cursor c = getContentResolver().query(ClassProvider.CONTENT_URI,
                 DBOpenHelper.CLASSES_ALL_COLUMNS, null, null, null);
@@ -94,8 +93,10 @@ public class StudentProfile extends AppCompatActivity {
                 new ArrayAdapter<String>(
                         this, android.R.layout.simple_spinner_item, classes.toArray(new String[classes.size()])));
 
-        // Set up UI Events
-
+       /*
+       Set OnClickListener for Update Button - validates input before adding data to the database.
+        Different ContentProvider methods are called depending on whether the student is being updated or created.
+        */
         btnUpdate.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 String error = validateInput();
@@ -129,7 +130,8 @@ public class StudentProfile extends AppCompatActivity {
 
             }
         });
-
+/* Set OnClickListener for Delete button
+         */
         btnDelete.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 String studentToDelete = txtZID.getText().toString();
@@ -139,7 +141,10 @@ public class StudentProfile extends AppCompatActivity {
                 finish();
             }
         });
-
+/*
+Set up on Click listener for ImageView - creates an explicit intent to the Camera app.
+As different Photography applications communicate in different ways, it was best to use the standard camera app.
+ */
         imgStudent.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
 
@@ -153,7 +158,6 @@ public class StudentProfile extends AppCompatActivity {
 
 
         // Check if we are adding or updating a student
-
         Intent i = getIntent();
         if (i.hasExtra("ZID")) {
             txtFirstName.setText(i.getStringExtra("FIRSTNAME").toString());
@@ -178,7 +182,7 @@ public class StudentProfile extends AppCompatActivity {
             imgStudent.setImageBitmap(getImage(null));
         }
 
-
+//If we are adding a student, we don't need to show their total grade or total participation mark
         if (i.hasExtra("HideGrades")) {
             lblGrade.setVisibility(View.INVISIBLE);
             gradeLabel.setVisibility(View.INVISIBLE);
@@ -202,6 +206,10 @@ public class StudentProfile extends AppCompatActivity {
         }
     }
 
+    /* Validate input by ensuring that there are no blank fields and that the ZID is entered correctly.
+    Validation on the Class and Coding Level fields are not necessary as the Spinners ensure that data entry is valid.
+    If the data entered is invalid, the caller method creates a Toast to alert the user.
+     */
     private String validateInput() {
         String error = "";
         String checkZID = txtZID.getText().toString();
@@ -217,6 +225,9 @@ public class StudentProfile extends AppCompatActivity {
         return error;
     }
 
+    /*
+    If updating a student's detials, set spinner according to what is contained in the database for that student.
+     */
     private void selectSpinnerValue(Spinner spinner, String myString) {
         int index = 0;
         for (int i = 0; i < spinner.getCount(); i++) {
@@ -227,6 +238,9 @@ public class StudentProfile extends AppCompatActivity {
         }
     }
 
+    /*
+    Waits for a photo to be taken. Once taken, data is sent back to the Smart Tutor app (hence onActivityResult)
+     */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);

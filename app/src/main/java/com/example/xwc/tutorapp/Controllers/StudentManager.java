@@ -1,7 +1,8 @@
 package com.example.xwc.tutorapp.Controllers;
 
 /**
- * Created by jameszhang on 17/10/2017.
+ * Created by Jacob and James on 17/10/2017.
+ * Activity dedicated to Student Search functionalities.
  */
 
 import android.database.Cursor;
@@ -36,7 +37,6 @@ public class StudentManager extends AppCompatActivity {
 
         // Grab references to UI elements
         txtSearch = (EditText) findViewById(R.id.txtSearchStudent);
-
         btnSearch = (Button) findViewById(R.id.btnSearchStudents);
         btnAdd = (Button) findViewById(R.id.btnAddNewStudent);
 
@@ -49,12 +49,14 @@ public class StudentManager extends AppCompatActivity {
                 String firstName = (txtSearch.getText().toString().contains(" ")) ? txtSearch.getText().toString().split(" ")[0] : "";
                 String lastName = (txtSearch.getText().toString().contains(" ")) ? txtSearch.getText().toString().split(" ")[1] : "";
 
+                //search for the student in the database.
                 Cursor c = getContentResolver().query(StudentProvider.CONTENT_URI,
                         DBOpenHelper.STUDENTS_ALL_COLUMNS, DBOpenHelper.STUDENTS_ZID +
                                 " = ? OR (" + DBOpenHelper.STUDENTS_FIRSTNAME
                         + "=? AND " + DBOpenHelper.STUDENTS_SURNAME + " = ?)",
                         new String[]{zid, firstName, lastName}, null);
 
+                //if student found, create an intent with the data, to be sent to the StudentProfile activity.
                 if (c!= null && c.moveToNext()) {
                     Intent i = new Intent(getBaseContext(), StudentProfile.class);
                     i.putExtra("ZID", c.getString(c.getColumnIndex(DBOpenHelper.STUDENTS_ZID)));
@@ -67,11 +69,15 @@ public class StudentManager extends AppCompatActivity {
                     i.putExtra("SKILL", c.getString(c.getColumnIndex(DBOpenHelper.STUDENTS_SKILL)));
                     startActivity(i);
                 } else {
+                    //If no student found, show a Toast message.
                     CommonMethods.showToast("No student found");
                 }
             }
         });
 
+        /*
+        Creates an empty StudentProfile activity ready for data to be added.
+         */
         btnAdd.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Intent i = new Intent(getBaseContext(), StudentProfile.class);
