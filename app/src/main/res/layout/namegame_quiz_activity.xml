@@ -31,7 +31,9 @@
         app:layout_constraintTop_toBottomOf="@+id/btnNGOption1"
         app:layout_constraintHorizontal_bias="0.508"
         android:textColor="#ffff"
-        android:background="@drawable/regular_answer"/>
+        android:background="@drawable/regular_answer"
+        android:elevation="5dp"
+        android:stateListAnimator="@null"/>
 
     <Button
         android:id="@+id/btnNGOption4"
@@ -49,7 +51,9 @@
         android:layout_marginBottom="8dp"
         app:layout_constraintVertical_bias="0.0"
         android:textColor="#ffff"
-        android:background="@drawable/regular_answer"/>
+        android:background="@drawable/regular_answer"
+        android:elevation="5dp"
+        android:stateListAnimator="@null"/>
 
     <Button
         android:id="@+id/btnNGOption3"
@@ -65,6 +69,8 @@
         app:layout_constraintTop_toBottomOf="@+id/btnNGOption2"
         android:textColor="#ffff"
         android:background="@drawable/regular_answer"
+        android:elevation="5dp"
+        android:stateListAnimator="@null"
         />
 
     <Button
@@ -80,7 +86,9 @@
         app:layout_constraintTop_toBottomOf="@+id/imgNGStudent"
         app:layout_constraintHorizontal_bias="0.508"
         android:textColor="#ffff"
-        android:background="@drawable/regular_answer"/>
+        android:background="@drawable/regular_answer"
+        android:elevation="5dp"
+        android:stateListAnimator="@null"/>
 
     <Button
         android:id="@+id/btnNGNextQ"
@@ -96,5 +104,7 @@
         android:layout_marginLeft="8dp"
         app:layout_constraintLeft_toLeftOf="parent"
         android:textColor="#ffff"
-        android:background="@drawable/gradient_lightrose"/>
+        android:background="@drawable/gradient_lightrose"
+        android:elevation="5dp"
+        android:stateListAnimator="@null"/>
 </android.support.constraint.ConstraintLayout>

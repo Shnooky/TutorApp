@@ -5,24 +5,21 @@
                                              android:layout_width="match_parent"
                                              android:layout_height="match_parent">
 
-<TextView
-    android:id="@+id/textView18"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_marginLeft="8dp"
-    android:layout_marginRight="8dp"
-    android:layout_marginTop="8dp"
-    android:fontFamily="sans-serif"
-    android:text="List of Tutorials:"
-    android:textColor="@android:color/holo_purple"
-    android:textSize="36sp"
-    android:textStyle="bold"
-    android:typeface="normal"
-    app:layout_constraintLeft_toLeftOf="parent"
-    app:layout_constraintRight_toRightOf="parent"
-    app:layout_constraintTop_toTopOf="parent"
-    android:layout_marginStart="8dp"
-    android:layout_marginEnd="8dp"/>
+    <TextView
+        android:id="@+id/textView18"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="Tutorials"
+        android:textAppearance="@android:style/TextAppearance.Material.Title"
+        android:textSize="30sp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ListView xmlns:android="http://schemas.android.com/apk/res/android"
               android:id="@+id/tutoriallist"

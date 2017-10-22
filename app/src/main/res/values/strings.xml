@@ -2,10 +2,10 @@
     <string name="app_name">Smart Tutor</string>
     <string name="classLabel">Class:</string>
     <string name="gradeLabel">Current Grade:</string>
-    <string name="view_roll_history">View Roll History</string>
-    <string name="start_a_new_tutorial">Start A New Tutorial</string>
+    <string name="view_roll_history">Past Tutorials</string>
+    <string name="start_a_new_tutorial">New Tutorial</string>
     <string name="edit_class">Edit Class</string>
-    <string name="the_name_game">The Name Game</string>
-    <string name="find_student">Find Student</string>
-    <string name="view_classes">View Classes</string>
+    <string name="the_name_game">Name Game</string>
+    <string name="find_student">Students</string>
+    <string name="view_classes">Classes</string>
 </resources>

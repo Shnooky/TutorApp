@@ -18,15 +18,6 @@ import android.os.Build;
 import android.util.Log;
 import android.view.View;
 import android.widget.*;
-import android.graphics.*;
-import android.net.Uri;
-import org.w3c.dom.Text;
-import java.io.File;
-import android.os.Environment;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.io.ByteArrayOutputStream;
-import android.graphics.Bitmap.CompressFormat;
 
 public class TutorialStudentEditor extends AppCompatActivity {
     public static final int EDIT_STUDENT = 200;
@@ -43,7 +34,7 @@ public class TutorialStudentEditor extends AppCompatActivity {
     private Button btnUpdate;
     private Button btnViewProfile;
     private Button btnConsultation;
-    private Button btnParticipation;
+    private CheckBox chkPart;
     private ImageView imgStudent;
     private String currZID, currTutorialID;
 
@@ -62,7 +53,7 @@ public class TutorialStudentEditor extends AppCompatActivity {
         btnUpdate = (Button) findViewById(R.id.btnUpdateStudentGrades);
         btnViewProfile = (Button) findViewById(R.id.btnViewStudentProfile);
         btnConsultation = (Button) findViewById(R.id.consultation);
-        btnParticipation = (Button) findViewById(R.id.participation);
+        chkPart = (CheckBox) findViewById(R.id.chkPartSE);
 
         imgStudent = (ImageView) findViewById(R.id.imgStudentTutorial);
 
@@ -78,7 +69,7 @@ public class TutorialStudentEditor extends AppCompatActivity {
                 insertValues.put(DBOpenHelper.STUDENTS_TUTORIALS_MARK, Double.parseDouble(txtGrade.getText().toString()));
                 insertValues.put(DBOpenHelper.STUDENTS_TUTORIALS_LATE, chkLate.isChecked() ? 1 : 0);
                 insertValues.put(DBOpenHelper.STUDENTS_TUTORIALS_ABSENT, chkAbsent.isChecked() ? 1 : 0);
-
+                insertValues.put(DBOpenHelper.STUDENTS_TUTORIALS_PARTICIPATION, chkPart.isChecked() ? 1 : 0);
                 getContentResolver().update(StudentTutorialProvider.CONTENT_URI,
                             insertValues, DBOpenHelper.STUDENTS_TUTORIALS_ZID + " = ? AND " +
                         DBOpenHelper.STUDENTS_TUTORIALS_TUTORIAL_ID + " = ?", new String[] {currZID, currTutorialID});
@@ -99,34 +90,11 @@ public class TutorialStudentEditor extends AppCompatActivity {
                     i.putExtra("CLASS", c.getString(c.getColumnIndex(DBOpenHelper.STUDENTS_CLASS)));
                     i.putExtra("FIRSTNAME", c.getString(c.getColumnIndex(DBOpenHelper.STUDENTS_FIRSTNAME)));
                     i.putExtra("SURNAME", c.getString(c.getColumnIndex(DBOpenHelper.STUDENTS_SURNAME)));
-                    // TODO: CALCULATE GRADE FROM STUDENTS_TUTORIALS TABLE
-                    //i.putExtra("GRADE", c.getString(c.getColumnIndex(DBOpenHelper.STUDENTS_GRADE)));
                     i.putExtra("PICTURE", c.getBlob(c.getColumnIndex(DBOpenHelper.STUDENTS_PICTURE)));
                     i.putExtra("SKILL", c.getString(c.getColumnIndex(DBOpenHelper.STUDENTS_SKILL)));
                     startActivityForResult(i, EDIT_STUDENT);
                 }
             }
-        });
-
-        btnParticipation.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                ContentValues insertValues = new ContentValues();
-                if(btnParticipation.getText().equals("Add Participation Mark")) {
-                    insertValues.put(DBOpenHelper.STUDENTS_TUTORIALS_PARTICIPATION, 1);
-                    getContentResolver().update(StudentTutorialProvider.CONTENT_URI, insertValues, DBOpenHelper.STUDENTS_TUTORIALS_ZID + " = ? AND " +
-                            DBOpenHelper.STUDENTS_TUTORIALS_TUTORIAL_ID + " = ?", new String[]{currZID, currTutorialID});
-                    Log.d("d","participation mark added");
-                    btnParticipation.setText("Remove Participation Mark");
-                }
-                else if(btnParticipation.getText().equals("Remove Participation Mark")) {
-                    insertValues.put(DBOpenHelper.STUDENTS_TUTORIALS_PARTICIPATION, 0);
-                    getContentResolver().update(StudentTutorialProvider.CONTENT_URI, insertValues, DBOpenHelper.STUDENTS_TUTORIALS_ZID + " = ? AND " +
-                            DBOpenHelper.STUDENTS_TUTORIALS_TUTORIAL_ID + " = ?", new String[]{currZID, currTutorialID});
-                    Log.d("d","participation mark removed");
-                    btnParticipation.setText("Add Participation Mark");
-                }
-            }
-
         });
 
         btnConsultation.setOnClickListener(new View.OnClickListener() {
@@ -157,12 +125,7 @@ public class TutorialStudentEditor extends AppCompatActivity {
         chkPresent.setChecked(!chkLate.isChecked() && !chkAbsent.isChecked()); // if none are checked, student must be present
         txtGrade.setText(i.getStringExtra("GRADE"));
         String participated = i.getStringExtra("PART");
-        Log.d("participated? ",participated);
-        if(participated.equals("1")) {
-            btnParticipation.setText("Remove Participation Mark");
-        } else {
-            btnParticipation.setText("Add Participation Mark");
-        }
+        chkPart.setChecked(participated.equals("1"));
         imgStudent.setImageBitmap(StudentProfile.getImage(i.getByteArrayExtra("IMG")));
     }
 

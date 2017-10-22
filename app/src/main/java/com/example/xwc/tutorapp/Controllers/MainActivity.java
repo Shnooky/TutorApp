@@ -84,5 +84,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         DBOpenHelper helper = new DBOpenHelper(getBaseContext());
         SQLiteDatabase database = helper.getWritableDatabase();
         helper.createDummyData(database);
+        CommonMethods.showToast("Sample data loaded!");
     }
 }

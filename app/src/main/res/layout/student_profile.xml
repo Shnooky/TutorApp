@@ -28,32 +28,38 @@
         app:layout_constraintRight_toRightOf="parent"
         android:layout_marginLeft="8dp"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintHorizontal_bias="0.893"/>
+        app:layout_constraintHorizontal_bias="0.893"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp" />
 
     <EditText
         android:id="@+id/txtStudentSurname"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:hint="Student Surname"
+        android:layout_width="176dp"
+        android:layout_height="40dp"
+        android:hint="Surname"
+        android:textAlignment="center"
         app:layout_constraintLeft_toRightOf="@+id/txtStudentFirstname"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imgStudent" />
+        android:layout_marginTop="19dp"
+        app:layout_constraintTop_toBottomOf="@+id/textView17" />
 
     <Button
         android:background="@drawable/gradient_lightrose"
         android:textColor="#ffff"
         android:id="@+id/btnUpdateStudent"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="88dp"
+        android:layout_height="37dp"
         android:text="Update"
         android:layout_marginEnd="41dp"
-        android:layout_marginTop="8dp"
-        app:layout_constraintTop_toBottomOf="@+id/lblPart"
-        android:layout_marginRight="36dp"
+        android:layout_marginRight="48dp"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginBottom="8dp"/>
+        android:layout_marginBottom="8dp"
+        android:elevation="5dp"
+        android:stateListAnimator="@null"
+        android:layout_marginTop="8dp"
+        app:layout_constraintTop_toBottomOf="@+id/lblPartLabel"
+        app:layout_constraintVertical_bias="0.513"/>
 
     <TextView
         android:id="@+id/gradeLabel"
@@ -68,57 +74,45 @@
 
     <EditText
         android:id="@+id/txtStudentZID"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:hint="zID"
-        android:layout_marginStart="8dp"
+        android:layout_width="365dp"
+        android:layout_height="41dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginTop="10dp"
-        app:layout_constraintTop_toBottomOf="@+id/txtStudentFirstname"
         android:layout_marginLeft="8dp"
-        app:layout_constraintLeft_toLeftOf="parent"
         android:layout_marginRight="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="21dp"
+        android:hint="zID"
+        android:textAlignment="center"
+        app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintHorizontal_bias="0.501"/>
+        app:layout_constraintTop_toBottomOf="@+id/txtStudentFirstname" />
 
 
     <ImageView
         android:id="@+id/imgStudent"
         android:layout_width="136dp"
         android:layout_height="113dp"
-        app:srcCompat="@mipmap/ic_launcher"
-        android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="40dp"
         android:layout_marginLeft="8dp"
-        app:layout_constraintLeft_toLeftOf="parent"
         android:layout_marginRight="8dp"
-        app:layout_constraintRight_toRightOf="parent"/>
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="41dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/cameraicon"
+        app:layout_constraintHorizontal_bias="0.498" />
 
     <EditText
         android:id="@+id/txtStudentFirstname"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:hint="Student First Name"
-        android:layout_marginTop="8dp"
-        app:layout_constraintTop_toBottomOf="@+id/imgStudent"
+        android:layout_width="164dp"
+        android:layout_height="40dp"
+        android:hint="First Name"
+        android:textAlignment="center"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toLeftOf="@+id/txtStudentSurname" />
-
-    <View
-        android:id="@+id/view2"
-        android:layout_width="358dp"
-        android:layout_height="1dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:background="#c0c0c0"
-        android:layout_marginTop="14dp"
-        app:layout_constraintTop_toBottomOf="@+id/txtStudentZID"
-        android:layout_marginLeft="8dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        android:layout_marginRight="8dp"
-        app:layout_constraintRight_toRightOf="parent"/>
+        app:layout_constraintRight_toLeftOf="@+id/txtStudentSurname"
+        android:layout_marginTop="19dp"
+        app:layout_constraintTop_toBottomOf="@+id/textView17" />
 
     <TextView
         android:id="@+id/textView5"
@@ -127,12 +121,13 @@
         android:text="Coding Skill"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginTop="12dp"
-        app:layout_constraintTop_toBottomOf="@+id/view2"
         android:layout_marginRight="8dp"
         app:layout_constraintRight_toRightOf="parent"
         android:layout_marginLeft="8dp"
-        app:layout_constraintLeft_toLeftOf="parent"/>
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginTop="28dp"
+        app:layout_constraintTop_toBottomOf="@+id/txtStudentZID"
+        app:layout_constraintHorizontal_bias="0.498" />
 
     <Spinner
         android:id="@+id/cboCodingSkill"
@@ -142,7 +137,8 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintHorizontal_bias="0.506"
-        android:layout_marginTop="7dp"/>
+        android:layout_marginTop="7dp"
+        android:gravity="center"/>
 
     <View
         android:id="@+id/view"
@@ -193,25 +189,41 @@
         android:layout_marginEnd="8dp"
         android:layout_marginTop="19dp"
         app:layout_constraintTop_toBottomOf="@+id/view"
-        android:layout_marginRight="26dp"
+        android:layout_marginRight="8dp"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintLeft_toRightOf="@+id/textView2"
         android:layout_marginLeft="8dp"
         app:layout_constraintHorizontal_bias="0.827"/>
 
     <Button
-        android:background="@drawable/gradient_lightrose"
-        android:textColor="#ffff"
         android:id="@+id/btnDeleteStudent"
+        android:layout_width="91dp"
+        android:layout_height="37dp"
+        android:layout_marginBottom="76dp"
+
+        android:background="@drawable/incorrect_answer"
+        android:text="Delete"
+        android:textColor="#ffff"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/btnUpdateStudent"
+        android:layout_marginRight="17dp"
+        android:elevation="5dp"
+        android:stateListAnimator="@null"
+        app:layout_constraintTop_toTopOf="@+id/btnUpdateStudent"
+        android:layout_marginTop="0dp"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <TextView
+        android:id="@+id/textView17"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Delete"
-        android:layout_marginStart="42dp"
+        android:text="Click to take new photo"
+        android:textStyle="italic"
         android:layout_marginTop="8dp"
-        app:layout_constraintTop_toBottomOf="@+id/lblPartLabel"
+        app:layout_constraintTop_toBottomOf="@+id/imgStudent"
+        android:layout_marginRight="8dp"
+        app:layout_constraintRight_toRightOf="parent"
         android:layout_marginLeft="8dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginBottom="8dp"/>
+        app:layout_constraintLeft_toLeftOf="parent" />
 
 </android.support.constraint.ConstraintLayout>

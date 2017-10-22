@@ -84,7 +84,6 @@ public class TutorialList extends AppCompatActivity {
                     "WHERE STUDENTS.CLASS = ? GROUP BY CLASSES.CLASS_ID, STUDENT_TUTORIALS.TUTORIAL_ID, TDATE " +
                     "ORDER BY STUDENT_TUTORIALS.TUTORIAL_ID DESC", classID) ;
 
-
             // getContentResolver().query(TutorialProvider.CONTENT_URI,
                     //DBOpenHelper.TUTORIALS_ALL_COLUMNS, DBOpenHelper.TUTORIALS_CLASS +"=?", classID, null);
             tuts.clear();

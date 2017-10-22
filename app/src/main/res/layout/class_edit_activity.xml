@@ -71,17 +71,24 @@
         android:layout_marginEnd="8dp"/>
 
     <Button
-        android:background="@drawable/gradient_lightrose"
-        android:textColor="#ffff"
         android:id="@+id/btnDeleteClass"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="37dp"
-        android:layout_marginLeft="29dp"
+        android:layout_width="71dp"
+        android:layout_height="33dp"
+        android:layout_marginBottom="38dp"
+        android:layout_marginStart="29dp"
+        android:background="@drawable/incorrect_answer"
+        android:elevation="5dp"
+        android:stateListAnimator="@null"
         android:text="Delete"
+        android:textColor="#ffff"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/btnAddNewClass"
+        app:layout_constraintVertical_bias="1.0"
+        app:layout_constraintRight_toLeftOf="@+id/btnAddNewClass"
+        android:layout_marginRight="0dp"
+        android:layout_marginLeft="8dp"
         app:layout_constraintLeft_toLeftOf="parent"
-        android:layout_marginStart="29dp"/>
+        app:layout_constraintHorizontal_bias="0.935" />
 
     <EditText
         android:id="@+id/txtLocation"
@@ -150,14 +157,16 @@
         android:background="@drawable/gradient_lightrose"
         android:textColor="#ffff"
         android:id="@+id/btnAddNewClass"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="73dp"
+        android:layout_height="33dp"
         android:text="Add"
         android:layout_marginRight="28dp"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginBottom="37dp"
-        android:layout_marginEnd="28dp"/>
+        android:layout_marginBottom="38dp"
+        android:layout_marginEnd="28dp"
+        android:stateListAnimator="@null"
+        android:elevation="5dp" />
 
     <TextView
         android:id="@+id/textView3"

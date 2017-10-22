@@ -1,9 +1,15 @@
 package com.example.xwc.tutorapp.Database;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.database.Cursor;
+
+import com.example.xwc.tutorapp.Controllers.StudentProfile;
+import com.example.xwc.tutorapp.R;
+import android.graphics.BitmapFactory;
+import android.graphics.Bitmap;
 
 import com.example.xwc.tutorapp.Controllers.MainActivity;
 
@@ -85,10 +91,10 @@ public class DBOpenHelper extends SQLiteOpenHelper {
             STUDENTS_ZID+", "+STUDENTS_FIRSTNAME+", "+STUDENTS_SURNAME+", "+STUDENTS_SKILL+", "+STUDENTS_CLASS+", "+STUDENTS_PICTURE+") VALUES (" +
             "'Z5019998', 'Jacob', 'Meyerowitz','Exceptional','W12A','???'), (" +
             "'Z1234567', 'Bob', 'Smith','High','W12A','???'), (" +
-            "'Z7654321', 'Jenny', 'Smith','Moderate','W12A','???'), (" +
+            "'Z7654321', 'Michael', 'C.','Moderate','W12A','???'), (" +
             "'Z5014884', 'James', 'Zhang','Exceptional','W15A','???'), (" +
             "'Z1111111', 'Johnny', 'Bravo','Low','W15A','???'), (" +
-            "'Z9999999', 'Benji', 'Bioer','Moderate','W15A','???'), (" +
+            "'Z9999999', 'Neil', 'Harris','Moderate','W15A','???'), (" +
             "'Z5014883', 'Yenni', 'Tim','Exceptional','W12A','???'), (" +
             "'Z5014885', 'Yeye', 'Jiang','High','W15A','???')";
 
@@ -171,6 +177,41 @@ public class DBOpenHelper extends SQLiteOpenHelper {
         db.execSQL(DUMMY_STUDENTS);
         db.execSQL(DUMMY_TUTORIAL_STUDENTS);
         db.execSQL(DUMMY_TUTORIALS);
+
+        // Insert photos
+        db.execSQL("update STUDENTS set PICTURE = ? WHERE ZID = ?",
+                new Object[]{StudentProfile.getBytes(BitmapFactory.decodeResource(MainActivity.appContext.getResources(), R.drawable.sample_yenni)),
+                        "Z5014883"});
+
+        db.execSQL("update STUDENTS set PICTURE = ? WHERE ZID = ?",
+                new Object[]{StudentProfile.getBytes(BitmapFactory.decodeResource(MainActivity.appContext.getResources(), R.drawable.sample_james)),
+                        "Z5014884"});
+
+        db.execSQL("update STUDENTS set PICTURE = ? WHERE ZID = ?",
+                new Object[]{StudentProfile.getBytes(BitmapFactory.decodeResource(MainActivity.appContext.getResources(), R.drawable.sample_yeye)),
+                        "Z5014885"});
+
+        db.execSQL("update STUDENTS set PICTURE = ? WHERE ZID = ?",
+                new Object[]{StudentProfile.getBytes(BitmapFactory.decodeResource(MainActivity.appContext.getResources(), R.drawable.sample_adam)),
+                        "Z5019998"});
+
+        db.execSQL("update STUDENTS set PICTURE = ? WHERE ZID = ?",
+                new Object[]{StudentProfile.getBytes(BitmapFactory.decodeResource(MainActivity.appContext.getResources(), R.drawable.sample_michael)),
+                        "Z7654321"});
+
+        db.execSQL("update STUDENTS set PICTURE = ? WHERE ZID = ?",
+                new Object[]{StudentProfile.getBytes(BitmapFactory.decodeResource(MainActivity.appContext.getResources(), R.drawable.sample_johnny)),
+                        "Z1111111"});
+
+        db.execSQL("update STUDENTS set PICTURE = ? WHERE ZID = ?",
+                new Object[]{StudentProfile.getBytes(BitmapFactory.decodeResource(MainActivity.appContext.getResources(), R.drawable.sample_neil)),
+                        "Z9999999"});
+
+        db.execSQL("update STUDENTS set PICTURE = ? WHERE ZID = ?",
+                new Object[]{StudentProfile.getBytes(BitmapFactory.decodeResource(MainActivity.appContext.getResources(), R.drawable.sample_bob)),
+                        "Z1234567"});
+
+
     }
 
     public static Cursor runSQL(String sql, String[] args) {
