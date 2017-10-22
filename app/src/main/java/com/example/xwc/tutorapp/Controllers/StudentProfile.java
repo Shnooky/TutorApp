@@ -45,6 +45,7 @@ public class StudentProfile extends AppCompatActivity {
     private EditText txtSurname;
     private Spinner cboSkill;
     private TextView lblPart;
+    private TextView lblPartLabel;
     private Button btnUpdate;
     private Button btnDelete;
     private ImageView imgStudent;
@@ -69,6 +70,7 @@ public class StudentProfile extends AppCompatActivity {
         txtSurname = (EditText) findViewById(R.id.txtStudentSurname);
         cboSkill = (Spinner) findViewById(R.id.cboCodingSkill);
         lblPart = (TextView) findViewById(R.id.lblPart);
+        lblPartLabel = (TextView) findViewById(R.id.lblPartLabel);
         btnUpdate = (Button) findViewById(R.id.btnUpdateStudent);
         btnDelete = (Button) findViewById(R.id.btnDeleteStudent);
 
@@ -177,12 +179,16 @@ public class StudentProfile extends AppCompatActivity {
         if (i.hasExtra("HideGrades")) {
             lblGrade.setVisibility(View.INVISIBLE);
             gradeLabel.setVisibility(View.INVISIBLE);
+            lblPart.setVisibility(View.INVISIBLE);
+            lblPartLabel.setVisibility(View.INVISIBLE);
         } else {
             gradeLabel.setVisibility(View.VISIBLE);
             lblGrade.setVisibility(View.VISIBLE);
-            // Calculate avg grade
-            Cursor cc = DBOpenHelper.runSQL("select AVG(STUDENT_TUTORIALS.MARK) AS 'AVGMARK'" +
-                    ", AVG(STUDENT_TUTORIALS.PARTICIPATION) AS 'AVGPART' FROM STUDENT_TUTORIALS" +
+            lblPart.setVisibility(View.VISIBLE);
+            lblPartLabel.setVisibility(View.VISIBLE);
+            // Calculate total grade
+            Cursor cc = DBOpenHelper.runSQL("select SUM(STUDENT_TUTORIALS.MARK) AS 'AVGMARK'" +
+                    ", SUM(STUDENT_TUTORIALS.PARTICIPATION) AS 'AVGPART' FROM STUDENT_TUTORIALS" +
                     " INNER JOIN STUDENTS ON (STUDENTS.ZID = STUDENT_TUTORIALS.ZID) WHERE " +
                     "STUDENTS.ZID = ?", new String[]{i.getStringExtra("ZID")});
             if (cc != null && cc.moveToNext()) {
