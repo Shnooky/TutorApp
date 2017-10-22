@@ -44,18 +44,18 @@ public class TutorialStudentAdapter extends ArrayAdapter<StudentTutorial> {
             itemLayout.setBackgroundResource(R.drawable.layout_absent);
         } else if (currentST.ismLate()) {
             if (currentST.getParticipation() > 0) {
-                lblStatus.setText("Current Mark: " + currentST.getmMark() + " (Participated & Late)");
+                lblStatus.setText("Mark: " + currentST.getmMark() + " (Participated & Late)");
                 itemLayout.setBackgroundResource(R.drawable.layout_part);
             } else {
-                lblStatus.setText("Current Mark: " + currentST.getmMark() + " (Late)");
+                lblStatus.setText("Mark: " + currentST.getmMark() + " (Late)");
             }
             itemLayout.setBackgroundResource(R.drawable.layout_late);
         } else {
             if (currentST.getParticipation() > 0) {
-                lblStatus.setText("Current Mark: " + currentST.getmMark() + " (Participated)");
+                lblStatus.setText("Mark: " + currentST.getmMark() + " (Participated)");
                 itemLayout.setBackgroundResource(R.drawable.layout_part);
             } else {
-                lblStatus.setText("Current Mark: " + currentST.getmMark());
+                lblStatus.setText("Mark: " + currentST.getmMark());
             }
         }
 

@@ -167,6 +167,8 @@ public class StudentProfile extends AppCompatActivity {
             btnDelete.setVisibility(View.VISIBLE);
             byte[] img = i.getByteArrayExtra("PICTURE");
             imgStudent.setImageBitmap(getImage(img));
+            // Class cannot be changed
+            cboCurrentClass.setEnabled(false);
         } else {
             updating_student = null;
             btnUpdate.setText("Add");
@@ -208,6 +210,8 @@ public class StudentProfile extends AppCompatActivity {
             error = "Please ensure a valid ZID is entered (z#######)";
         } else if (checkFirstname.isEmpty() || checkSurname.isEmpty()) {
             error = "Please ensure a firstname and surname is entered";
+        } else if (CommonMethods.studentExists(checkZID)) {
+            error = "Student with the ZID " + checkZID + " already exists in the system";
         }
         return error;
     }

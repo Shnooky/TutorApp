@@ -81,8 +81,8 @@ public class TutorialList extends AppCompatActivity {
                     "SUM(STUDENT_TUTORIALS.ABSENT) AS 'TOTALABSENT' FROM STUDENTS " +
                     "INNER JOIN CLASSES ON (STUDENTS.CLASS = CLASSES.CLASS_ID) " +
                     "INNER JOIN STUDENT_TUTORIALS ON (STUDENTS.ZID = STUDENT_TUTORIALS.ZID) " +
-                    "WHERE STUDENTS.CLASS = ? GROUP BY CLASSES.CLASS_ID, STUDENT_TUTORIALS.TUTORIAL_ID, TDATE", classID) ;
-
+                    "WHERE STUDENTS.CLASS = ? GROUP BY CLASSES.CLASS_ID, STUDENT_TUTORIALS.TUTORIAL_ID, TDATE " +
+                    "ORDER BY STUDENT_TUTORIALS.TUTORIAL_ID DESC", classID) ;
 
 
             // getContentResolver().query(TutorialProvider.CONTENT_URI,

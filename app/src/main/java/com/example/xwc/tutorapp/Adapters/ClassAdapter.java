@@ -37,17 +37,11 @@ public class ClassAdapter extends ArrayAdapter<Class> {
         classView.setText(currentClass.getClassId() + " " + currentClass.getDay() + " " + currentClass.getStartTime() +
                 "-" + currentClass.getEndTime() + " " + currentClass.getLocation());
 
-
         TextView gradeView = (TextView) listItemView.findViewById(R.id.avGrade);
         gradeView.setText(Double.toString(Math.round(currentClass.getAverageGrade()*100)/100.0));
 
         TextView numStuView = (TextView) listItemView.findViewById(R.id.numberStudents);
         numStuView.setText(Integer.toString(currentClass.getNumStu()));
-
-
-        // Set overall participation
-        TextView lblPart = (TextView) listItemView.findViewById(R.id.lblPart);
-        lblPart.setText(currentClass.getParticipation() + " / " + currentClass.getNumStu());
 
         ImageView image = (ImageView) listItemView.findViewById(R.id.classImage);
         Random rn = new Random();

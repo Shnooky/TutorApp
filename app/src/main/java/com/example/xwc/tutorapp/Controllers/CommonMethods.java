@@ -37,4 +37,10 @@ public class CommonMethods {
         prevToast = Toast.makeText(MainActivity.appContext,msg,Toast.LENGTH_LONG);
         prevToast.show();
     }
+
+    public static boolean studentExists(String zID) {
+        Cursor c = DBOpenHelper.runSQL("select ZID from STUDENTS where ZID = ?",
+                new String[]{zID});
+        return (c != null && c.getCount() > 0);
+    }
 }
