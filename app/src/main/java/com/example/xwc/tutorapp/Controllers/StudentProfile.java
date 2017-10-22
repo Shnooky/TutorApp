@@ -234,6 +234,9 @@ public class StudentProfile extends AppCompatActivity {
     // Bitmap -> Byte Array Utility Functions
     // convert from bitmap to byte array
     public static byte[] getBytes(Bitmap bitmap) {
+        if (bitmap == null) {
+            return null;
+        }
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
         bitmap.compress(CompressFormat.PNG, 0, stream);
         return stream.toByteArray();

@@ -46,7 +46,6 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>
 
-
     <ListView xmlns:android="http://schemas.android.com/apk/res/android"
               android:id="@+id/classlist"
               android:layout_width="0dp"
