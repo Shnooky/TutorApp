@@ -60,7 +60,9 @@ public class ClassAdder extends AppCompatActivity {
                 String error = validateInput();
                 if(error.isEmpty()) {
                     ContentValues insertValues = new ContentValues();
-                    insertValues.put(DBOpenHelper.CLASSES_CLASS_ID, generateID());
+                    if(updating_class_id==null) {
+                        insertValues.put(DBOpenHelper.CLASSES_CLASS_ID, generateID());
+                    }
                     insertValues.put(DBOpenHelper.CLASSES_DAY, txtDay.getSelectedItem().toString());
                     insertValues.put(DBOpenHelper.CLASSES_ENDTIME, txtEndTime.getText().toString());
                     insertValues.put(DBOpenHelper.CLASSES_STARTTIME, txtStartTime.getText().toString());
