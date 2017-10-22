@@ -1,17 +1,18 @@
 package com.example.xwc.tutorapp.Model;
 
 /**
- * Created by Jacob on 15/10/2017.
+ * Created by Jacob and James on 15/10/2017.
+ * Java Bean for Students
  */
 
 public class Student {
-    protected String mzID;
-    protected String mFirstName;
-    protected String mSurname;
-    protected String mCodingSkill;
-    protected String mClassID;
-    protected double mCurrentGrade;
-    protected byte[] mPicture;
+    protected String mzID; //ZID of student
+    protected String mFirstName; //Student first name
+    protected String mSurname; //Student surname
+    protected String mCodingSkill; //Coding skill of student
+    protected String mClassID; //Enrolled class
+    protected double mCurrentGrade; //student's current grade
+    protected byte[] mPicture; //student's picture
 
     public Student(String mzID, String firstName, String surname, String codingSkill, String classID, double currentGrade, byte[] picture) {
         this.mzID = mzID;
@@ -83,10 +84,12 @@ public class Student {
         mPicture = picture;
     }
 
+    //Checks to see if Student objects are equal
     @Override
     public boolean equals(Object obj) {
         Student s = (Student) obj;
         return (s.getClassID().equals(this.getClassID()) &&
                 s.getMzID().equals(this.getMzID()));
     }
+
 }

@@ -21,7 +21,9 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-
+/*
+Created by: Jacob and James on 15/10/2017
+ */
 public class ClassMenu extends AppCompatActivity implements View.OnClickListener {
     public static final int EDIT_CLASS = 100;
     public static final int DELETE_CLASS = 101;

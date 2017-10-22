@@ -1,7 +1,8 @@
 package com.example.xwc.tutorapp.Database;
 
 /**
- * Created by jameszhang on 17/10/2017.
+ * Created by Jacob and James on 17/10/2017.
+ * ContentProvider for Student Table in SQLite Database
  */
 
 import android.content.ContentProvider;

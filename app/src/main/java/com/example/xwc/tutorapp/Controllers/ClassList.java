@@ -19,7 +19,7 @@ import android.view.ViewGroup.LayoutParams;
 import java.util.ArrayList;
 
 /**
- * Created by Jacob, but really created by James on 15/10/2017.
+ * Created by Jacob and James on 15/10/2017.
  */
 
 public class ClassList extends AppCompatActivity {
@@ -87,6 +87,10 @@ public class ClassList extends AppCompatActivity {
         loadClasses();
     }
 
+    /*
+    Load classes from the database. Due to the complexity of the query (i.e. need to obtain the average student mark and
+    total number of students), a rawQuery is used instead of ContentProvider methods.
+     */
     private void loadClasses() {
         Log.d("","Load classes");
         Cursor c = DBOpenHelper.runSQL("select CLASSES.*, COUNT(DISTINCT STUDENTS.ZID) as 'TOTAL', " +
