@@ -23,7 +23,7 @@
         android:layout_marginLeft="19dp"
         android:layout_weight="1"
         android:fontFamily="sans-serif-condensed"
-        android:text="Participation:"
+        android:text="Average Participation:"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toRightOf="@+id/classImage"

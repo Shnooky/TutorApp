@@ -13,11 +13,13 @@ import android.content.Intent;
 import com.example.xwc.tutorapp.Adapters.ClassAdapter;
 import com.example.xwc.tutorapp.Database.ClassProvider;
 import com.example.xwc.tutorapp.Database.DBOpenHelper;
+import com.example.xwc.tutorapp.Database.StudentProvider;
+import com.example.xwc.tutorapp.Database.StudentTutorialProvider;
 import com.example.xwc.tutorapp.Model.Class;
 import com.example.xwc.tutorapp.R;
 import android.view.*;
 import android.content.ContentValues;
-
+import android.util.Log;
 import java.util.ArrayList;
 
 
@@ -76,18 +78,42 @@ public class ClassAdder extends AppCompatActivity {
                         getContentResolver().insert(ClassProvider.CONTENT_URI,
                                 insertValues);
                     }
-                    setResult(RESULT_OK, null);
+
+                    // Send updates back to class activity
+                    Intent i = new Intent();
+                    i.putExtra("CLASSID", updating_class_id);
+                    i.putExtra("DAY", txtDay.getSelectedItem().toString());
+                    i.putExtra("STARTTIME", txtStartTime.getText().toString());
+                    i.putExtra("ENDTIME", txtEndTime.getText().toString());
+                    i.putExtra("LOCATION", txtLocation.getText().toString());
+
+                    setResult(ClassMenu.UPDATE_CLASS, i);
                     finish();
                 } else {
-                    Toast.makeText(getApplicationContext(),error,Toast.LENGTH_LONG).show();
+                    CommonMethods.showToast(error);
                 }
             }
         });
 
         btnDelete.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+                Cursor c = DBOpenHelper.runSQL("select * from STUDENTS where CLASS = ?", new String[]{updating_class_id});
+                while (c != null && c.moveToNext()) {
+                    Log.d("XWCABC", c.getString(c.getColumnIndex(DBOpenHelper.STUDENTS_TUTORIALS_ZID)));
+                    // Delete every student_tutorial record associated with that class
+                    getContentResolver().delete(StudentTutorialProvider.CONTENT_URI,
+                            DBOpenHelper.STUDENTS_TUTORIALS_ZID + " = ?",
+                            new String[] {c.getString(c.getColumnIndex(DBOpenHelper.STUDENTS_TUTORIALS_ZID))});
+                    // Delete that student
+                    getContentResolver().delete(StudentProvider.CONTENT_URI,
+                            DBOpenHelper.STUDENTS_ZID + " = ?",
+                            new String[] {c.getString(c.getColumnIndex(DBOpenHelper.STUDENTS_TUTORIALS_ZID))});
+                }
+
+                // Finally, delete the class
                 getContentResolver().delete(ClassProvider.CONTENT_URI,
-                            DBOpenHelper.CLASSES_CLASS_ID + " = ?", new String[] {updating_class_id});
+                        DBOpenHelper.CLASSES_CLASS_ID + " = ?", new String[] {updating_class_id});
+
                 setResult(ClassMenu.DELETE_CLASS, null);
                 finish();
             }

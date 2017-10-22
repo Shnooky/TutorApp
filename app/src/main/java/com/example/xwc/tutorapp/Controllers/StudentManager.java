@@ -66,6 +66,8 @@ public class StudentManager extends AppCompatActivity {
                     i.putExtra("PICTURE", c.getBlob(c.getColumnIndex(DBOpenHelper.STUDENTS_PICTURE)));
                     i.putExtra("SKILL", c.getString(c.getColumnIndex(DBOpenHelper.STUDENTS_SKILL)));
                     startActivity(i);
+                } else {
+                    CommonMethods.showToast("No student found");
                 }
             }
         });

@@ -20,6 +20,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private Button mClassList;
     private Button mStudentProfile;
     private Button mNameGame;
+    private Button btnDummyData;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +34,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mStudentProfile.setOnClickListener(this);
         mNameGame = (Button) findViewById(R.id.nameGame);
         mNameGame.setOnClickListener(this);
+        btnDummyData = (Button) findViewById(R.id.btnDummyData);
+        btnDummyData.setOnClickListener(this);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (checkSelfPermission(Manifest.permission.CAMERA)
@@ -67,8 +70,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.nameGame:
                 intent = new Intent(this, NameGameManager.class);
                 break;
-            default:
-
+            case R.id.btnDummyData:
+                loadDummyData();
+                return;
         }
         if (intent !=null) {
             startActivity(intent);
@@ -79,7 +83,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void loadDummyData() {
         DBOpenHelper helper = new DBOpenHelper(getBaseContext());
         SQLiteDatabase database = helper.getWritableDatabase();
-        helper.onCreate(database);
         helper.createDummyData(database);
     }
 }

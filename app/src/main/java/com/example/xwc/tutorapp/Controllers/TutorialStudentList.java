@@ -85,6 +85,7 @@ public class TutorialStudentList extends AppCompatActivity {
                 i.putExtra("ABSENT", s.ismAbsent() ? 1 : 0);
                 i.putExtra("NAME", s.getFirstName() + " " + s.getLastName());
                 i.putExtra("PART",Integer.toString(s.getParticipation()));
+                i.putExtra("IMG", s.getmImg());
                 startActivity(i);
             }
         });

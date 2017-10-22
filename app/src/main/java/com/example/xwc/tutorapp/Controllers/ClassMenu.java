@@ -25,6 +25,7 @@ import java.util.Date;
 public class ClassMenu extends AppCompatActivity implements View.OnClickListener {
     public static final int EDIT_CLASS = 100;
     public static final int DELETE_CLASS = 101;
+    public static final int UPDATE_CLASS = 102;
     private TextView className;
     private Button viewRollHistory;
     private Button startTutorial;
@@ -34,7 +35,6 @@ public class ClassMenu extends AppCompatActivity implements View.OnClickListener
     @Override
     protected void onResume() {
         super.onResume();
-        tutorialsExist(new String[] {thisClass.getClassId()});
     }
 
     @Override
@@ -54,30 +54,19 @@ public class ClassMenu extends AppCompatActivity implements View.OnClickListener
 
         Intent intent = getIntent();
         if (intent.hasExtra("CLASSID")) {
-            String thisClassName = intent.getStringExtra("CLASSID");
-            String thisClassDay = intent.getStringExtra("DAY");
-            String thisClassStart = intent.getStringExtra("STARTTIME");
-            String thisClassEnd = intent.getStringExtra("ENDTIME");
-            String thisClassLocation = intent.getStringExtra("LOCATION");
-            int thisClassPart = intent.getIntExtra("PART", 0);
-           thisClass = new Class(thisClassName,thisClassDay,thisClassStart,thisClassEnd,"",thisClassLocation,22,0.0, thisClassPart);
-            className.setText(thisClass.getClassId() + " " + thisClass.getDay() + " " + thisClass.getStartTime() +
-                    "-" + thisClass.getEndTime() + " " + thisClass.getLocation());
+            setupClassUI(intent);
         }
-
-      tutorialsExist(new String[] {thisClass.getClassId()});
-
     }
 
-    private boolean tutorialsExist(String[] classID) {
-        boolean exist = true;
-        Cursor c = getContentResolver().query(TutorialProvider.CONTENT_URI,
-                DBOpenHelper.TUTORIALS_ALL_COLUMNS, DBOpenHelper.TUTORIALS_CLASS + "=?", classID, null);
-        if (c == null || !c.moveToNext()) {
-            exist = false;
-        }
-        return exist;
-
+    public void setupClassUI(Intent intent) {
+        String thisClassName = intent.getStringExtra("CLASSID");
+        String thisClassDay = intent.getStringExtra("DAY");
+        String thisClassStart = intent.getStringExtra("STARTTIME");
+        String thisClassEnd = intent.getStringExtra("ENDTIME");
+        String thisClassLocation = intent.getStringExtra("LOCATION");
+        thisClass = new Class(thisClassName,thisClassDay,thisClassStart,thisClassEnd,"",thisClassLocation,22,0.0, 0);
+        className.setText(thisClass.getClassId() + " " + thisClass.getDay() + " " + thisClass.getStartTime() +
+                "-" + thisClass.getEndTime() + " " + thisClass.getLocation());
     }
 
     @Override
@@ -86,7 +75,7 @@ public class ClassMenu extends AppCompatActivity implements View.OnClickListener
 
         switch (v.getId()) {
             case R.id.rollHistory:
-                if(tutorialsExist(new String[] {thisClass.getClassId()})) {
+                if(CommonMethods.hasTutorials(thisClass.getClassId())) {
                     intent = new Intent(this, TutorialList.class);
                     intent.putExtra("CLASSID", thisClass.getClassId());
                     intent.putExtra("DAY", thisClass.getDay());
@@ -94,13 +83,16 @@ public class ClassMenu extends AppCompatActivity implements View.OnClickListener
                     intent.putExtra("ENDTIME", thisClass.getEndTime());
                     intent.putExtra("LOCATION", thisClass.getLocation());
                 } else {
-                    Log.d("","display toast");
-                    Toast.makeText(getApplicationContext(),"There are no tutorials to display, please add a new tutorial",Toast.LENGTH_LONG).show();
+                    CommonMethods.showToast("There are no tutorials to display, please add a new tutorial");
                 }
                 break;
             case R.id.newTut:
-                intent = new Intent(this, TutorialStudentList.class);
-                intent.putExtra("CLASSID", thisClass.getClassId());
+                if(CommonMethods.hasStudents(thisClass.getClassId())) {
+                    intent = new Intent(this, TutorialStudentList.class);
+                    intent.putExtra("CLASSID", thisClass.getClassId());
+                } else {
+                    CommonMethods.showToast("There are no students in your class, please add some students first");
+                }
                 break;
             case R.id.editClass:
                 intent = new Intent(getBaseContext(), ClassAdder.class);
@@ -114,7 +106,7 @@ public class ClassMenu extends AppCompatActivity implements View.OnClickListener
         }
         if (intent != null && v.getId() == R.id.editClass) {
             startActivityForResult(intent, EDIT_CLASS);
-        } else {
+        } else if (intent != null) {
             startActivity(intent);
         }
     }
@@ -126,7 +118,9 @@ public class ClassMenu extends AppCompatActivity implements View.OnClickListener
             if (resultCode == DELETE_CLASS) {
                 // Class deleted, so we must exit it's menu activity
                 finish();
-
+            } else if (resultCode == UPDATE_CLASS) {
+                // refresh activity
+                setupClassUI(data);
             }
         }
     }

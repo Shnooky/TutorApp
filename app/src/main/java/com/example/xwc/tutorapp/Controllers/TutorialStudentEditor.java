@@ -11,6 +11,7 @@ import com.example.xwc.tutorapp.Database.DBOpenHelper;
 import com.example.xwc.tutorapp.Database.StudentProvider;
 import com.example.xwc.tutorapp.Database.StudentTutorialProvider;
 import com.example.xwc.tutorapp.Model.Class;
+import com.example.xwc.tutorapp.Model.Student;
 import com.example.xwc.tutorapp.R;
 import android.content.pm.*;
 import android.os.Build;
@@ -30,8 +31,11 @@ import android.graphics.Bitmap.CompressFormat;
 public class TutorialStudentEditor extends AppCompatActivity {
     public static final int EDIT_STUDENT = 200;
     public static final int DELETE_STUDENT = 201;
-    private CheckBox chkAbsent;
-    private CheckBox chkLate;
+    public static final int UPDATE_STUDENT = 202;
+    private RadioButton chkAbsent;
+    private RadioButton chkLate;
+    private RadioButton chkPresent;
+
     private EditText txtGrade;
     private TextView lblStudentName;
     private TextView lblStudentZID;
@@ -49,8 +53,9 @@ public class TutorialStudentEditor extends AppCompatActivity {
         setContentView(R.layout.tutorial_student_editor);
 
         // Get references to UI elements
-        chkAbsent = (CheckBox) findViewById(R.id.chkAbsent);
-        chkLate = (CheckBox) findViewById(R.id.chkLate);
+        chkAbsent = (RadioButton) findViewById(R.id.chkAbsent);
+        chkLate = (RadioButton) findViewById(R.id.chkLate);
+        chkPresent = (RadioButton) findViewById(R.id.chkPresent);
 
         txtGrade = (EditText) findViewById(R.id.txtStudentGrade);
 
@@ -149,6 +154,7 @@ public class TutorialStudentEditor extends AppCompatActivity {
         // Setup UI
         chkLate.setChecked(i.getIntExtra("LATE", 0) == 1);
         chkAbsent.setChecked(i.getIntExtra("ABSENT", 0) == 1);
+        chkPresent.setChecked(!chkLate.isChecked() && !chkAbsent.isChecked()); // if none are checked, student must be present
         txtGrade.setText(i.getStringExtra("GRADE"));
         String participated = i.getStringExtra("PART");
         Log.d("participated? ",participated);
@@ -157,7 +163,7 @@ public class TutorialStudentEditor extends AppCompatActivity {
         } else {
             btnParticipation.setText("Add Participation Mark");
         }
-
+        imgStudent.setImageBitmap(StudentProfile.getImage(i.getByteArrayExtra("IMG")));
     }
 
     @Override
@@ -166,6 +172,8 @@ public class TutorialStudentEditor extends AppCompatActivity {
             if (resultCode == DELETE_STUDENT) {
                 // Student deleted, so we must exit the mark editor activity
                 finish();
+            } else if (resultCode == UPDATE_STUDENT) {
+                imgStudent.setImageBitmap(StudentProfile.getImage(data.getByteArrayExtra("IMG")));
             }
         }
     }
